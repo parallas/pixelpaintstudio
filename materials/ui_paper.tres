@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ddpd0nfqo1jgu"]
+
+[ext_resource type="Shader" uid="uid://c684mfdmfkvwu" path="res://shaders/ui_paper.gdshader" id="1_i1imh"]
+[ext_resource type="Texture2D" uid="uid://dv2m531qttsyx" path="res://textures/Paper001.png" id="2_pe4t8"]
+
+[resource]
+shader = ExtResource("1_i1imh")
+shader_parameter/paper_tex = ExtResource("2_pe4t8")
+shader_parameter/paper_intensity = 1.0
+shader_parameter/paper_scale = 2.0
