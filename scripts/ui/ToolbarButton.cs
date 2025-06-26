@@ -3,7 +3,7 @@ using System;
 using Parallas;
 
 [GlobalClass]
-public partial class ToolbarButton : Control
+public partial class ToolbarButton : Panel
 {
     [Export] private Control VisualRoot;
     [Export] private Node3D Model;
@@ -35,19 +35,28 @@ public partial class ToolbarButton : Control
 
         VisualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
-        VisualRoot.Scale = MathUtil.ExpDecay(VisualRoot.Scale, _isHovered ? Vector2.One * 1.2f : Vector2.One, 16f, (float)delta);
-        Model.Quaternion = MathUtil.ExpDecay(Model.Quaternion, Quaternion.Identity, 16f, (float)delta);
+        VisualRoot.Scale = MathUtil.ExpDecay(
+            VisualRoot.Scale,
+            _isHovered ? Vector2.One * 1.25f : Vector2.One,
+            16f,
+            (float)delta
+        );
+        Model.Quaternion = MathUtil.ExpDecay(
+            Model.Quaternion,
+            Quaternion.FromEuler(new Vector3(0f, _hoverTime * 2f, 0f)),
+            16f,
+            (float)delta
+        );
 
         if (_isHovered)
         {
             _hoverTime += (float)delta;
-            VisualRoot.Position = VisualRoot.Position with { Y = MathUtil.ExpDecay(VisualRoot.Position.Y, -50, 16f, (float)delta) };
-
+            Position = Position with { Y = MathUtil.ExpDecay(Position.Y, -50, 16f, (float)delta) };
         }
         else
         {
             _hoverTime = 0;
-            VisualRoot.Position = VisualRoot.Position with { Y = MathUtil.ExpDecay(VisualRoot.Position.Y, 0, 16f, (float)delta) };
+            Position = Position with { Y = MathUtil.ExpDecay(Position.Y, 0, 16f, (float)delta) };
         }
 
         if (_isHovered || _isSelected)

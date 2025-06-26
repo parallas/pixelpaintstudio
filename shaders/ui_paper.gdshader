@@ -25,7 +25,7 @@ void fragment() {
 	vec3 texture_tint = texture_sample.rgb;
 	texture_tint = rgb2hsv(texture_tint);
 	texture_tint.g *= color_blend;
-	texture_tint.b *= mix(0.5, 1.2, color_blend);
+	texture_tint.b *= mix(0.8, 1.2, color_blend);
 	texture_tint = hsv2rgb(texture_tint);
 	texture_sample.rgb = texture_tint;
 	

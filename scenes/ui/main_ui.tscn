@@ -1,12 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=8 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
 [ext_resource type="Shader" uid="uid://8qc7y5sk72ig" path="res://shaders/background_scroll.gdshader" id="1_l8t6x"]
 [ext_resource type="Texture2D" uid="uid://sof3dakv1wbd" path="res://textures/bg_grid.png" id="2_l8t6x"]
+[ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="3_travt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_46cp5"]
 shader = ExtResource("1_l8t6x")
 shader_parameter/scroll_speed = Vector2(0.5, 0.25)
+
+[sub_resource type="Image" id="Image_travt"]
+data = {
+"data": PackedByteArray(255, 255, 255, 255),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 1
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_b1beo"]
+image = SubResource("Image_travt")
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -43,10 +56,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Spacer" type="Control" parent="VBoxContainer"]
+[node name="Topbar" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Topbar"]
+layout_mode = 2
+color = Color(0.674815, 0.674815, 0.674815, 1)
+
+[node name="Center" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 32
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/Center"]
+layout_mode = 2
+ratio = 1.7777
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Center/AspectRatioContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="DropShadowRect" type="TextureRect" parent="VBoxContainer/Center/AspectRatioContainer/ColorRect" node_paths=PackedStringArray("_referenceControl")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 1214.0
+offset_bottom = 686.405
+texture = SubResource("ImageTexture_b1beo")
+script = ExtResource("3_travt")
+_referenceControl = NodePath("..")
+metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
 [node name="Toolbar" parent="VBoxContainer" instance=ExtResource("1_hnesk")]
+custom_minimum_size = Vector2(0, 144)
 layout_mode = 2
-size_flags_horizontal = 4

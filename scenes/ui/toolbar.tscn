@@ -1,54 +1,64 @@
-[gd_scene load_steps=10 format=3 uid="uid://3i8sakgujhkd"]
+[gd_scene load_steps=9 format=3 uid="uid://3i8sakgujhkd"]
 
-[ext_resource type="Script" uid="uid://bwaob846te7l4" path="res://scripts/ui/ToolbarButton.cs" id="1_j4jut"]
+[ext_resource type="PackedScene" uid="uid://bb27qsdfplrcs" path="res://scenes/ui/tool_button.tscn" id="1_ieq13"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_7r4a7"]
-[ext_resource type="Material" uid="uid://ddpd0nfqo1jgu" path="res://materials/ui_paper.tres" id="3_hv7jf"]
 [ext_resource type="PackedScene" uid="uid://c5khalp47htu0" path="res://models/tools/tool_marker_small.glb" id="3_pr1jq"]
 [ext_resource type="PackedScene" uid="uid://dktkhomrfbvxd" path="res://models/tools/tool_marker_big.glb" id="4_j4jut"]
 [ext_resource type="PackedScene" uid="uid://ywayhrhgys52" path="res://models/tools/tool_marker_medium.glb" id="5_7r4a7"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_hv7jf"]
-viewport_path = NodePath("HBoxContainer/ToolbarButton3/SubViewportContainer2/SubViewport")
+viewport_path = NodePath("Control/MarginContainer/Items/Toolbar Button/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_j4jut"]
-viewport_path = NodePath("HBoxContainer/ToolbarButton2/SubViewportContainer2/SubViewport")
+[sub_resource type="ViewportTexture" id="ViewportTexture_7r4a7"]
+viewport_path = NodePath("Control/MarginContainer/Items/Toolbar Button2/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ieq13"]
-viewport_path = NodePath("HBoxContainer/ToolbarButton/SubViewportContainer/SubViewport")
+[sub_resource type="ViewportTexture" id="ViewportTexture_pr1jq"]
+viewport_path = NodePath("Control/MarginContainer/Items/Toolbar Button3/SubViewportContainer2/SubViewport")
 
 [node name="Toolbar" type="MarginContainer"]
 custom_minimum_size = Vector2(0, 128)
 offset_right = 544.0
-offset_bottom = 144.0
+offset_bottom = 272.0
+size_flags_vertical = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="BG Color" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.34, 0.1496, 0.1496, 1)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 264.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Items" type="HBoxContainer" parent="Control/MarginContainer"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="ToolbarButton3" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("VisualRoot", "Model")]
-material = ExtResource("3_hv7jf")
-instance_shader_parameters/color_blend = 1.0
-custom_minimum_size = Vector2(128, 128)
+[node name="Toolbar Button" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-mouse_filter = 1
-script = ExtResource("1_j4jut")
 VisualRoot = NodePath("SubViewportContainer2")
 Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_small")
-metadata/_custom_type_script = "uid://bwaob846te7l4"
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="HBoxContainer/ToolbarButton3"]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Toolbar Button"]
 use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 offset_right = 128.0
 offset_bottom = 128.0
 pivot_offset = Vector2(64, 64)
-stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer/ToolbarButton3/SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Toolbar Button/SubViewportContainer2"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
@@ -56,16 +66,16 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_marker_small" parent="HBoxContainer/ToolbarButton3/SubViewportContainer2/SubViewport" instance=ExtResource("3_pr1jq")]
+[node name="tool_marker_small" parent="Control/MarginContainer/Items/Toolbar Button/SubViewportContainer2/SubViewport" instance=ExtResource("3_pr1jq")]
 
-[node name="Camera3D" type="Camera3D" parent="HBoxContainer/ToolbarButton3/SubViewportContainer2/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Toolbar Button/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
 current = true
 size = 5.5
 far = 50.0
 
-[node name="DropShadowViewport" type="TextureRect" parent="HBoxContainer/ToolbarButton3/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Toolbar Button/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
@@ -75,26 +85,18 @@ script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="ToolbarButton2" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("VisualRoot", "Model")]
-material = ExtResource("3_hv7jf")
-instance_shader_parameters/color_blend = 1.0
-custom_minimum_size = Vector2(128, 128)
+[node name="Toolbar Button2" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-mouse_filter = 1
-script = ExtResource("1_j4jut")
 VisualRoot = NodePath("SubViewportContainer2")
 Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_medium")
-metadata/_custom_type_script = "uid://bwaob846te7l4"
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="HBoxContainer/ToolbarButton2"]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Toolbar Button2"]
 use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-offset_right = 128.0
-offset_bottom = 128.0
 pivot_offset = Vector2(64, 64)
-stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer/ToolbarButton2/SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Toolbar Button2/SubViewportContainer2"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
@@ -102,46 +104,37 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_marker_medium" parent="HBoxContainer/ToolbarButton2/SubViewportContainer2/SubViewport" instance=ExtResource("5_7r4a7")]
+[node name="tool_marker_medium" parent="Control/MarginContainer/Items/Toolbar Button2/SubViewportContainer2/SubViewport" instance=ExtResource("5_7r4a7")]
 
-[node name="Camera3D" type="Camera3D" parent="HBoxContainer/ToolbarButton2/SubViewportContainer2/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Toolbar Button2/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
 current = true
 size = 5.5
 far = 50.0
 
-[node name="DropShadowViewport" type="TextureRect" parent="HBoxContainer/ToolbarButton2/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Toolbar Button2/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_j4jut")
+texture = SubResource("ViewportTexture_7r4a7")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="ToolbarButton" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("VisualRoot", "Model")]
-material = ExtResource("3_hv7jf")
-instance_shader_parameters/color_blend = 1.0
-custom_minimum_size = Vector2(128, 128)
+[node name="Toolbar Button3" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-mouse_filter = 1
-script = ExtResource("1_j4jut")
-VisualRoot = NodePath("SubViewportContainer")
-Model = NodePath("SubViewportContainer/SubViewport/tool_marker_big")
-metadata/_custom_type_script = "uid://bwaob846te7l4"
+VisualRoot = NodePath("SubViewportContainer2")
+Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_big")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/ToolbarButton"]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Toolbar Button3"]
 use_parent_material = true
-instance_shader_parameters/color_blend = 1.0
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-offset_right = 128.0
-offset_bottom = 128.0
 pivot_offset = Vector2(64, 64)
-stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer/ToolbarButton/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Toolbar Button3/SubViewportContainer2"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
@@ -149,21 +142,21 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_marker_big" parent="HBoxContainer/ToolbarButton/SubViewportContainer/SubViewport" instance=ExtResource("4_j4jut")]
+[node name="tool_marker_big" parent="Control/MarginContainer/Items/Toolbar Button3/SubViewportContainer2/SubViewport" instance=ExtResource("4_j4jut")]
 
-[node name="Camera3D" type="Camera3D" parent="HBoxContainer/ToolbarButton/SubViewportContainer/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Toolbar Button3/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
 current = true
 size = 5.5
 far = 50.0
 
-[node name="DropShadowViewport" type="TextureRect" parent="HBoxContainer/ToolbarButton/SubViewportContainer" node_paths=PackedStringArray("Viewport")]
+[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Toolbar Button3/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_ieq13")
+texture = SubResource("ViewportTexture_pr1jq")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
