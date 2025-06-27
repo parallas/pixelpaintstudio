@@ -95,11 +95,11 @@ public partial class ToolbarButton : Panel
 
         if (_isHovered || _isSelected)
         {
-            _colorBlend = MathUtil.ExpDecay(_colorBlend, 1f, 13f, (float)delta);
+            _colorBlend = MathUtil.ExpDecay(_colorBlend, 1f, 40f, (float)delta);
         }
         else
         {
-            _colorBlend = MathUtil.ExpDecay(_colorBlend, 0f, 13f, (float)delta);
+            _colorBlend = MathUtil.ExpDecay(_colorBlend, 0f, 5f, (float)delta);
         }
     }
 }

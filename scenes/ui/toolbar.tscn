@@ -81,16 +81,16 @@ anchor_right = 1.0
 offset_bottom = 32.0
 grow_horizontal = 2
 
-[node name="Control2" type="Control" parent="Details/Hinges"]
+[node name="Space L" type="Control" parent="Details/Hinges"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="Details/Hinges"]
+[node name="Hinge L" type="ColorRect" parent="Details/Hinges"]
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
-color = Color(0.5002, 0.52765, 0.61, 1)
+color = Color(0.532699, 0.555224, 0.622223, 1)
 
-[node name="DropShadowRect" type="TextureRect" parent="Details/Hinges/ColorRect" node_paths=PackedStringArray("_referenceControl")]
+[node name="DropShadowRect" type="TextureRect" parent="Details/Hinges/Hinge L" node_paths=PackedStringArray("_referenceControl")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
@@ -104,16 +104,16 @@ _referenceControl = NodePath("..")
 Offset = Vector2(4, 4)
 metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
-[node name="Control" type="Control" parent="Details/Hinges"]
+[node name="Space Center" type="Control" parent="Details/Hinges"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ColorRect2" type="ColorRect" parent="Details/Hinges"]
+[node name="Hinge R" type="ColorRect" parent="Details/Hinges"]
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
-color = Color(0.5002, 0.52765, 0.61, 1)
+color = Color(0.532699, 0.555224, 0.622223, 1)
 
-[node name="DropShadowRect2" type="TextureRect" parent="Details/Hinges/ColorRect2" node_paths=PackedStringArray("_referenceControl")]
+[node name="DropShadowRect2" type="TextureRect" parent="Details/Hinges/Hinge R" node_paths=PackedStringArray("_referenceControl")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
@@ -127,7 +127,7 @@ _referenceControl = NodePath("..")
 Offset = Vector2(4, 4)
 metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
-[node name="Control3" type="Control" parent="Details/Hinges"]
+[node name="Space R" type="Control" parent="Details/Hinges"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 
@@ -137,19 +137,31 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
-color = Color(0.6723, 0.702135, 0.81, 1)
+color = Color(0.659503, 0.677693, 0.742115, 1)
 
 [node name="DropShadowRect" type="TextureRect" parent="Details/Bar" node_paths=PackedStringArray("_referenceControl")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
-offset_top = 4.0
+offset_top = 8.0
 offset_right = 1334.0
-offset_bottom = 12.0
+offset_bottom = 16.0
 texture = SubResource("ImageTexture_cicof")
 script = ExtResource("9_ukw8a")
 _referenceControl = NodePath("..")
-Offset = Vector2(0, 4)
+Offset = Vector2(0, 8)
+metadata/_custom_type_script = "uid://oatqjlhy3t4d"
+
+[node name="DropShadowRect2" type="TextureRect" parent="Details/Bar" node_paths=PackedStringArray("_referenceControl")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_top = -8.0
+offset_right = 1334.0
+texture = SubResource("ImageTexture_cicof")
+script = ExtResource("9_ukw8a")
+_referenceControl = NodePath("..")
+Offset = Vector2(0, -8)
 metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
 [node name="Item Bar" type="Control" parent="."]
@@ -164,7 +176,7 @@ offset_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 28
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 0
 
