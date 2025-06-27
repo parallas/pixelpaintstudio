@@ -35,18 +35,18 @@ public partial class ToolbarButton : Panel
 
         VisualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
-        VisualRoot.Scale = MathUtil.ExpDecay(
-            VisualRoot.Scale,
-            _isHovered ? Vector2.One * 1.25f : Vector2.One,
-            16f,
-            (float)delta
-        );
-        Model.Quaternion = MathUtil.ExpDecay(
+        // VisualRoot.Scale = MathUtil.ExpDecay(
+        //     VisualRoot.Scale,
+        //     _isHovered ? Vector2.One * 1.25f : Vector2.One,
+        //     16f,
+        //     (float)delta
+        // );
+        Model?.SetQuaternion(MathUtil.ExpDecay(
             Model.Quaternion,
             Quaternion.FromEuler(new Vector3(0f, _hoverTime * 2f, 0f)),
             16f,
             (float)delta
-        );
+        ));
 
         if (_isHovered)
         {
