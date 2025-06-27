@@ -14,6 +14,9 @@ public partial class ToolbarButton : Panel
     private float _hoverTime = 0;
     private float _colorBlend = 0f;
 
+    private float _squashStretchAmount = 0f;
+    private float _squashStretchVelocity = 0f;
+
     public override void _Ready()
     {
         base._Ready();
@@ -35,12 +38,23 @@ public partial class ToolbarButton : Panel
 
         VisualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
+        MathUtil.Spring(
+            ref _squashStretchAmount,
+            ref _squashStretchVelocity,
+            0f,
+            0.3f,
+            20f,
+            (float)delta
+        );
+
         // VisualRoot.Scale = MathUtil.ExpDecay(
         //     VisualRoot.Scale,
         //     _isHovered ? Vector2.One * 1.25f : Vector2.One,
         //     16f,
         //     (float)delta
         // );
+
+        VisualRoot.Scale = MathUtil.SquashScale(1f + _squashStretchAmount).ToVector2();
         Model?.SetQuaternion(MathUtil.ExpDecay(
             Model.Quaternion,
             Quaternion.FromEuler(new Vector3(0f, _hoverTime * 2f, 0f)),
@@ -50,11 +64,13 @@ public partial class ToolbarButton : Panel
 
         if (_isHovered)
         {
+            if (_hoverTime == 0) _squashStretchAmount = 0.25f;
             _hoverTime += (float)delta;
             Position = Position with { Y = MathUtil.ExpDecay(Position.Y, -50, 16f, (float)delta) };
         }
         else
         {
+            if (_hoverTime > 0) _squashStretchAmount = 0.25f;
             _hoverTime = 0;
             Position = Position with { Y = MathUtil.ExpDecay(Position.Y, 0, 16f, (float)delta) };
         }
