@@ -17,6 +17,9 @@ public partial class ToolbarButton : Panel
     private float _squashStretchAmount = 0f;
     private float _squashStretchVelocity = 0f;
 
+    private float _tabLiftTarget = 0f;
+    private float _tabLiftVelocity = 0f;
+
     public override void _Ready()
     {
         base._Ready();
@@ -47,6 +50,17 @@ public partial class ToolbarButton : Panel
             (float)delta
         );
 
+        var y = Position.Y;
+        MathUtil.Spring(
+            ref y,
+            ref _tabLiftVelocity,
+            _tabLiftTarget,
+            0.4f,
+            30f,
+            (float)delta
+        );
+        Position = Position with { Y = y };
+
         // VisualRoot.Scale = MathUtil.ExpDecay(
         //     VisualRoot.Scale,
         //     _isHovered ? Vector2.One * 1.25f : Vector2.One,
@@ -66,13 +80,13 @@ public partial class ToolbarButton : Panel
         {
             if (_hoverTime == 0) _squashStretchAmount = 0.25f;
             _hoverTime += (float)delta;
-            Position = Position with { Y = MathUtil.ExpDecay(Position.Y, -50, 16f, (float)delta) };
+            _tabLiftTarget = -50;
         }
         else
         {
             if (_hoverTime > 0) _squashStretchAmount = 0.25f;
             _hoverTime = 0;
-            Position = Position with { Y = MathUtil.ExpDecay(Position.Y, 0, 16f, (float)delta) };
+            _tabLiftTarget = 0;
         }
 
         if (_isHovered || _isSelected)

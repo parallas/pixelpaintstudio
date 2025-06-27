@@ -4,6 +4,7 @@ shader_type canvas_item;
 
 uniform sampler2D paper_tex : source_color, hint_default_white, repeat_enable;
 uniform float paper_intensity : hint_range(0.0, 1.0) = 1.0;
+uniform float paper_power = 1.0;
 uniform float paper_scale = 1.0;
 
 instance uniform float color_blend : hint_range(0.0, 1.0) = 1.0;
@@ -16,6 +17,7 @@ void vertex() {
 
 void fragment() {
 	vec4 paper_sample = texture(paper_tex, SCREEN_UV * vec2(paper_scale));
+	paper_sample = pow(paper_sample, vec4(paper_power));
 	paper_sample.a = mix(0.0, paper_sample.a, paper_intensity);
 	paper_sample = mix(vec4(1.0), vec4(paper_sample.rgb, 1.0), paper_sample.a);
 	
