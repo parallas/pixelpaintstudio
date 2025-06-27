@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 scroll_speed = vec2(0.5, 0.5);
 varying vec4 vertex_color;
 
@@ -19,7 +20,7 @@ void vertex() {
 }
 
 void fragment() {
-	vec2 scroll_uv = rotated(UV, 0.05);
+	vec2 scroll_uv = rotated(UV * uv_scale, 0.05);
 	scroll_uv += TIME * scroll_speed;
 	COLOR = texture(TEXTURE, scroll_uv) * vertex_color;
 }

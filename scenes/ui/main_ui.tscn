@@ -7,6 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_46cp5"]
 shader = ExtResource("1_l8t6x")
+shader_parameter/uv_scale = Vector2(1.5, 1.5)
 shader_parameter/scroll_speed = Vector2(0.5, 0.25)
 
 [sub_resource type="Image" id="Image_travt"]
@@ -37,12 +38,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BG Color" type="ColorRect" parent="MarginContainer"]
+[node name="Background" type="MarginContainer" parent="MarginContainer"]
+modulate = Color(0.542467, 0.4187, 0.79, 1)
+layout_mode = 2
+
+[node name="BG Color" type="ColorRect" parent="MarginContainer/Background"]
 material = SubResource("ShaderMaterial_46cp5")
 layout_mode = 2
 
-[node name="BG Grid" type="TextureRect" parent="MarginContainer"]
-self_modulate = Color(0.756863, 0.607843, 1, 0.109804)
+[node name="BG Grid" type="TextureRect" parent="MarginContainer/Background"]
+modulate = Color(0.9, 0.9, 0.9, 1)
 material = SubResource("ShaderMaterial_46cp5")
 layout_mode = 2
 texture = ExtResource("2_l8t6x")
@@ -61,6 +66,7 @@ custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer/Topbar"]
+visible = false
 layout_mode = 2
 color = Color(0.674815, 0.674815, 0.674815, 1)
 
@@ -84,15 +90,16 @@ layout_mode = 2
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 1214.0
-offset_bottom = 686.405
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1222.0
+offset_bottom = 694.405
 texture = SubResource("ImageTexture_b1beo")
 script = ExtResource("3_travt")
 _referenceControl = NodePath("..")
+Offset = Vector2(16, 16)
 metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
 [node name="Toolbar" parent="VBoxContainer" instance=ExtResource("1_hnesk")]
-custom_minimum_size = Vector2(0, 144)
+custom_minimum_size = Vector2(0, 160)
 layout_mode = 2

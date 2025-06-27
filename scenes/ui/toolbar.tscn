@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://3i8sakgujhkd"]
+[gd_scene load_steps=20 format=3 uid="uid://3i8sakgujhkd"]
 
 [ext_resource type="PackedScene" uid="uid://bb27qsdfplrcs" path="res://scenes/ui/tool_button.tscn" id="1_ieq13"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_7r4a7"]
@@ -7,58 +7,184 @@
 [ext_resource type="PackedScene" uid="uid://ywayhrhgys52" path="res://models/tools/tool_marker_medium.glb" id="5_7r4a7"]
 [ext_resource type="PackedScene" uid="uid://b5lhqngmc12e5" path="res://models/tools/tool_stamp.glb" id="6_7r4a7"]
 [ext_resource type="PackedScene" uid="uid://bpdxvrtexr571" path="res://models/tools/tool_zoom.glb" id="7_pr1jq"]
+[ext_resource type="PackedScene" uid="uid://c385xiljxr1wj" path="res://models/tools/tool_sticker.glb" id="8_ne8ky"]
+[ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="9_ukw8a"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_7r4a7"]
-viewport_path = NodePath("Control/MarginContainer/Items/Pen Small/SubViewportContainer2/SubViewport")
+[sub_resource type="Image" id="Image_ukw8a"]
+data = {
+"data": PackedByteArray(255, 255, 255, 255),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 1
+}
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_pr1jq"]
-viewport_path = NodePath("Control/MarginContainer/Items/Pen Medium/SubViewportContainer2/SubViewport")
+[sub_resource type="ImageTexture" id="ImageTexture_lcige"]
+image = SubResource("Image_ukw8a")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ne8ky"]
-viewport_path = NodePath("Control/MarginContainer/Items/Pen Large/SubViewportContainer2/SubViewport")
+[sub_resource type="Image" id="Image_lcige"]
+data = {
+"data": PackedByteArray(255, 255, 255, 255),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 1
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_cicof"]
+image = SubResource("Image_lcige")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ukw8a"]
-viewport_path = NodePath("Control/MarginContainer/Items/Stamp/SubViewportContainer2/SubViewport")
+viewport_path = NodePath("Item Bar/MarginContainer/Items/HBoxContainer/Pen Small/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lcige"]
-viewport_path = NodePath("Control/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport")
+viewport_path = NodePath("Item Bar/MarginContainer/Items/HBoxContainer/Pen Medium/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_cicof"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/HBoxContainer/Pen Large/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_725x6"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/HBoxContainer2/Stamp/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_f0xeq"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/HBoxContainer2/Sticker/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_71qqi"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport")
 
 [node name="Toolbar" type="MarginContainer"]
 custom_minimum_size = Vector2(0, 128)
-offset_right = 544.0
-offset_bottom = 272.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 160.0
+grow_horizontal = 2
 size_flags_vertical = 4
 
 [node name="BG Color" type="ColorRect" parent="."]
+visible = false
 layout_mode = 2
 color = Color(0.34, 0.1496, 0.1496, 1)
 
-[node name="Control" type="Control" parent="."]
+[node name="BG Color2" type="ColorRect" parent="."]
 layout_mode = 2
+color = Color(0.5, 0.125, 0.125, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="Control"]
+[node name="Details" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Hinges" type="HBoxContainer" parent="Details"]
+custom_minimum_size = Vector2(0, 8)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 264.0
+offset_bottom = 32.0
 grow_horizontal = 2
+
+[node name="Control2" type="Control" parent="Details/Hinges"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Details/Hinges"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+color = Color(0.5002, 0.52765, 0.61, 1)
+
+[node name="DropShadowRect" type="TextureRect" parent="Details/Hinges/ColorRect" node_paths=PackedStringArray("_referenceControl")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 20.0
+offset_bottom = 36.0
+texture = SubResource("ImageTexture_lcige")
+script = ExtResource("9_ukw8a")
+_referenceControl = NodePath("..")
+Offset = Vector2(4, 4)
+metadata/_custom_type_script = "uid://oatqjlhy3t4d"
+
+[node name="Control" type="Control" parent="Details/Hinges"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect2" type="ColorRect" parent="Details/Hinges"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+color = Color(0.5002, 0.52765, 0.61, 1)
+
+[node name="DropShadowRect2" type="TextureRect" parent="Details/Hinges/ColorRect2" node_paths=PackedStringArray("_referenceControl")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 20.0
+offset_bottom = 36.0
+texture = SubResource("ImageTexture_lcige")
+script = ExtResource("9_ukw8a")
+_referenceControl = NodePath("..")
+Offset = Vector2(4, 4)
+metadata/_custom_type_script = "uid://oatqjlhy3t4d"
+
+[node name="Control3" type="Control" parent="Details/Hinges"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="Bar" type="ColorRect" parent="Details"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+color = Color(0.6723, 0.702135, 0.81, 1)
+
+[node name="DropShadowRect" type="TextureRect" parent="Details/Bar" node_paths=PackedStringArray("_referenceControl")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1334.0
+offset_bottom = 12.0
+texture = SubResource("ImageTexture_cicof")
+script = ExtResource("9_ukw8a")
+_referenceControl = NodePath("..")
+Offset = Vector2(0, 4)
+metadata/_custom_type_script = "uid://oatqjlhy3t4d"
+
+[node name="Item Bar" type="Control" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Item Bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
+theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 0
 
-[node name="Items" type="HBoxContainer" parent="Control/MarginContainer"]
+[node name="Items" type="HBoxContainer" parent="Item Bar/MarginContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Item Bar/MarginContainer/Items"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 theme_override_constants/separation = 8
-alignment = 1
 
-[node name="Pen Small" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Pen Small" parent="Item Bar/MarginContainer/Items/HBoxContainer" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
 layout_mode = 2
 VisualRoot = NodePath("SubViewportContainer2")
 Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_small")
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Pen Small"]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Small"]
 use_parent_material = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -66,7 +192,7 @@ offset_right = 128.0
 offset_bottom = 128.0
 pivot_offset = Vector2(64, 64)
 
-[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Pen Small/SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Small/SubViewportContainer2"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
@@ -74,130 +200,16 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_marker_small" parent="Control/MarginContainer/Items/Pen Small/SubViewportContainer2/SubViewport" instance=ExtResource("3_pr1jq")]
+[node name="tool_marker_small" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Small/SubViewportContainer2/SubViewport" instance=ExtResource("3_pr1jq")]
 
-[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Pen Small/SubViewportContainer2/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Small/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
 current = true
 size = 6.5
 far = 50.0
 
-[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Pen Small/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-texture = SubResource("ViewportTexture_7r4a7")
-script = ExtResource("3_7r4a7")
-Viewport = NodePath("../SubViewport")
-metadata/_custom_type_script = "uid://djtog83vrh75d"
-
-[node name="Pen Medium" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
-layout_mode = 2
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_medium")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Pen Medium"]
-use_parent_material = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-pivot_offset = Vector2(64, 64)
-
-[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Pen Medium/SubViewportContainer2"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-msaa_3d = 2
-size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="tool_marker_medium" parent="Control/MarginContainer/Items/Pen Medium/SubViewportContainer2/SubViewport" instance=ExtResource("5_7r4a7")]
-
-[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Pen Medium/SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-projection = 1
-current = true
-size = 6.5
-far = 50.0
-
-[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Pen Medium/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-texture = SubResource("ViewportTexture_pr1jq")
-script = ExtResource("3_7r4a7")
-Viewport = NodePath("../SubViewport")
-metadata/_custom_type_script = "uid://djtog83vrh75d"
-
-[node name="Pen Large" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
-layout_mode = 2
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_big")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Pen Large"]
-use_parent_material = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-pivot_offset = Vector2(64, 64)
-
-[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Pen Large/SubViewportContainer2"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-msaa_3d = 2
-size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="tool_marker_big" parent="Control/MarginContainer/Items/Pen Large/SubViewportContainer2/SubViewport" instance=ExtResource("4_j4jut")]
-
-[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Pen Large/SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-projection = 1
-current = true
-size = 6.5
-far = 50.0
-
-[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Pen Large/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-texture = SubResource("ViewportTexture_ne8ky")
-script = ExtResource("3_7r4a7")
-Viewport = NodePath("../SubViewport")
-metadata/_custom_type_script = "uid://djtog83vrh75d"
-
-[node name="Stamp" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
-layout_mode = 2
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_stamp")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Stamp"]
-use_parent_material = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-pivot_offset = Vector2(64, 64)
-
-[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Stamp/SubViewportContainer2"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-msaa_3d = 2
-size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="tool_stamp" parent="Control/MarginContainer/Items/Stamp/SubViewportContainer2/SubViewport" instance=ExtResource("6_7r4a7")]
-
-[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Stamp/SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-projection = 1
-current = true
-size = 6.5
-far = 50.0
-
-[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Stamp/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Small/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
@@ -207,18 +219,18 @@ script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Zoom" parent="Control/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Pen Medium" parent="Item Bar/MarginContainer/Items/HBoxContainer" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
 layout_mode = 2
 VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_zoom")
+Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_medium")
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/MarginContainer/Items/Zoom"]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Medium"]
 use_parent_material = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 pivot_offset = Vector2(64, 64)
 
-[node name="SubViewport" type="SubViewport" parent="Control/MarginContainer/Items/Zoom/SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Medium/SubViewportContainer2"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
@@ -226,21 +238,178 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_zoom" parent="Control/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport" instance=ExtResource("7_pr1jq")]
+[node name="tool_marker_medium" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Medium/SubViewportContainer2/SubViewport" instance=ExtResource("5_7r4a7")]
 
-[node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Medium/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
 current = true
 size = 6.5
 far = 50.0
 
-[node name="DropShadowViewport" type="TextureRect" parent="Control/MarginContainer/Items/Zoom/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Medium/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 texture = SubResource("ViewportTexture_lcige")
+script = ExtResource("3_7r4a7")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="Pen Large" parent="Item Bar/MarginContainer/Items/HBoxContainer" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+layout_mode = 2
+VisualRoot = NodePath("SubViewportContainer2")
+Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_big")
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Large"]
+use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Large/SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="tool_marker_big" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Large/SubViewportContainer2/SubViewport" instance=ExtResource("4_j4jut")]
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Large/SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+projection = 1
+current = true
+size = 6.5
+far = 50.0
+
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/HBoxContainer/Pen Large/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+texture = SubResource("ViewportTexture_cicof")
+script = ExtResource("3_7r4a7")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Item Bar/MarginContainer/Items"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Stamp" parent="Item Bar/MarginContainer/Items/HBoxContainer2" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+layout_mode = 2
+VisualRoot = NodePath("SubViewportContainer2")
+Model = NodePath("SubViewportContainer2/SubViewport/tool_stamp")
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Stamp"]
+use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Stamp/SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="tool_stamp" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Stamp/SubViewportContainer2/SubViewport" instance=ExtResource("6_7r4a7")]
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Stamp/SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+projection = 1
+current = true
+size = 6.5
+far = 50.0
+
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Stamp/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+texture = SubResource("ViewportTexture_725x6")
+script = ExtResource("3_7r4a7")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="Sticker" parent="Item Bar/MarginContainer/Items/HBoxContainer2" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+layout_mode = 2
+VisualRoot = NodePath("SubViewportContainer2")
+Model = NodePath("SubViewportContainer2/SubViewport/tool_sticker")
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Sticker"]
+use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Sticker/SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="tool_sticker" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Sticker/SubViewportContainer2/SubViewport" instance=ExtResource("8_ne8ky")]
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Sticker/SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+projection = 1
+current = true
+size = 6.5
+far = 50.0
+
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/HBoxContainer2/Sticker/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+texture = SubResource("ViewportTexture_f0xeq")
+script = ExtResource("3_7r4a7")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="Zoom" parent="Item Bar/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+layout_mode = 2
+VisualRoot = NodePath("SubViewportContainer2")
+Model = NodePath("SubViewportContainer2/SubViewport/tool_zoom")
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Zoom"]
+use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="tool_zoom" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport" instance=ExtResource("7_pr1jq")]
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+projection = 1
+current = true
+size = 6.5
+far = 50.0
+
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+texture = SubResource("ViewportTexture_71qqi")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

@@ -14,8 +14,10 @@ public partial class ToolbarButton : Panel
     private float _hoverTime = 0;
     private float _colorBlend = 0f;
 
+    private Vector2 _hoverScale = Vector2.One;
     private float _squashStretchAmount = 0f;
     private float _squashStretchVelocity = 0f;
+    private Vector2 _squashStretchScale = Vector2.One;
 
     private float _tabLiftTarget = 0f;
     private float _tabLiftVelocity = 0f;
@@ -61,14 +63,16 @@ public partial class ToolbarButton : Panel
         );
         Position = Position with { Y = y };
 
-        // VisualRoot.Scale = MathUtil.ExpDecay(
-        //     VisualRoot.Scale,
-        //     _isHovered ? Vector2.One * 1.25f : Vector2.One,
-        //     16f,
-        //     (float)delta
-        // );
+        _hoverScale = MathUtil.ExpDecay(
+            _hoverScale,
+            _isHovered ? Vector2.One * 1.15f : Vector2.One,
+            16f,
+            (float)delta
+        );
 
-        VisualRoot.Scale = MathUtil.SquashScale(1f + _squashStretchAmount).ToVector2();
+        _squashStretchScale = MathUtil.SquashScale(1f + _squashStretchAmount).ToVector2();
+
+        VisualRoot.Scale = _hoverScale * _squashStretchScale;
         Model?.SetQuaternion(MathUtil.ExpDecay(
             Model.Quaternion,
             Quaternion.FromEuler(new Vector3(0f, _hoverTime * 2f, 0f)),
