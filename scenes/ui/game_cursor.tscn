@@ -16,6 +16,7 @@ offset_bottom = 32.0
 mouse_filter = 2
 use_top_left = true
 script = ExtResource("1_uh2sl")
+_baseSpeed = 400.0
 _contentRoot3d = NodePath("SubViewportContainer/SubViewport/Icons")
 _iconToolPenSmall = NodePath("SubViewportContainer/SubViewport/Icons/tool_marker_small")
 _iconToolPenMedium = NodePath("SubViewportContainer/SubViewport/Icons/tool_marker_medium")

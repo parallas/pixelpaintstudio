@@ -5,6 +5,8 @@ using Parallas;
 
 public partial class GameCursor : Control
 {
+    [Export] private float _baseSpeed = 128f;
+    [Export] private Vector2 _minMaxSpeedMultiplier = new Vector2(1, 5);
     [Export] private Node3D _contentRoot3d;
     [Export] private Node3D _iconToolPenSmall;
     [Export] private Node3D _iconToolPenMedium;
@@ -49,10 +51,10 @@ public partial class GameCursor : Control
             "cursor_down"
         ).Clamp(-1f, 1f);
         if (moveAmount.LengthSquared() > 0)
-            _cursorCurrentSpeed = MathUtil.ExpDecay(_cursorCurrentSpeed, 5f, 1f, (float)delta);
+            _cursorCurrentSpeed = MathUtil.ExpDecay(_cursorCurrentSpeed, _minMaxSpeedMultiplier.Y, 1f, (float)delta);
         else
-            _cursorCurrentSpeed = 1f;
-        newPos += moveAmount * 128f * _cursorCurrentSpeed * (float)delta;
+            _cursorCurrentSpeed = _minMaxSpeedMultiplier.X;
+        newPos += moveAmount * _baseSpeed * _cursorCurrentSpeed * (float)delta;
         newPos = newPos.Clamp(Vector2.Zero, GetViewportRect().Size);
         SetPosition(newPos);
 
