@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=2420
 window/size/viewport_height=1668
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [dotnet]
 
