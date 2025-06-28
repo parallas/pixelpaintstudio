@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvjmrg7av4u7l"]
+[gd_scene load_steps=12 format=3 uid="uid://bvjmrg7av4u7l"]
 
 [ext_resource type="Script" uid="uid://die3pj38kq66c" path="res://scripts/ui/GameCursor.cs" id="1_uh2sl"]
 [ext_resource type="PackedScene" uid="uid://c5khalp47htu0" path="res://models/tools/tool_marker_small.glb" id="2_mbebk"]
@@ -8,9 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://b5lhqngmc12e5" path="res://models/tools/tool_stamp.glb" id="6_pctj2"]
 [ext_resource type="PackedScene" uid="uid://c385xiljxr1wj" path="res://models/tools/tool_sticker.glb" id="7_47kbk"]
 [ext_resource type="PackedScene" uid="uid://bpdxvrtexr571" path="res://models/tools/tool_zoom.glb" id="8_ttyst"]
+[ext_resource type="PackedScene" uid="uid://b0oebfbxvgkam" path="res://models/tools/tool_sponge.glb" id="9_i4w5j"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="9_mbebk"]
 
-[node name="Game Cursor" type="CenterContainer" node_paths=PackedStringArray("_contentRoot3d", "_iconToolPenSmall", "_iconToolPenMedium", "_iconToolPenLarge", "_iconToolBubble", "_iconToolStamp", "_iconToolSticker", "_iconToolZoom")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_7rtmf"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[node name="Game Cursor" type="CenterContainer" node_paths=PackedStringArray("_contentRoot3d", "_iconToolPenSmall", "_iconToolPenMedium", "_iconToolPenLarge", "_iconToolBubble", "_iconToolSponge", "_iconToolStamp", "_iconToolSticker", "_iconToolZoom")]
 offset_right = 32.0
 offset_bottom = 32.0
 mouse_filter = 2
@@ -22,6 +26,7 @@ _iconToolPenSmall = NodePath("SubViewportContainer/SubViewport/Icons/tool_marker
 _iconToolPenMedium = NodePath("SubViewportContainer/SubViewport/Icons/tool_marker_medium")
 _iconToolPenLarge = NodePath("SubViewportContainer/SubViewport/Icons/tool_marker_big")
 _iconToolBubble = NodePath("SubViewportContainer/SubViewport/Icons/tool_bubble")
+_iconToolSponge = NodePath("SubViewportContainer/SubViewport/Icons/tool_sponge")
 _iconToolStamp = NodePath("SubViewportContainer/SubViewport/Icons/tool_stamp")
 _iconToolSticker = NodePath("SubViewportContainer/SubViewport/Icons/tool_sticker")
 _iconToolZoom = NodePath("SubViewportContainer/SubViewport/Icons/tool_zoom")
@@ -59,11 +64,14 @@ size = 10.0
 
 [node name="tool_zoom" parent="SubViewportContainer/SubViewport/Icons" instance=ExtResource("8_ttyst")]
 
+[node name="tool_sponge" parent="SubViewportContainer/SubViewport/Icons" instance=ExtResource("9_i4w5j")]
+
 [node name="DropShadowViewport" type="TextureRect" parent="SubViewportContainer" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 2
 mouse_filter = 2
+texture = SubResource("ViewportTexture_7rtmf")
 script = ExtResource("9_mbebk")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

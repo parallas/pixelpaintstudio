@@ -12,6 +12,7 @@ public partial class GameCursor : Control
     [Export] private Node3D _iconToolPenMedium;
     [Export] private Node3D _iconToolPenLarge;
     [Export] private Node3D _iconToolBubble;
+    [Export] private Node3D _iconToolSponge;
     [Export] private Node3D _iconToolStamp;
     [Export] private Node3D _iconToolSticker;
     [Export] private Node3D _iconToolZoom;
@@ -27,6 +28,9 @@ public partial class GameCursor : Control
     private Array<Node> _contents3d;
     private String _currentIconName;
     private Dictionary<String, AnimationPlayer> _animationPlayers = new();
+    private AnimationPlayer _currentAnimationPlayer;
+
+    private bool _clickHeld = false;
 
     public override void _Ready()
     {
@@ -69,6 +73,16 @@ public partial class GameCursor : Control
 
         if (Input.IsKeyPressed(Key.Escape)) Input.SetMouseMode(Input.MouseModeEnum.Visible);
         if (Input.IsMouseButtonPressed(MouseButton.Left)) Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+
+        if (_clickHeld && _currentAnimationPlayer?.CurrentAnimation != "Cursor")
+        {
+            _currentAnimationPlayer?.Play("Cursor");
+        }
+        // if (!_clickHeld && _currentAnimationPlayer?.CurrentAnimation == "Cursor")
+        // {
+        //     _currentAnimationPlayer?.Stop();
+        //     _squashStretchAmount = 0.2f;
+        // }
     }
 
     public override void _Input(InputEvent @event)
@@ -84,6 +98,10 @@ public partial class GameCursor : Control
         {
             SetPosition(mouseEvent.Position, true);
         }
+
+
+        if (@event.IsActionPressed("click")) _clickHeld = true;
+        if (@event.IsActionReleased("click")) _clickHeld = false;
     }
 
     public void SetToolState(ToolState toolState)
@@ -132,6 +150,8 @@ public partial class GameCursor : Control
                 return _iconToolPenLarge;
             case ToolState.DrawingTools.BubbleWand:
                 return _iconToolBubble;
+            case ToolState.DrawingTools.Sponge:
+                return _iconToolSponge;
             case ToolState.DrawingTools.Stamp:
                 return _iconToolStamp;
             case ToolState.DrawingTools.Sticker:
@@ -151,7 +171,10 @@ public partial class GameCursor : Control
 
         HideAllObjects();
         if (_animationPlayers.TryGetValue(toolIconNode.Name, out var animationPlayer))
+        {
+            _currentAnimationPlayer = animationPlayer;
             animationPlayer.Play("Cursor");
+        }
         toolIconNode.SetVisible(true);
         _squashStretchAmount = 0.25f;
     }

@@ -11,6 +11,7 @@ public partial class ToolState : Resource
         PenMedium,
         PenLarge,
         BubbleWand,
+        Sponge,
         Stamp,
         Sticker,
         Zoom,
