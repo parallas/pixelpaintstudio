@@ -60,6 +60,8 @@ public partial class GameCursor : Control
 
         if (Input.IsKeyPressed(Key.Escape)) Input.SetMouseMode(Input.MouseModeEnum.Visible);
         if (Input.IsMouseButtonPressed(MouseButton.Left)) Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+
+        Input.ParseInputEvent(new InputEventMouseMotion() { Position = newPos });
     }
 
     public override void _Input(InputEvent @event)

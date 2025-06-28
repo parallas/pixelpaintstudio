@@ -108,16 +108,11 @@ public partial class ToolbarButton : Panel
         {
             _colorBlend = MathUtil.ExpDecay(_colorBlend, 0f, 5f, (float)delta);
         }
-    }
 
-    public override void _GuiInput(InputEvent @event)
-    {
-        base._GuiInput(@event);
-
-        // if (@event is not InputEventAction inputEventAction) return;
-        if (!@event.IsActionPressed("click")) return;
-
-        ToolState.SetDrawingTool(Tool);
-        EmitSignalOnToolSelected(Tool);
+        if (_isHovered && Input.IsActionPressed("click"))
+        {
+            ToolState.SetDrawingTool(Tool);
+            EmitSignalOnToolSelected(Tool);
+        }
     }
 }
