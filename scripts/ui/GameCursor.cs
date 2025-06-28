@@ -26,7 +26,7 @@ public partial class GameCursor : Control
 
     private Array<Node> _contents3d;
     private String _currentIconName;
-    private Dictionary<String, AnimationPlayer> _animationPlayers = new Dictionary<string, AnimationPlayer>();
+    private Dictionary<String, AnimationPlayer> _animationPlayers = new();
 
     public override void _Ready()
     {
@@ -69,8 +69,6 @@ public partial class GameCursor : Control
 
         if (Input.IsKeyPressed(Key.Escape)) Input.SetMouseMode(Input.MouseModeEnum.Visible);
         if (Input.IsMouseButtonPressed(MouseButton.Left)) Input.SetMouseMode(Input.MouseModeEnum.Hidden);
-
-        Input.ParseInputEvent(new InputEventMouseMotion() { Position = newPos });
     }
 
     public override void _Input(InputEvent @event)
@@ -78,6 +76,10 @@ public partial class GameCursor : Control
         base._Input(@event);
         InputFixer.UpdateInput(@event);
 
+        if (@event is InputEventJoypadMotion joypadMotion || @event is InputEventJoypadButton joypadButton)
+        {
+            Input.ParseInputEvent(new InputEventMouseMotion() { Position = Position });
+        }
         if (@event is InputEventMouseMotion mouseEvent)
         {
             SetPosition(mouseEvent.Position, true);
