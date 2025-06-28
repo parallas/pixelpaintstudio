@@ -49,7 +49,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Background (White)" type="MarginContainer" parent="Background"]
-modulate = Color(0.81, 0.81, 0.81, 1)
+modulate = Color(0.72, 0.72, 0.72, 1)
 layout_mode = 2
 
 [node name="BG Color" type="ColorRect" parent="Background/Background (White)"]
@@ -58,6 +58,38 @@ layout_mode = 2
 
 [node name="BG Grid" type="TextureRect" parent="Background/Background (White)"]
 modulate = Color(0.96, 0.96, 0.96, 1)
+material = SubResource("ShaderMaterial_46cp5")
+layout_mode = 2
+texture = ExtResource("2_l8t6x")
+stretch_mode = 1
+
+[node name="Background (Red)" type="MarginContainer" parent="Background"]
+visible = false
+modulate = Color(0.88, 0.507907, 0.5016, 1)
+layout_mode = 2
+
+[node name="BG Color" type="ColorRect" parent="Background/Background (Red)"]
+material = SubResource("ShaderMaterial_46cp5")
+layout_mode = 2
+
+[node name="BG Grid" type="TextureRect" parent="Background/Background (Red)"]
+modulate = Color(0.96, 0.96, 0.96, 1)
+material = SubResource("ShaderMaterial_46cp5")
+layout_mode = 2
+texture = ExtResource("2_l8t6x")
+stretch_mode = 1
+
+[node name="Background (Dark)" type="MarginContainer" parent="Background"]
+visible = false
+modulate = Color(0.305943, 0.235204, 0.476463, 1)
+layout_mode = 2
+
+[node name="BG Color" type="ColorRect" parent="Background/Background (Dark)"]
+material = SubResource("ShaderMaterial_46cp5")
+layout_mode = 2
+
+[node name="BG Grid" type="TextureRect" parent="Background/Background (Dark)"]
+modulate = Color(0.914775, 0.914775, 0.914775, 1)
 material = SubResource("ShaderMaterial_46cp5")
 layout_mode = 2
 texture = ExtResource("2_l8t6x")

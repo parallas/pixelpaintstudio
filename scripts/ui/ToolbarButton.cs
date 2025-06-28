@@ -87,17 +87,17 @@ public partial class ToolbarButton : Panel
             (float)delta
         ));
 
+        _tabLiftTarget = (_isHovered ? -50 : 0) + (IsSelected ? -25 : 0);
+
         if (_isHovered || IsSelected)
         {
             if (_hoverTime == 0) _squashStretchAmount = 0.25f;
             _hoverTime += (float)delta;
-            _tabLiftTarget = _isHovered ? -50 : -25;
         }
         else
         {
             if (_hoverTime > 0) _squashStretchAmount = 0.25f;
             _hoverTime = 0;
-            _tabLiftTarget = 0;
         }
 
         if (_isHovered || IsSelected)
