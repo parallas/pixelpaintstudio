@@ -4,6 +4,7 @@ using System;
 [GlobalClass]
 public partial class ToolState : Resource
 {
+    [Signal] public delegate void DrawingToolChangedEventHandler(DrawingTools drawingTool);
     public enum DrawingTools
     {
         PenSmall,
@@ -14,5 +15,12 @@ public partial class ToolState : Resource
         Sticker,
         Zoom,
     }
-    [Export] public DrawingTools DrawingTool = DrawingTools.PenMedium;
+    [Export] public DrawingTools DrawingTool { get; private set; } = DrawingTools.PenMedium;
+
+    public void SetDrawingTool(DrawingTools tool)
+    {
+        if (DrawingTool == tool) return;
+        DrawingTool = tool;
+        EmitSignalDrawingToolChanged(tool);
+    }
 }

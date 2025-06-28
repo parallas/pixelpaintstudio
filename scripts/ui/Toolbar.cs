@@ -20,7 +20,7 @@ public partial class Toolbar : MarginContainer
 
     public void SetDrawingTool(ToolState.DrawingTools tool)
     {
-        ToolState.DrawingTool = tool;
+        ToolState.SetDrawingTool(tool);
         EmitSignalOnToolSelected(tool);
     }
 

@@ -117,7 +117,7 @@ public partial class ToolbarButton : Panel
         // if (@event is not InputEventAction inputEventAction) return;
         if (!@event.IsActionPressed("click")) return;
 
-        ToolState.DrawingTool = Tool;
+        ToolState.SetDrawingTool(Tool);
         EmitSignalOnToolSelected(Tool);
     }
 }
