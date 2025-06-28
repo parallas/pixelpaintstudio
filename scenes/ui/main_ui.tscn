@@ -1,9 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=11 format=3 uid="uid://bcs3ibma0b68n"]
 
+[ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
 [ext_resource type="Shader" uid="uid://8qc7y5sk72ig" path="res://shaders/background_scroll.gdshader" id="1_l8t6x"]
+[ext_resource type="Script" uid="uid://bv6edhv10dqh5" path="res://scripts/resources/ToolState.cs" id="2_b1beo"]
 [ext_resource type="Texture2D" uid="uid://sof3dakv1wbd" path="res://textures/bg_grid.png" id="2_l8t6x"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="3_travt"]
+
+[sub_resource type="Resource" id="Resource_t0li6"]
+script = ExtResource("2_b1beo")
+DrawingTool = 1
+metadata/_custom_type_script = "uid://bv6edhv10dqh5"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_46cp5"]
 shader = ExtResource("1_l8t6x")
@@ -22,15 +29,18 @@ data = {
 [sub_resource type="ImageTexture" id="ImageTexture_b1beo"]
 image = SubResource("Image_travt")
 
-[node name="Control" type="Control"]
+[node name="Main Editor" type="Control" node_paths=PackedStringArray("Toolbar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_46cp5")
+ToolState = SubResource("Resource_t0li6")
+Toolbar = NodePath("Layout/Toolbar")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Background" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,38 +48,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background (White)" type="MarginContainer" parent="MarginContainer"]
+[node name="Background (White)" type="MarginContainer" parent="Background"]
 modulate = Color(0.81, 0.81, 0.81, 1)
 layout_mode = 2
 
-[node name="BG Color" type="ColorRect" parent="MarginContainer/Background (White)"]
+[node name="BG Color" type="ColorRect" parent="Background/Background (White)"]
 material = SubResource("ShaderMaterial_46cp5")
 layout_mode = 2
 
-[node name="BG Grid" type="TextureRect" parent="MarginContainer/Background (White)"]
+[node name="BG Grid" type="TextureRect" parent="Background/Background (White)"]
 modulate = Color(0.96, 0.96, 0.96, 1)
 material = SubResource("ShaderMaterial_46cp5")
 layout_mode = 2
 texture = ExtResource("2_l8t6x")
 stretch_mode = 1
 
-[node name="Background (Color)" type="MarginContainer" parent="MarginContainer"]
+[node name="Background (Color)" type="MarginContainer" parent="Background"]
 visible = false
 modulate = Color(0.542467, 0.4187, 0.79, 1)
 layout_mode = 2
 
-[node name="BG Color" type="ColorRect" parent="MarginContainer/Background (Color)"]
+[node name="BG Color" type="ColorRect" parent="Background/Background (Color)"]
 material = SubResource("ShaderMaterial_46cp5")
 layout_mode = 2
 
-[node name="BG Grid" type="TextureRect" parent="MarginContainer/Background (Color)"]
+[node name="BG Grid" type="TextureRect" parent="Background/Background (Color)"]
 modulate = Color(0.96, 0.96, 0.96, 1)
 material = SubResource("ShaderMaterial_46cp5")
 layout_mode = 2
 texture = ExtResource("2_l8t6x")
 stretch_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Layout" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,16 +87,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Topbar" type="MarginContainer" parent="VBoxContainer"]
+[node name="Topbar" type="MarginContainer" parent="Layout"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Topbar"]
+[node name="ColorRect" type="ColorRect" parent="Layout/Topbar"]
 visible = false
 layout_mode = 2
 color = Color(0.674815, 0.674815, 0.674815, 1)
 
-[node name="Center" type="MarginContainer" parent="VBoxContainer"]
+[node name="Center" type="MarginContainer" parent="Layout"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 64
@@ -94,28 +104,44 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 32
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/Center"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Layout/Center"]
 layout_mode = 2
 ratio = 1.7777
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Center/AspectRatioContainer"]
-custom_minimum_size = Vector2(50, 50)
+[node name="Canvas" type="Control" parent="Layout/Center/AspectRatioContainer"]
 layout_mode = 2
 
-[node name="DropShadowRect" type="TextureRect" parent="VBoxContainer/Center/AspectRatioContainer/ColorRect" node_paths=PackedStringArray("_referenceControl")]
+[node name="Canvas BG" type="ColorRect" parent="Layout/Center/AspectRatioContainer/Canvas"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DropShadowRect" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Canvas/Canvas BG" node_paths=PackedStringArray("_referenceControl")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 1222.0
-offset_bottom = 694.405
+offset_right = 2308.0
+offset_bottom = 1305.31
 texture = SubResource("ImageTexture_b1beo")
 script = ExtResource("3_travt")
 _referenceControl = NodePath("..")
 Offset = Vector2(16, 16)
 metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
-[node name="Toolbar" parent="VBoxContainer" instance=ExtResource("1_hnesk")]
+[node name="TextureRect" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Canvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Toolbar" parent="Layout" instance=ExtResource("1_hnesk")]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2

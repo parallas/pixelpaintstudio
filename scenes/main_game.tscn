@@ -4,4 +4,4 @@
 
 [node name="Node" type="Node"]
 
-[node name="Control" parent="." instance=ExtResource("1_s3esy")]
+[node name="Main Editor" parent="." instance=ExtResource("1_s3esy")]
