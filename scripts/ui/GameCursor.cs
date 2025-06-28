@@ -26,6 +26,7 @@ public partial class GameCursor : Control
 
     private Array<Node> _contents3d;
     private String _currentIconName;
+    private Dictionary<String, AnimationPlayer> _animationPlayers = new Dictionary<string, AnimationPlayer>();
 
     public override void _Ready()
     {
@@ -35,6 +36,14 @@ public partial class GameCursor : Control
         Godot.Engine.MaxFps = 120;
 
         _contents3d = _contentRoot3d.GetChildren();
+        foreach (var node in _contents3d)
+        {
+            if (node.FindChild("AnimationPlayer") is not AnimationPlayer animationPlayer) continue;
+            _animationPlayers.Add(node.Name, animationPlayer);
+
+            if (!animationPlayer.HasAnimation("Cursor")) continue;
+            animationPlayer.Play("Cursor");
+        }
         HideAllObjects();
     }
 
@@ -139,12 +148,9 @@ public partial class GameCursor : Control
         if (toolIconNode.Name == _currentIconName) return;
 
         HideAllObjects();
+        if (_animationPlayers.TryGetValue(toolIconNode.Name, out var animationPlayer))
+            animationPlayer.Play("Cursor");
         toolIconNode.SetVisible(true);
-        if (toolIconNode.FindChild("AnimationPlayer") is AnimationPlayer animationPlayer)
-        {
-            if (animationPlayer.HasAnimation("Cursor"))
-                animationPlayer.Play("Cursor");
-        }
         _squashStretchAmount = 0.25f;
     }
 
