@@ -12,6 +12,8 @@ public partial class ToolbarButton : Button
     [Export] private Control VisualRoot;
     [Export] private Node3D Model;
 
+    [Export] public BrushDefinition BrushDefinition { get; private set; }
+
     private AnimationPlayer _animationPlayer;
     private float _hoverTime = 0;
     private float _colorBlend = 0f;
@@ -114,5 +116,7 @@ public partial class ToolbarButton : Button
         if (!@event.IsActionPressed("click")) return;
         ToolState.SetDrawingTool(Tool);
         EmitSignalOnToolSelected(Tool);
+
+        if (BrushDefinition is not null) ToolState.SetBrush(BrushDefinition);
     }
 }

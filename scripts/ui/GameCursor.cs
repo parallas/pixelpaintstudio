@@ -19,7 +19,6 @@ public partial class GameCursor : Control
 
     [Export] public ToolState ToolState { get; private set; }
 
-    [Export] public BrushDefinition BrushDefinition;
     [Export] public DrawCanvas TargetDrawCanvas;
 
     public bool IsHighlighted { get; private set; }
@@ -79,7 +78,7 @@ public partial class GameCursor : Control
 
         if (_clickHeld)
         {
-            BrushDefinition.Process(GetCanvasPosition(), delta);
+            ToolState?.BrushDefinition?.Process(GetCanvasPosition(), delta);
             if (_currentAnimationPlayer?.CurrentAnimation != "Cursor")
                 _currentAnimationPlayer?.Play("Cursor");
         }
@@ -103,12 +102,12 @@ public partial class GameCursor : Control
         {
             _clickHeld = true;
             _squashStretchAmount += 0.2f;
-            BrushDefinition.Start(TargetDrawCanvas, GetCanvasPosition());
+            ToolState?.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition());
         }
         if (@event.IsActionReleased("click"))
         {
             _clickHeld = false;
-            BrushDefinition.Finish(GetCanvasPosition());
+            ToolState?.BrushDefinition?.Finish(GetCanvasPosition());
         }
     }
 
