@@ -79,7 +79,7 @@ public partial class GameCursor : Control
 
         if (_clickHeld)
         {
-            BrushDefinition.Process(TargetDrawCanvas.GetLocalMousePosition(), delta);
+            BrushDefinition.Process(GetCanvasPosition(), delta);
             if (_currentAnimationPlayer?.CurrentAnimation != "Cursor")
                 _currentAnimationPlayer?.Play("Cursor");
         }
@@ -103,12 +103,12 @@ public partial class GameCursor : Control
         {
             _clickHeld = true;
             _squashStretchAmount += 0.2f;
-            BrushDefinition.Start(TargetDrawCanvas, TargetDrawCanvas.GetLocalMousePosition());
+            BrushDefinition.Start(TargetDrawCanvas, GetCanvasPosition());
         }
         if (@event.IsActionReleased("click"))
         {
             _clickHeld = false;
-            BrushDefinition.Finish(TargetDrawCanvas.GetLocalMousePosition());
+            BrushDefinition.Finish(GetCanvasPosition());
         }
     }
 
@@ -190,5 +190,13 @@ public partial class GameCursor : Control
     private void ReactToDrawingToolChange(ToolState.DrawingTools drawingTool)
     {
         UpdateIcon();
+    }
+
+    private Vector2 GetCanvasPosition()
+    {
+        var canvasSubViewportContainer = TargetDrawCanvas.GetViewport().GetParent<SubViewportContainer>();
+        var offsetAmount = canvasSubViewportContainer.GlobalPosition;
+        var finalValue = TargetDrawCanvas.GetViewportTransform().AffineInverse().BasisXform(Position - offsetAmount);
+        return finalValue;
     }
 }
