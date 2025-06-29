@@ -194,9 +194,9 @@ public partial class GameCursor : Control
 
     private Vector2 GetCanvasPosition()
     {
-        var canvasSubViewportContainer = TargetDrawCanvas.GetViewport().GetParent<SubViewportContainer>();
-        var offsetAmount = canvasSubViewportContainer.GlobalPosition;
-        var finalValue = TargetDrawCanvas.GetViewportTransform().AffineInverse().BasisXform(Position - offsetAmount);
+        var finalValue = TargetDrawCanvas.GetScreenTransform().AffineInverse().BasisXform(
+            GlobalPosition - TargetDrawCanvas.GetScreenPosition()
+        );
         return finalValue;
     }
 }
