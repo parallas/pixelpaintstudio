@@ -20,6 +20,7 @@ public partial class GameCursor : Control
     [Export] public ToolState ToolState { get; private set; }
 
     [Export] public DrawCanvas TargetDrawCanvas;
+    [Export] public Control CanvasRoot;
 
     public bool IsHighlighted { get; private set; }
     private float _cursorCurrentSpeed = 1f;
@@ -193,9 +194,17 @@ public partial class GameCursor : Control
 
     private Vector2 GetCanvasPosition()
     {
-        var finalValue = TargetDrawCanvas.GetScreenTransform().AffineInverse().BasisXform(
-            GlobalPosition - TargetDrawCanvas.GetScreenPosition()
-        );
-        return finalValue;
+        Vector2 finalValue = Vector2.Zero;
+        if (TargetDrawCanvas.GetViewport().GetParent() is SubViewportContainer)
+        {
+            finalValue = TargetDrawCanvas.GetScreenTransform().AffineInverse().BasisXform(
+                GlobalPosition - TargetDrawCanvas.GetScreenPosition()
+            );
+            return finalValue;
+        }
+
+        var posLocalToRect = GlobalPosition - CanvasRoot.GlobalPosition;
+        var scaleFactor = TargetDrawCanvas.Resolution / CanvasRoot.Size;
+        return posLocalToRect * scaleFactor;
     }
 }
