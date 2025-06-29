@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=20 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
@@ -6,7 +6,12 @@
 [ext_resource type="Script" uid="uid://bv6edhv10dqh5" path="res://scripts/resources/ToolState.cs" id="2_b1beo"]
 [ext_resource type="Texture2D" uid="uid://sof3dakv1wbd" path="res://textures/bg_grid.png" id="2_l8t6x"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="3_travt"]
+[ext_resource type="Script" uid="uid://dhj15jvhu7awh" path="res://scripts/ui/drawing/DrawCanvas.cs" id="5_oxwcw"]
+[ext_resource type="Material" uid="uid://c0ysv7ylv6pg0" path="res://materials/brush_add.tres" id="6_yc0ux"]
 [ext_resource type="PackedScene" uid="uid://bvjmrg7av4u7l" path="res://scenes/ui/game_cursor.tscn" id="7_t0li6"]
+[ext_resource type="Script" uid="uid://c5caugpc02fc2" path="res://scripts/ui/drawing/resources/brush_behaviors/BasicDraw.cs" id="8_oi40j"]
+[ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="9_aa6wj"]
+[ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="10_aa6wj"]
 
 [sub_resource type="Resource" id="Resource_t0li6"]
 script = ExtResource("2_b1beo")
@@ -18,7 +23,7 @@ shader = ExtResource("1_l8t6x")
 shader_parameter/uv_scale = Vector2(1.5, 1.5)
 shader_parameter/scroll_speed = Vector2(0.5, 0.25)
 
-[sub_resource type="Image" id="Image_t0li6"]
+[sub_resource type="Image" id="Image_oxwcw"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -28,7 +33,25 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_b1beo"]
-image = SubResource("Image_t0li6")
+image = SubResource("Image_oxwcw")
+
+[sub_resource type="Resource" id="Resource_m82f4"]
+script = ExtResource("10_aa6wj")
+metadata/_custom_type_script = "uid://cmv66q4eh60qf"
+
+[sub_resource type="Resource" id="Resource_oi40j"]
+script = ExtResource("8_oi40j")
+Color = Color(1, 0, 0, 1)
+Radius = 4.0
+metadata/_custom_type_script = "uid://c5caugpc02fc2"
+
+[sub_resource type="Resource" id="Resource_aa6wj"]
+script = ExtResource("9_aa6wj")
+Name = ""
+Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_oi40j")])
+StartBehaviors = null
+FinishBehaviors = null
+metadata/_custom_type_script = "uid://wqjbvlsij6wj"
 
 [node name="Main Editor" type="Control" node_paths=PackedStringArray("Toolbar", "GameCursor")]
 layout_mode = 3
@@ -142,19 +165,18 @@ theme_override_constants/margin_bottom = 32
 layout_mode = 2
 ratio = 1.7777
 
-[node name="Canvas" type="Control" parent="Layout/Center/AspectRatioContainer"]
+[node name="Canvas Stuff" type="Control" parent="Layout/Center/AspectRatioContainer"]
 layout_mode = 2
 
-[node name="Canvas BG" type="ColorRect" parent="Layout/Center/AspectRatioContainer/Canvas"]
+[node name="Canvas BG" type="ColorRect" parent="Layout/Center/AspectRatioContainer/Canvas Stuff"]
 custom_minimum_size = Vector2(50, 50)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 2
+offset_right = 2292.0
+offset_bottom = 1289.31
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DropShadowRect" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Canvas/Canvas BG" node_paths=PackedStringArray("_referenceControl")]
+[node name="DropShadowRect" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas BG" node_paths=PackedStringArray("_referenceControl")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
@@ -168,17 +190,41 @@ _referenceControl = NodePath("..")
 Offset = Vector2(16, 16)
 metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
-[node name="TextureRect" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Canvas"]
+[node name="Canvas" type="SubViewportContainer" parent="Layout/Center/AspectRatioContainer/Canvas Stuff"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch = true
+
+[node name="Canvas Viewport" type="SubViewport" parent="Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(2292, 1289)
+size_2d_override = Vector2i(640, 360)
+size_2d_override_stretch = true
+render_target_clear_mode = 2
+render_target_update_mode = 4
+
+[node name="Canvas" type="Control" parent="Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas/Canvas Viewport" node_paths=PackedStringArray("_aspectRatioContainer")]
+material = ExtResource("6_yc0ux")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_oxwcw")
+_aspectRatioContainer = NodePath("../../../..")
 
 [node name="Toolbar" parent="Layout" instance=ExtResource("1_hnesk")]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 
-[node name="Game Cursor" parent="." instance=ExtResource("7_t0li6")]
+[node name="Game Cursor" parent="." node_paths=PackedStringArray("TargetDrawCanvas") instance=ExtResource("7_t0li6")]
 layout_mode = 0
+BrushDefinition = SubResource("Resource_aa6wj")
+TargetDrawCanvas = NodePath("../Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas/Canvas Viewport/Canvas")

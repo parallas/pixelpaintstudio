@@ -19,6 +19,9 @@ public partial class GameCursor : Control
 
     [Export] public ToolState ToolState { get; private set; }
 
+    [Export] public BrushDefinition BrushDefinition;
+    [Export] public DrawCanvas TargetDrawCanvas;
+
     public bool IsHighlighted { get; private set; }
     private float _cursorCurrentSpeed = 1f;
 
@@ -74,15 +77,12 @@ public partial class GameCursor : Control
         if (Input.IsKeyPressed(Key.Escape)) Input.SetMouseMode(Input.MouseModeEnum.Visible);
         if (Input.IsMouseButtonPressed(MouseButton.Left)) Input.SetMouseMode(Input.MouseModeEnum.Hidden);
 
-        if (_clickHeld && _currentAnimationPlayer?.CurrentAnimation != "Cursor")
+        if (_clickHeld)
         {
-            _currentAnimationPlayer?.Play("Cursor");
+            BrushDefinition.Process(TargetDrawCanvas.GetLocalMousePosition(), delta);
+            if (_currentAnimationPlayer?.CurrentAnimation != "Cursor")
+                _currentAnimationPlayer?.Play("Cursor");
         }
-        // if (!_clickHeld && _currentAnimationPlayer?.CurrentAnimation == "Cursor")
-        // {
-        //     _currentAnimationPlayer?.Stop();
-        //     _squashStretchAmount = 0.2f;
-        // }
     }
 
     public override void _Input(InputEvent @event)
@@ -99,9 +99,17 @@ public partial class GameCursor : Control
             SetPosition(mouseEvent.Position, true);
         }
 
-
-        if (@event.IsActionPressed("click")) _clickHeld = true;
-        if (@event.IsActionReleased("click")) _clickHeld = false;
+        if (@event.IsActionPressed("click"))
+        {
+            _clickHeld = true;
+            _squashStretchAmount += 0.2f;
+            BrushDefinition.Start(TargetDrawCanvas, TargetDrawCanvas.GetLocalMousePosition());
+        }
+        if (@event.IsActionReleased("click"))
+        {
+            _clickHeld = false;
+            BrushDefinition.Finish(TargetDrawCanvas.GetLocalMousePosition());
+        }
     }
 
     public void SetToolState(ToolState toolState)

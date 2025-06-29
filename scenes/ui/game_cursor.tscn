@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b0oebfbxvgkam" path="res://models/tools/tool_sponge.glb" id="9_i4w5j"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="9_mbebk"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_7rtmf"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_i4w5j"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
 
 [node name="Game Cursor" type="CenterContainer" node_paths=PackedStringArray("_contentRoot3d", "_iconToolPenSmall", "_iconToolPenMedium", "_iconToolPenLarge", "_iconToolBubble", "_iconToolSponge", "_iconToolStamp", "_iconToolSticker", "_iconToolZoom")]
@@ -71,7 +71,19 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 2
 mouse_filter = 2
-texture = SubResource("ViewportTexture_7rtmf")
+texture = SubResource("ViewportTexture_i4w5j")
 script = ExtResource("9_mbebk")
 Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="DropShadowViewport2" type="TextureRect" parent="SubViewportContainer" node_paths=PackedStringArray("Viewport")]
+visible = false
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("ViewportTexture_i4w5j")
+script = ExtResource("9_mbebk")
+Viewport = NodePath("../SubViewport")
+Offset = Vector2(-1, -1)
 metadata/_custom_type_script = "uid://djtog83vrh75d"
