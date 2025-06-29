@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=21 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
@@ -7,11 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://sof3dakv1wbd" path="res://textures/bg_grid.png" id="2_l8t6x"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="3_travt"]
 [ext_resource type="Script" uid="uid://dhj15jvhu7awh" path="res://scripts/ui/drawing/DrawCanvas.cs" id="5_oxwcw"]
-[ext_resource type="Material" uid="uid://c0ysv7ylv6pg0" path="res://materials/brush_add.tres" id="6_yc0ux"]
 [ext_resource type="PackedScene" uid="uid://bvjmrg7av4u7l" path="res://scenes/ui/game_cursor.tscn" id="7_t0li6"]
 [ext_resource type="Script" uid="uid://c5caugpc02fc2" path="res://scripts/ui/drawing/resources/brush_behaviors/BasicDraw.cs" id="8_oi40j"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="9_aa6wj"]
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="10_aa6wj"]
+[ext_resource type="Script" uid="uid://b17vdftr7prjq" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColor.cs" id="11_m82f4"]
 
 [sub_resource type="Resource" id="Resource_t0li6"]
 script = ExtResource("2_b1beo")
@@ -39,16 +39,20 @@ image = SubResource("Image_oxwcw")
 script = ExtResource("10_aa6wj")
 metadata/_custom_type_script = "uid://cmv66q4eh60qf"
 
+[sub_resource type="Resource" id="Resource_8s2gp"]
+script = ExtResource("11_m82f4")
+Color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://b17vdftr7prjq"
+
 [sub_resource type="Resource" id="Resource_oi40j"]
 script = ExtResource("8_oi40j")
-Color = Color(1, 0, 0, 1)
 Radius = 4.0
 metadata/_custom_type_script = "uid://c5caugpc02fc2"
 
 [sub_resource type="Resource" id="Resource_aa6wj"]
 script = ExtResource("9_aa6wj")
 Name = ""
-Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_oi40j")])
+Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_8s2gp"), SubResource("Resource_oi40j")])
 StartBehaviors = null
 FinishBehaviors = null
 metadata/_custom_type_script = "uid://wqjbvlsij6wj"
@@ -210,7 +214,6 @@ render_target_clear_mode = 2
 render_target_update_mode = 4
 
 [node name="Canvas" type="Control" parent="Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas/Canvas Viewport" node_paths=PackedStringArray("_aspectRatioContainer")]
-material = ExtResource("6_yc0ux")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

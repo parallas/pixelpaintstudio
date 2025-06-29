@@ -16,6 +16,8 @@ public partial class BrushDefinition : Resource
     public Vector2 LastCursorPosition;
     public Vector2 EvaluatedPosition;
     public Vector2 LastEvaluatedPosition;
+    public Color EvaluatedColor;
+    public Vector2 EvaluatedScale;
     public float DrawingTime;
 
     public enum DrawStates
