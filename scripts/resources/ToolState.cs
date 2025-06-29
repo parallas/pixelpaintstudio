@@ -16,6 +16,7 @@ public partial class ToolState : Resource
         Stamp,
         Sticker,
         Zoom,
+        Wand,
     }
     [Export] public DrawingTools DrawingTool { get; private set; } = DrawingTools.PenMedium;
     [Export] public BrushDefinition BrushDefinition { get; private set; }

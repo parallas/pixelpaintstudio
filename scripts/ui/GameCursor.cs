@@ -15,6 +15,7 @@ public partial class GameCursor : Control
     [Export] private Node3D _iconToolSponge;
     [Export] private Node3D _iconToolStamp;
     [Export] private Node3D _iconToolSticker;
+    [Export] private Node3D _iconToolWand;
     [Export] private Node3D _iconToolZoom;
 
     [Export] public ToolState ToolState { get; private set; }
@@ -164,6 +165,8 @@ public partial class GameCursor : Control
                 return _iconToolStamp;
             case ToolState.DrawingTools.Sticker:
                 return _iconToolSticker;
+            case ToolState.DrawingTools.Wand:
+                return _iconToolWand;
             case ToolState.DrawingTools.Zoom:
                 return _iconToolZoom;
         }
@@ -205,6 +208,8 @@ public partial class GameCursor : Control
 
         var posLocalToRect = GlobalPosition - CanvasRoot.GlobalPosition;
         var scaleFactor = TargetDrawCanvas.Resolution / CanvasRoot.Size;
-        return posLocalToRect * scaleFactor;
+        var canvasRelativePosition = posLocalToRect * scaleFactor;
+        var pixelPosition = canvasRelativePosition.Round();
+        return pixelPosition;
     }
 }

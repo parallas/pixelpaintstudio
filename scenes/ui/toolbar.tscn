@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://3i8sakgujhkd"]
+[gd_scene load_steps=30 format=3 uid="uid://3i8sakgujhkd"]
 
 [ext_resource type="Script" uid="uid://ciiyfrdjg73jx" path="res://scripts/ui/Toolbar.cs" id="1_cicof"]
 [ext_resource type="PackedScene" uid="uid://bb27qsdfplrcs" path="res://scenes/ui/tool_button.tscn" id="1_ieq13"]
@@ -15,8 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://b0oebfbxvgkam" path="res://models/tools/tool_sponge.glb" id="9_725x6"]
 [ext_resource type="Resource" uid="uid://d4b71w5paugyf" path="res://brushes/brush_pen_large.tres" id="9_m5qa8"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="9_ukw8a"]
+[ext_resource type="PackedScene" uid="uid://c5lwyosp4q0kg" path="res://models/tools/tool_wand.glb" id="15_vhrfc"]
 
-[sub_resource type="Image" id="Image_725x6"]
+[sub_resource type="Image" id="Image_vhrfc"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -26,9 +27,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_lcige"]
-image = SubResource("Image_725x6")
+image = SubResource("Image_vhrfc")
 
-[sub_resource type="Image" id="Image_f0xeq"]
+[sub_resource type="Image" id="Image_wmx1g"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -38,30 +39,33 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_cicof"]
-image = SubResource("Image_f0xeq")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_71qqi"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2/SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_m5qa8"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Medium/SubViewportContainer2/SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_vhrfc"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewportContainer2/SubViewport")
+image = SubResource("Image_wmx1g")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_wmx1g"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Bubble/SubViewportContainer2/SubViewport")
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lnpyt"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport")
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Medium/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_i1qcg"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport")
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Sticker/SubViewportContainer2/SubViewport")
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Bubble/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4dr0l"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_mbflq"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_kceen"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Sticker/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_d043o"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_idg7t"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport")
 
 [node name="Toolbar" type="MarginContainer" node_paths=PackedStringArray("ToolbarButtons")]
@@ -72,7 +76,7 @@ offset_bottom = 160.0
 grow_horizontal = 2
 size_flags_vertical = 4
 script = ExtResource("1_cicof")
-ToolbarButtons = [NodePath("Item Bar/MarginContainer/Items/Pens/Pen Small"), NodePath("Item Bar/MarginContainer/Items/Pens/Pen Medium"), NodePath("Item Bar/MarginContainer/Items/Pens/Pen Large"), NodePath("Item Bar/MarginContainer/Items/Tools/Bubble"), NodePath("Item Bar/MarginContainer/Items/Tools/Sponge"), NodePath("Item Bar/MarginContainer/Items/Copying/Stamp"), NodePath("Item Bar/MarginContainer/Items/Copying/Sticker"), NodePath("Item Bar/MarginContainer/Items/Zoom")]
+ToolbarButtons = [NodePath("Item Bar/MarginContainer/Items/Pens/Pen Small"), NodePath("Item Bar/MarginContainer/Items/Pens/Pen Medium"), NodePath("Item Bar/MarginContainer/Items/Pens/Pen Large"), NodePath("Item Bar/MarginContainer/Items/Tools/Bubble"), NodePath("Item Bar/MarginContainer/Items/Tools/Sponge"), NodePath("Item Bar/MarginContainer/Items/Copying/Stamp"), NodePath("Item Bar/MarginContainer/Items/Copying/Sticker"), NodePath("Item Bar/MarginContainer/Items/Copying/Wand"), NodePath("Item Bar/MarginContainer/Items/Zoom")]
 
 [node name="BG Color" type="ColorRect" parent="."]
 visible = false
@@ -241,7 +245,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_71qqi")
+texture = SubResource("ViewportTexture_wmx1g")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -281,7 +285,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_m5qa8")
+texture = SubResource("ViewportTexture_lnpyt")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -321,7 +325,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_vhrfc")
+texture = SubResource("ViewportTexture_i1qcg")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -365,7 +369,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_wmx1g")
+texture = SubResource("ViewportTexture_ljjj3")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -404,7 +408,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_lnpyt")
+texture = SubResource("ViewportTexture_4dr0l")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -448,7 +452,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_i1qcg")
+texture = SubResource("ViewportTexture_mbflq")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -487,7 +491,46 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_ljjj3")
+texture = SubResource("ViewportTexture_kceen")
+script = ExtResource("3_7r4a7")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="Wand" parent="Item Bar/MarginContainer/Items/Copying" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+layout_mode = 2
+Tool = 8
+VisualRoot = NodePath("SubViewportContainer2")
+Model = NodePath("SubViewportContainer2/SubViewport/tool_wand")
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Copying/Wand"]
+use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="tool_wand" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2/SubViewport" instance=ExtResource("15_vhrfc")]
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+projection = 1
+current = true
+size = 6.5
+far = 50.0
+
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+texture = SubResource("ViewportTexture_d043o")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -526,7 +569,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_4dr0l")
+texture = SubResource("ViewportTexture_idg7t")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
