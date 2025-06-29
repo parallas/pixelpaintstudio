@@ -3,7 +3,7 @@ using System;
 using Parallas;
 
 [GlobalClass]
-public partial class ToolbarButton : Panel
+public partial class ToolbarButton : Button
 {
     [Signal] public delegate void OnToolSelectedEventHandler(ToolState.DrawingTools tool);
 
@@ -13,7 +13,6 @@ public partial class ToolbarButton : Panel
     [Export] private Node3D Model;
 
     private AnimationPlayer _animationPlayer;
-    private bool _isHovered = false;
     private float _hoverTime = 0;
     private float _colorBlend = 0f;
 
@@ -31,9 +30,6 @@ public partial class ToolbarButton : Panel
     {
         base._Ready();
 
-        MouseEntered += () => { _isHovered = true; };
-        MouseExited += () => { _isHovered = false; };
-
         VisualRoot.Material = null;
         VisualRoot.UseParentMaterial = true;
         VisualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
@@ -46,8 +42,8 @@ public partial class ToolbarButton : Panel
     {
         base._Process(delta);
 
-        if ((_isHovered || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
-        if ((!_isHovered && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
+        if ((IsHovered() || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
+        if ((!IsHovered() && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
         VisualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
         MathUtil.Spring(
@@ -72,7 +68,7 @@ public partial class ToolbarButton : Panel
 
         _hoverScale = MathUtil.ExpDecay(
             _hoverScale,
-            _isHovered ? Vector2.One * 1.15f : Vector2.One,
+            IsHovered() ? Vector2.One * 1.15f : Vector2.One,
             16f,
             (float)delta
         );
@@ -87,9 +83,9 @@ public partial class ToolbarButton : Panel
             (float)delta
         ));
 
-        _tabLiftTarget = (_isHovered ? -50 : 0) + (IsSelected ? -25 : 0);
+        _tabLiftTarget = (IsHovered() ? -50 : 0) + (IsSelected ? -25 : 0);
 
-        if (_isHovered || IsSelected)
+        if (IsHovered() || IsSelected)
         {
             if (_hoverTime == 0) _squashStretchAmount = 0.25f;
             _hoverTime += (float)delta;
@@ -100,7 +96,7 @@ public partial class ToolbarButton : Panel
             _hoverTime = 0;
         }
 
-        if (_isHovered || IsSelected)
+        if (IsHovered() || IsSelected)
         {
             _colorBlend = MathUtil.ExpDecay(_colorBlend, 1f, 40f, (float)delta);
         }
@@ -108,11 +104,15 @@ public partial class ToolbarButton : Panel
         {
             _colorBlend = MathUtil.ExpDecay(_colorBlend, 0f, 5f, (float)delta);
         }
+    }
 
-        if (_isHovered && Input.IsActionPressed("click"))
-        {
-            ToolState.SetDrawingTool(Tool);
-            EmitSignalOnToolSelected(Tool);
-        }
+    public override void _Input(InputEvent @event)
+    {
+        base._Input(@event);
+
+        if (!IsHovered()) return;
+        if (!@event.IsActionPressed("click")) return;
+        ToolState.SetDrawingTool(Tool);
+        EmitSignalOnToolSelected(Tool);
     }
 }
