@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=16 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://sof3dakv1wbd" path="res://textures/bg_grid.png" id="2_l8t6x"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="3_travt"]
 [ext_resource type="Script" uid="uid://dhj15jvhu7awh" path="res://scripts/ui/drawing/DrawCanvas.cs" id="5_oxwcw"]
+[ext_resource type="PackedScene" uid="uid://dikgniiqb312x" path="res://scenes/ui/topbar.tscn" id="6_b65ll"]
 [ext_resource type="PackedScene" uid="uid://bvjmrg7av4u7l" path="res://scenes/ui/game_cursor.tscn" id="7_t0li6"]
 [ext_resource type="Resource" uid="uid://doi7aq6mlanfb" path="res://brushes/brush_pen_medium.tres" id="9_yc0ux"]
 
@@ -127,14 +128,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Topbar" type="MarginContainer" parent="Layout"]
-custom_minimum_size = Vector2(0, 128)
+[node name="Topbar" parent="Layout" instance=ExtResource("6_b65ll")]
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="Layout/Topbar"]
-visible = false
-layout_mode = 2
-color = Color(0.674815, 0.674815, 0.674815, 1)
 
 [node name="Center" type="MarginContainer" parent="Layout"]
 layout_mode = 2
