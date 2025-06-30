@@ -10,6 +10,8 @@ public partial class PaintColorButton : Button
     private Vector2 _scaleVelocity = Vector2.Zero;
     private ToolState _toolState;
 
+    private bool IsSelected => _paintColor == _toolState?.BrushColor;
+
     public override void _Ready()
     {
         base._Ready();
@@ -27,7 +29,7 @@ public partial class PaintColorButton : Button
         var scaleTarget = 1f;
         if (IsHovered()) scaleTarget = 1.15f;
         if (IsPressed()) scaleTarget = 1f;
-        if (_paintColor == _toolState?.BrushColor) scaleTarget += 0.3f;
+        if (IsSelected) scaleTarget += 0.3f;
         var (x, y) = _scale;
         var (xVel, yVel) = _scaleVelocity;
         MathUtil.Spring(
@@ -50,6 +52,8 @@ public partial class PaintColorButton : Button
         _scaleVelocity = new Vector2(xVel, yVel);
 
         Scale = _scale;
+
+        SetZIndex(IsHovered() ? 2 : IsSelected ? 1 : 0);
     }
 
     public override void _Input(InputEvent @event)
