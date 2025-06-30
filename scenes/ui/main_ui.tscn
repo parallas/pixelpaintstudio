@@ -24,7 +24,7 @@ shader = ExtResource("1_l8t6x")
 shader_parameter/uv_scale = Vector2(1.5, 1.5)
 shader_parameter/scroll_speed = Vector2(0.5, 0.25)
 
-[sub_resource type="Image" id="Image_b65ll"]
+[sub_resource type="Image" id="Image_oi40j"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -34,7 +34,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_b1beo"]
-image = SubResource("Image_b65ll")
+image = SubResource("Image_oi40j")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yc0ux"]
 viewport_path = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas Viewport")
