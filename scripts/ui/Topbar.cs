@@ -9,13 +9,6 @@ public partial class Topbar : MarginContainer
 
     [Export] public ColorPaletteBar ColorPaletteBar { get; private set; }
 
-    public override void _Ready()
-    {
-        base._Ready();
-
-        ColorPaletteBar.SetToolState(ToolState);
-    }
-
     public void SetToolState(ToolState toolState)
     {
         ToolState = toolState;

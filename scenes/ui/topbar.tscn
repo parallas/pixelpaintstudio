@@ -8,7 +8,7 @@
 [ext_resource type="StyleBox" uid="uid://dx6sib3bjuyju" path="res://styles/drawer.tres" id="4_2uv7f"]
 [ext_resource type="Script" uid="uid://b7qb4b8ako0hj" path="res://scripts/ui/ColorPaletteBar.cs" id="5_ar3oq"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_vhwmh"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_xm8n6"]
 viewport_path = NodePath("HBoxContainer/Second Menu/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport")
 
 [node name="Topbar" type="MarginContainer" node_paths=PackedStringArray("ColorPaletteBar")]
@@ -197,7 +197,7 @@ size = 6.0
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 2
-texture = SubResource("ViewportTexture_vhwmh")
+texture = SubResource("ViewportTexture_xm8n6")
 script = ExtResource("3_fg84n")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

@@ -15,10 +15,7 @@ public partial class PaintColorButton : Button
         base._Ready();
 
         _paintBlob.SetColor(_paintColor);
-
-        _paintBlob.RotateZ(GD.Randf() * 2f * Mathf.Pi);
-        if (GD.Randf() < 0.5f) _paintBlob.RotateX(Mathf.Pi);
-        if (GD.Randf() < 0.5f) _paintBlob.RotateY(Mathf.Pi);
+        RandomizeOrientation();
     }
 
     public override void _Process(double delta)
@@ -30,7 +27,7 @@ public partial class PaintColorButton : Button
         var scaleTarget = 1f;
         if (IsHovered()) scaleTarget = 1.15f;
         if (IsPressed()) scaleTarget = 1f;
-        if (_paintColor == _toolState.BrushColor) scaleTarget += 0.1f;
+        if (_paintColor == _toolState?.BrushColor) scaleTarget += 0.3f;
         var (x, y) = _scale;
         var (xVel, yVel) = _scaleVelocity;
         MathUtil.Spring(
@@ -62,10 +59,22 @@ public partial class PaintColorButton : Button
         if (!IsHovered()) return;
         if (!@event.IsActionPressed("click")) return;
         _toolState.SetColor(_paintColor);
+        RandomizeOrientation();
+        _scaleVelocity = Vector2.One * 10f;
     }
 
     public void SetToolState(ToolState toolState)
     {
         _toolState = toolState;
+
+        if (toolState.BrushColor == _paintColor) return;
+        RandomizeOrientation();
+    }
+
+    private void RandomizeOrientation()
+    {
+        _paintBlob.RotateZ(GD.Randf() * 2f * Mathf.Pi);
+        if (GD.Randf() < 0.5f) _paintBlob.RotateX(Mathf.Pi);
+        if (GD.Randf() < 0.5f) _paintBlob.RotateY(Mathf.Pi);
     }
 }
