@@ -5,6 +5,7 @@ using Parallas;
 public partial class PaintColorButton : Button
 {
     [Export] private PaintBlob _paintBlob;
+    [Export] private Control _visualRoot;
     [Export] private Color _paintColor = Colors.Red;
     private Vector2 _scale = Vector2.One;
     private Vector2 _scaleVelocity = Vector2.Zero;
@@ -24,12 +25,12 @@ public partial class PaintColorButton : Button
     {
         base._Process(delta);
 
-        SetPivotOffset(Size * 0.5f);
+        _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
 
         var scaleTarget = 1f;
         if (IsHovered()) scaleTarget = 1.15f;
         if (IsPressed()) scaleTarget = 1f;
-        if (IsSelected) scaleTarget += 0.3f;
+        if (IsSelected) scaleTarget += 0.45f;
         var (x, y) = _scale;
         var (xVel, yVel) = _scaleVelocity;
         MathUtil.Spring(
@@ -51,7 +52,7 @@ public partial class PaintColorButton : Button
         _scale = new Vector2(x, y);
         _scaleVelocity = new Vector2(xVel, yVel);
 
-        Scale = _scale;
+        _visualRoot.Scale = _scale;
 
         SetZIndex(IsHovered() ? 2 : IsSelected ? 1 : 0);
     }
