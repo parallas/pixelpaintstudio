@@ -1,12 +1,17 @@
-[gd_resource type="Resource" script_class="BrushDefinition" load_steps=6 format=3 uid="uid://d4b71w5paugyf"]
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=8 format=3 uid="uid://d4b71w5paugyf"]
 
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_jdqit"]
+[ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_gw2r7"]
 [ext_resource type="Script" uid="uid://c5caugpc02fc2" path="res://scripts/ui/drawing/resources/brush_behaviors/BasicDraw.cs" id="2_tggaw"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="3_gw2r7"]
 
 [sub_resource type="Resource" id="Resource_m82f4"]
 script = ExtResource("1_jdqit")
 metadata/_custom_type_script = "uid://cmv66q4eh60qf"
+
+[sub_resource type="Resource" id="Resource_cwlyw"]
+script = ExtResource("2_gw2r7")
+metadata/_custom_type_script = "uid://ctwr7tpgocsul"
 
 [sub_resource type="Resource" id="Resource_oi40j"]
 script = ExtResource("2_tggaw")
@@ -16,7 +21,7 @@ metadata/_custom_type_script = "uid://c5caugpc02fc2"
 [resource]
 script = ExtResource("3_gw2r7")
 Name = "Pen Medium"
-Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_oi40j")])
+Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_cwlyw"), SubResource("Resource_oi40j")])
 StartBehaviors = null
 FinishBehaviors = null
 metadata/_custom_type_script = "uid://wqjbvlsij6wj"

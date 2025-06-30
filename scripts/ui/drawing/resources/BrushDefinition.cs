@@ -16,6 +16,7 @@ public partial class BrushDefinition : Resource
     public Vector2 LastCursorPosition;
     public Vector2 EvaluatedPosition;
     public Vector2 LastEvaluatedPosition;
+    public Color CursorColor = Colors.Red;
     public Color EvaluatedColor = Colors.Red;
     public Vector2 EvaluatedScale;
     public float DrawingTime;
@@ -33,9 +34,10 @@ public partial class BrushDefinition : Resource
         CanvasItem.Draw -= Draw;
     }
 
-    public void Start(CanvasItem canvasItem, Vector2 cursorPosition)
+    public void Start(CanvasItem canvasItem, Vector2 cursorPosition, Color cursorColor)
     {
         DrawState = DrawStates.Start;
+        CursorColor = cursorColor;
         CanvasItem = canvasItem;
         canvasItem.Draw += Draw;
         foreach (var brushBehavior in Behaviors)
@@ -68,9 +70,10 @@ public partial class BrushDefinition : Resource
         CanvasItem?.QueueRedraw();
     }
 
-    public void Process(Vector2 cursorPosition, double deltaTime)
+    public void Process(Vector2 cursorPosition, Color cursorColor, double deltaTime)
     {
         CursorPosition = cursorPosition;
+        CursorColor = cursorColor;
 
         // Run behavior logic
         foreach (var brushBehavior in Behaviors)
@@ -84,10 +87,11 @@ public partial class BrushDefinition : Resource
         DrawingTime += (float)deltaTime;
     }
 
-    public void Finish(Vector2 cursorPosition)
+    public void Finish(Vector2 cursorPosition, Color cursorColor)
     {
         DrawState = DrawStates.Finish;
         CursorPosition = cursorPosition;
+        CursorColor = cursorColor;
 
         // Run behavior logic
         foreach (var brushBehavior in FinishBehaviors)
