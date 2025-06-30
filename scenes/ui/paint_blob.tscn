@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://8xxa35qq5sb8"]
+
+[ext_resource type="PackedScene" uid="uid://b38y0rvhb2nsw" path="res://models/menus/paint_blob.glb" id="1_jypnw"]
+[ext_resource type="Script" uid="uid://bfis3l8l54w50" path="res://scripts/ui/PaintBlob.cs" id="2_ahwf4"]
+[ext_resource type="Shader" uid="uid://cx7kertpwpy2h" path="res://shaders/paint_blob.gdshader" id="3_ahwf4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iliid"]
+render_priority = 0
+shader = ExtResource("3_ahwf4")
+shader_parameter/paint_tint = Color(1, 1, 1, 1)
+
+[node name="paint_blob" node_paths=PackedStringArray("_meshInstance3D") instance=ExtResource("1_jypnw")]
+script = ExtResource("2_ahwf4")
+_meshInstance3D = NodePath("Blob")
+
+[node name="Blob" parent="." index="0"]
+material_override = SubResource("ShaderMaterial_iliid")

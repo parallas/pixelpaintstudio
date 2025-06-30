@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=8 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="PackedScene" uid="uid://b38y0rvhb2nsw" path="res://models/menus/paint_blob.glb" id="2_52fes"]
+[ext_resource type="PackedScene" uid="uid://bjju47so4g0la" path="res://scenes/ui/paint_color_button.tscn" id="2_hf8t1"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_fg84n"]
 [ext_resource type="StyleBox" uid="uid://dx6sib3bjuyju" path="res://styles/drawer.tres" id="4_2uv7f"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_52fes"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_hf8t1"]
+viewport_path = NodePath("HBoxContainer2/Menu Switcher/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vhwmh"]
 viewport_path = NodePath("HBoxContainer2/Second Menu/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport")
 
 [node name="Topbar" type="MarginContainer"]
@@ -20,50 +24,154 @@ theme_override_constants/margin_bottom = 24
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 32
 
-[node name="Color Palette" type="PanelContainer" parent="HBoxContainer2"]
+[node name="Menu Switcher" type="Control" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(300, 160)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = ExtResource("1_fg84n")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer2/Color Palette"]
+[node name="Stencil Drawer" type="PanelContainer" parent="HBoxContainer2/Menu Switcher"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("4_2uv7f")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer2/Menu Switcher/Stencil Drawer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="CenterContainer" parent="HBoxContainer2/Color Palette/HBoxContainer"]
+[node name="MarginContainer" type="CenterContainer" parent="HBoxContainer2/Menu Switcher/Stencil Drawer/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer2/Color Palette/HBoxContainer/MarginContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer2/Menu Switcher/Stencil Drawer/HBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer2/Color Palette/HBoxContainer/MarginContainer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer2/Menu Switcher/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 2
 size = Vector2i(100, 100)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
-[node name="Camera3D" type="Camera3D" parent="HBoxContainer2/Color Palette/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="HBoxContainer2/Menu Switcher/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 projection = 1
 current = true
 size = 6.0
 
-[node name="paint_blob" parent="HBoxContainer2/Color Palette/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport" instance=ExtResource("2_52fes")]
+[node name="paint_blob" parent="HBoxContainer2/Menu Switcher/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport" instance=ExtResource("2_52fes")]
 
-[node name="DropShadowViewport" type="TextureRect" parent="HBoxContainer2/Color Palette/HBoxContainer/MarginContainer/SubViewportContainer" node_paths=PackedStringArray("Viewport")]
+[node name="DropShadowViewport" type="TextureRect" parent="HBoxContainer2/Menu Switcher/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 2
+texture = SubResource("ViewportTexture_hf8t1")
 script = ExtResource("3_fg84n")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
+[node name="Left Panel" type="Control" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(1900, 160)
+layout_mode = 2
+
+[node name="Color Palette" type="PanelContainer" parent="HBoxContainer2/Left Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("1_fg84n")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer2/Left Panel/Color Palette"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Colors" type="HBoxContainer" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = -24
+
+[node name="Paint Color Button" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+
+[node name="Paint Color Button2" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(1, 0.47451, 0, 1)
+
+[node name="Paint Color Button3" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(1, 0.8, 0, 1)
+
+[node name="Paint Color Button4" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.0470588, 0.788235, 0.176471, 1)
+
+[node name="Paint Color Button13" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.057, 0.57, 0.35625, 1)
+
+[node name="Paint Color Button5" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0, 0.666667, 1, 1)
+
+[node name="Paint Color Button6" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.25098, 0.156863, 0.945098, 1)
+
+[node name="Paint Color Button7" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.576471, 0, 1, 1)
+
+[node name="Paint Color Button12" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(1, 0.46, 1, 1)
+
+[node name="Paint Color Button8" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(1, 0.765333, 0.56, 1)
+
+[node name="Paint Color Button18" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.78, 0.57044, 0.3744, 1)
+
+[node name="Paint Color Button17" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.644939, 0.369016, 0.118474, 1)
+
+[node name="Paint Color Button14" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.41, 0.236297, 0.0738, 1)
+
+[node name="Paint Color Button9" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0, 0, 0, 1)
+
+[node name="Paint Color Button10" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(0.52, 0.52, 0.52, 1)
+
+[node name="Paint Color Button11" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+layout_mode = 2
+_paintColor = Color(1, 1, 1, 1)
+
+[node name="Next Page Button" type="Button" parent="HBoxContainer2/Left Panel/Color Palette/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="Second Menu" type="Control" parent="HBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(160, 160)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -81,6 +189,7 @@ theme_override_styles/panel = ExtResource("4_2uv7f")
 layout_mode = 2
 
 [node name="MarginContainer" type="CenterContainer" parent="HBoxContainer2/Second Menu/Stencil Drawer/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
@@ -95,7 +204,7 @@ transparent_bg = true
 handle_input_locally = false
 msaa_3d = 2
 size = Vector2i(100, 100)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="HBoxContainer2/Second Menu/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
@@ -109,7 +218,7 @@ size = 6.0
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 2
-texture = SubResource("ViewportTexture_52fes")
+texture = SubResource("ViewportTexture_vhwmh")
 script = ExtResource("3_fg84n")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

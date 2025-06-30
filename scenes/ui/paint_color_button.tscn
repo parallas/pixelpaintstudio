@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjju47so4g0la"]
+
+[ext_resource type="Script" uid="uid://c8wbxhxurfp5b" path="res://scripts/ui/PaintColorButton.cs" id="1_lnvwr"]
+[ext_resource type="PackedScene" uid="uid://8xxa35qq5sb8" path="res://scenes/ui/paint_blob.tscn" id="2_atk6x"]
+[ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_gnlmx"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_atk6x"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[node name="Paint Color Button" type="Button" node_paths=PackedStringArray("_paintBlob")]
+custom_minimum_size = Vector2(128, 128)
+offset_right = 96.0
+offset_bottom = 96.0
+flat = true
+script = ExtResource("1_lnvwr")
+_paintBlob = NodePath("SubViewportContainer/SubViewport/paint_blob")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+projection = 1
+current = true
+size = 6.0
+
+[node name="paint_blob" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_atk6x")]
+
+[node name="DropShadowViewport" type="TextureRect" parent="SubViewportContainer" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 2
+texture = SubResource("ViewportTexture_atk6x")
+script = ExtResource("3_gnlmx")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"

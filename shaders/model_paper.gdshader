@@ -1,8 +1,6 @@
 shader_type spatial;
 render_mode unshaded;
 
-#include "shading.gdshaderinc"
-
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
