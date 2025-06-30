@@ -15,7 +15,7 @@
 script = ExtResource("2_b1beo")
 DrawingTool = 1
 BrushDefinition = ExtResource("9_yc0ux")
-BrushColor = Color(0, 0, 0, 0)
+BrushColor = Color(1, 0, 0, 1)
 metadata/_custom_type_script = "uid://bv6edhv10dqh5"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_46cp5"]
@@ -23,7 +23,7 @@ shader = ExtResource("1_l8t6x")
 shader_parameter/uv_scale = Vector2(1.5, 1.5)
 shader_parameter/scroll_speed = Vector2(0.5, 0.25)
 
-[sub_resource type="Image" id="Image_yc0ux"]
+[sub_resource type="Image" id="Image_b65ll"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -33,7 +33,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_b1beo"]
-image = SubResource("Image_yc0ux")
+image = SubResource("Image_b65ll")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yc0ux"]
 viewport_path = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas Viewport")

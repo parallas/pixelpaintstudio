@@ -42,15 +42,15 @@ public partial class BrushDefinition : Resource
         canvasItem.Draw += Draw;
         foreach (var brushBehavior in Behaviors)
         {
-            brushBehavior.Initialize();
+            brushBehavior.Initialize(cursorPosition, cursorColor);
         }
         foreach (var brushBehavior in StartBehaviors)
         {
-            brushBehavior.Initialize();
+            brushBehavior.Initialize(cursorPosition, cursorColor);
         }
         foreach (var brushBehavior in FinishBehaviors)
         {
-            brushBehavior.Initialize();
+            brushBehavior.Initialize(cursorPosition, cursorColor);
         }
 
         CursorPosition = cursorPosition;

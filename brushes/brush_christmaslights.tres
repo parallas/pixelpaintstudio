@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=16 format=3 uid="uid://btxag5m8sl4tr"]
+
+[ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_5s1ju"]
+[ext_resource type="Script" uid="uid://b17vdftr7prjq" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColor.cs" id="2_5s1ju"]
+[ext_resource type="Script" uid="uid://c5caugpc02fc2" path="res://scripts/ui/drawing/resources/brush_behaviors/BasicDraw.cs" id="3_chd8v"]
+[ext_resource type="Script" uid="uid://6tsv2hlggasd" path="res://scripts/ui/drawing/resources/brush_behaviors/WaitForDistance.cs" id="4_lssp1"]
+[ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="4_m0wkk"]
+[ext_resource type="Script" uid="uid://dtfcaotk1gw1y" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorRandom.cs" id="5_lssp1"]
+[ext_resource type="Texture2D" uid="uid://q62s7fuoovji" path="res://textures/christmas_light_gray_80x.png" id="6_lssp1"]
+[ext_resource type="Script" uid="uid://c884dpjmfme40" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImage.cs" id="6_r4vfi"]
+
+[sub_resource type="Resource" id="Resource_m82f4"]
+script = ExtResource("1_5s1ju")
+metadata/_custom_type_script = "uid://cmv66q4eh60qf"
+
+[sub_resource type="Resource" id="Resource_7s5fq"]
+script = ExtResource("2_5s1ju")
+Color = Color(0, 0.44, 0.168667, 1)
+metadata/_custom_type_script = "uid://b17vdftr7prjq"
+
+[sub_resource type="Resource" id="Resource_oi40j"]
+script = ExtResource("3_chd8v")
+Radius = 4.0
+metadata/_custom_type_script = "uid://c5caugpc02fc2"
+
+[sub_resource type="Resource" id="Resource_3yagk"]
+script = ExtResource("4_lssp1")
+Distance = 100.0
+BlockProcessInsteadOfDraw = false
+metadata/_custom_type_script = "uid://6tsv2hlggasd"
+
+[sub_resource type="Gradient" id="Gradient_3yagk"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.167, 0.333, 0.5, 0.667, 0.83)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.618167, 0.21, 1, 1, 0.781, 0.27, 1, 0.315, 0.7, 0.359917, 1, 0.2958, 0.45849, 0.87, 1, 0.913333, 0.48, 1, 1)
+
+[sub_resource type="Resource" id="Resource_r4vfi"]
+script = ExtResource("5_lssp1")
+Gradient = SubResource("Gradient_3yagk")
+metadata/_custom_type_script = "uid://dtfcaotk1gw1y"
+
+[sub_resource type="Resource" id="Resource_jnkqf"]
+script = ExtResource("6_r4vfi")
+Texture = ExtResource("6_lssp1")
+Size = Vector2(40, 40)
+Offset = Vector2(-20, 0)
+TintUsingColor = true
+RandomAngleRange = Vector2(-45, 45)
+RandomScaleRange = Vector2(0.8, 1.8)
+metadata/_custom_type_script = "uid://c884dpjmfme40"
+
+[resource]
+script = ExtResource("4_m0wkk")
+Name = "Christmas Lights"
+Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_7s5fq"), SubResource("Resource_oi40j"), SubResource("Resource_3yagk"), SubResource("Resource_r4vfi"), SubResource("Resource_jnkqf")])
+StartBehaviors = null
+FinishBehaviors = Array[Object]([])
+metadata/_custom_type_script = "uid://wqjbvlsij6wj"

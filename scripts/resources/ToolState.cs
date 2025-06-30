@@ -21,7 +21,7 @@ public partial class ToolState : Resource
     }
     [Export] public DrawingTools DrawingTool { get; private set; } = DrawingTools.PenMedium;
     [Export] public BrushDefinition BrushDefinition { get; private set; }
-    [Export] public Color BrushColor { get; private set; }
+    [Export] public Color BrushColor { get; private set; } = Colors.Red;
 
     public void SetDrawingTool(DrawingTools tool)
     {

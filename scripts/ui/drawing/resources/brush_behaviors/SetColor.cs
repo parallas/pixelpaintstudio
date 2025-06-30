@@ -5,10 +5,9 @@ using System;
 public partial class SetColor : BrushBehavior
 {
     [Export] public Color Color = Colors.Red;
-    public override void Process(BrushDefinition brushDefinition)
+    public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
     {
-        base.Process(brushDefinition);
-
+        base.Draw(brushDefinition, canvasItem);
         brushDefinition.EvaluatedColor = Color;
     }
 }
