@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="BrushDefinition" load_steps=9 format=3 uid="uid://bstqujm0okway"]
 
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_g62dg"]
-[ext_resource type="Texture2D" uid="uid://dxd4y8ljftavo" path="res://textures/christmas_light_80x.png" id="2_8ep02"]
 [ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_mqqvn"]
+[ext_resource type="Texture2D" uid="uid://mdc7jwpl37gv" path="res://textures/glob.png" id="3_goqy0"]
 [ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="3_mqqvn"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="8_266s0"]
 
@@ -16,7 +16,8 @@ metadata/_custom_type_script = "uid://ctwr7tpgocsul"
 
 [sub_resource type="Resource" id="Resource_goqy0"]
 script = ExtResource("3_mqqvn")
-Texture = ExtResource("2_8ep02")
+Texture = ExtResource("3_goqy0")
+SizeOverride = Vector2(16, 16)
 TintUsingColor = true
 FillGapsBetweenDraws = true
 RandomAngleRange = Vector2(0, 0)

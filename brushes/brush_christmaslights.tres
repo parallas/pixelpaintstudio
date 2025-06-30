@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_5s1ju"]
 [ext_resource type="Script" uid="uid://b17vdftr7prjq" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColor.cs" id="2_5s1ju"]
-[ext_resource type="Script" uid="uid://drh4vglcvtsy5" path="res://scripts/ui/drawing/resources/brush_behaviors/ShadedDraw.cs" id="3_lssp1"]
+[ext_resource type="Script" uid="uid://c5caugpc02fc2" path="res://scripts/ui/drawing/resources/brush_behaviors/BasicDraw.cs" id="3_chd8v"]
 [ext_resource type="Script" uid="uid://6tsv2hlggasd" path="res://scripts/ui/drawing/resources/brush_behaviors/WaitForDistance.cs" id="4_lssp1"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="4_m0wkk"]
 [ext_resource type="Script" uid="uid://dtfcaotk1gw1y" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorRandom.cs" id="5_lssp1"]
-[ext_resource type="Texture2D" uid="uid://dxd4y8ljftavo" path="res://textures/christmas_light_80x.png" id="6_lssp1"]
+[ext_resource type="Texture2D" uid="uid://cldx5kd4obc2o" path="res://textures/christmas_light_bright_80x.png" id="6_lssp1"]
 [ext_resource type="Script" uid="uid://c884dpjmfme40" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImage.cs" id="6_r4vfi"]
 
 [sub_resource type="Resource" id="Resource_m82f4"]
@@ -18,10 +18,10 @@ script = ExtResource("2_5s1ju")
 Color = Color(0, 0.44, 0.168667, 1)
 metadata/_custom_type_script = "uid://b17vdftr7prjq"
 
-[sub_resource type="Resource" id="Resource_d2423"]
-script = ExtResource("3_lssp1")
+[sub_resource type="Resource" id="Resource_lssp1"]
+script = ExtResource("3_chd8v")
 Radius = 4.0
-metadata/_custom_type_script = "uid://drh4vglcvtsy5"
+metadata/_custom_type_script = "uid://c5caugpc02fc2"
 
 [sub_resource type="Resource" id="Resource_3yagk"]
 script = ExtResource("4_lssp1")
@@ -53,7 +53,7 @@ metadata/_custom_type_script = "uid://c884dpjmfme40"
 [resource]
 script = ExtResource("4_m0wkk")
 Name = "Christmas Lights"
-Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_7s5fq"), SubResource("Resource_d2423"), SubResource("Resource_3yagk"), SubResource("Resource_r4vfi"), SubResource("Resource_jnkqf")])
+Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_7s5fq"), SubResource("Resource_lssp1"), SubResource("Resource_3yagk"), SubResource("Resource_r4vfi"), SubResource("Resource_jnkqf")])
 StartBehaviors = null
 FinishBehaviors = Array[Object]([])
 metadata/_custom_type_script = "uid://wqjbvlsij6wj"

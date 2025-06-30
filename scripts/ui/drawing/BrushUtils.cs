@@ -39,20 +39,21 @@ public static class BrushUtils
             var b = imageData[i + 2];
             var a = imageData[i + 3];
 
-            Color c = new Color(r, g, b, a);
+            Color c = new Color(r, g, b, 1);
             c.ToHsv(out var h, out var s, out var v);
             color.ToHsv(out var newH, out var newS, out var newV);
             h = newH;
             v *= Mathf.Lerp(1f, newV, s);
             s *= newS;
-            Color cFromHsv = Color.FromHsv(h, s, v);
+            Color cFromHsv = Color.FromHsv(h, s, v, a);
             imageData[i] = (byte)cFromHsv.R;
             imageData[i + 1] = (byte)cFromHsv.G;
             imageData[i + 2] = (byte)cFromHsv.B;
-            imageData[i + 3] = a;
+            imageData[i + 3] = (byte)cFromHsv.A;
         }
 
         image.SetData(image.GetWidth(), image.GetHeight(), image.HasMipmaps(), image.GetFormat(), imageData);
+        image.GenerateMipmaps(true);
         return ImageTexture.CreateFromImage(image);
     }
 }

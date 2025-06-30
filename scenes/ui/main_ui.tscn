@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=19 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dhj15jvhu7awh" path="res://scripts/ui/drawing/DrawCanvas.cs" id="5_oxwcw"]
 [ext_resource type="PackedScene" uid="uid://dikgniiqb312x" path="res://scenes/ui/topbar.tscn" id="6_b65ll"]
 [ext_resource type="PackedScene" uid="uid://bvjmrg7av4u7l" path="res://scenes/ui/game_cursor.tscn" id="7_t0li6"]
+[ext_resource type="Material" uid="uid://d4jyrw3g2qr1l" path="res://materials/brush_mix.tres" id="8_oi40j"]
 [ext_resource type="Resource" uid="uid://doi7aq6mlanfb" path="res://brushes/brush_pen_medium.tres" id="9_yc0ux"]
 
 [sub_resource type="Resource" id="Resource_t0li6"]
@@ -37,6 +38,13 @@ image = SubResource("Image_b65ll")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yc0ux"]
 viewport_path = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas Viewport")
+
+[sub_resource type="Environment" id="Environment_oi40j"]
+background_mode = 1
+background_color = Color(1, 1, 1, 0)
+
+[sub_resource type="World3D" id="World3D_aa6wj"]
+environment = SubResource("Environment_oi40j")
 
 [node name="Main Editor" type="Control" node_paths=PackedStringArray("Toolbar", "Topbar", "GameCursor")]
 layout_mode = 3
@@ -173,6 +181,7 @@ metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
 [node name="TextureRect" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Canvas Stuff"]
 texture_filter = 1
+material = ExtResource("8_oi40j")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -183,6 +192,7 @@ texture = SubResource("ViewportTexture_yc0ux")
 
 [node name="Canvas Viewport" type="SubViewport" parent="Layout/Center/AspectRatioContainer/Canvas Stuff"]
 own_world_3d = true
+world_3d = SubResource("World3D_aa6wj")
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0

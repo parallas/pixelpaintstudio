@@ -5,6 +5,7 @@ using System;
 public partial class DrawImageBrush : BrushBehavior
 {
     [Export] public Texture2D Texture { get; set; }
+    [Export] public Vector2 SizeOverride { get; set; }
     [Export] public bool TintUsingColor { get; set; }
     [Export] public bool FillGapsBetweenDraws { get; set; }
 
@@ -33,6 +34,9 @@ public partial class DrawImageBrush : BrushBehavior
 
         if (!FillGapsBetweenDraws) _lastPosition = brushDefinition.EvaluatedPosition;
 
+        var size = SizeOverride;
+        if (size == Vector2.Zero) size = Texture.GetSize();
+
         int distanceInPixels = (int)brushDefinition.EvaluatedPosition.DistanceTo(_lastPosition);
         for (int i = 0; i <= distanceInPixels; i++)
         {
@@ -40,14 +44,14 @@ public partial class DrawImageBrush : BrushBehavior
             Vector2 position = _lastPosition.Lerp(brushDefinition.EvaluatedPosition, percent);
 
             var transform = Transform2D.Identity
-                    .Translated(-Texture.GetSize() * 0.5f)
+                    .Translated(-size * 0.5f)
                     .Scaled(Vector2.One * (float)GD.RandRange(RandomScaleRange.X, RandomScaleRange.Y))
                     .Rotated(Mathf.DegToRad((float)GD.RandRange(RandomAngleRange.X, RandomAngleRange.Y)))
                     .Translated(position)
                 ;
             canvasItem.DrawSetTransformMatrix(transform);
-            
-            canvasItem.DrawTextureRect(texture, new Rect2(Vector2.Zero, Texture.GetSize()), false, Colors.White);
+
+            canvasItem.DrawTextureRect(texture, new Rect2(Vector2.Zero, size), false, Colors.White);
         }
 
         canvasItem.DrawSetTransformMatrix(Transform2D.Identity);
