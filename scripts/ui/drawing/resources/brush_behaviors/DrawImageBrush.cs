@@ -25,6 +25,9 @@ public partial class DrawImageBrush : BrushBehavior
     {
         base.Draw(brushDefinition, canvasItem);
 
+        var texture = Texture;
+        if (TintUsingColor) texture = BrushUtils.Colorize(Texture, brushDefinition.EvaluatedColor);
+
         if (_lastPosition == -Vector2.Inf)
             _lastPosition = brushDefinition.EvaluatedPosition;
 
@@ -43,9 +46,8 @@ public partial class DrawImageBrush : BrushBehavior
                     .Translated(position)
                 ;
             canvasItem.DrawSetTransformMatrix(transform);
-
-            var tint = TintUsingColor ? brushDefinition.EvaluatedColor : Colors.White;
-            canvasItem.DrawTextureRect(Texture, new Rect2(Vector2.Zero, Texture.GetSize()), false, tint);
+            
+            canvasItem.DrawTextureRect(texture, new Rect2(Vector2.Zero, Texture.GetSize()), false, Colors.White);
         }
 
         canvasItem.DrawSetTransformMatrix(Transform2D.Identity);

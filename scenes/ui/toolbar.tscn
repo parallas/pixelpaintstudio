@@ -16,7 +16,7 @@
 [ext_resource type="Resource" uid="uid://d4b71w5paugyf" path="res://brushes/brush_pen_large.tres" id="9_m5qa8"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="9_ukw8a"]
 [ext_resource type="PackedScene" uid="uid://c5lwyosp4q0kg" path="res://models/tools/tool_wand.glb" id="15_vhrfc"]
-[ext_resource type="Resource" uid="uid://bstqujm0okway" path="res://brushes/brush_shaded_test.tres" id="15_wmx1g"]
+[ext_resource type="Resource" uid="uid://btxag5m8sl4tr" path="res://brushes/brush_christmaslights.tres" id="15_wmx1g"]
 
 [sub_resource type="Image" id="Image_wmx1g"]
 data = {

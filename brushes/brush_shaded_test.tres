@@ -1,13 +1,18 @@
-[gd_resource type="Resource" script_class="BrushDefinition" load_steps=7 format=3 uid="uid://bstqujm0okway"]
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=9 format=3 uid="uid://bstqujm0okway"]
 
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_g62dg"]
-[ext_resource type="Texture2D" uid="uid://drdbq7mr6ed2b" path="res://textures/test_shaded.png" id="2_8ep02"]
+[ext_resource type="Texture2D" uid="uid://dxd4y8ljftavo" path="res://textures/christmas_light_80x.png" id="2_8ep02"]
+[ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_mqqvn"]
 [ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="3_mqqvn"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="8_266s0"]
 
 [sub_resource type="Resource" id="Resource_m82f4"]
 script = ExtResource("1_g62dg")
 metadata/_custom_type_script = "uid://cmv66q4eh60qf"
+
+[sub_resource type="Resource" id="Resource_cj32i"]
+script = ExtResource("2_mqqvn")
+metadata/_custom_type_script = "uid://ctwr7tpgocsul"
 
 [sub_resource type="Resource" id="Resource_goqy0"]
 script = ExtResource("3_mqqvn")
@@ -21,7 +26,7 @@ metadata/_custom_type_script = "uid://drcqrruwqhh3q"
 [resource]
 script = ExtResource("8_266s0")
 Name = "Christmas Lights"
-Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_goqy0")])
+Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_cj32i"), SubResource("Resource_goqy0")])
 StartBehaviors = null
 FinishBehaviors = Array[Object]([])
 metadata/_custom_type_script = "uid://wqjbvlsij6wj"

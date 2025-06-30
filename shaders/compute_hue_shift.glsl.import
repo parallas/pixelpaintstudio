@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://35iy21mt8qab"
+path="res://.godot/imported/compute_hue_shift.glsl-bd7c7644af6da7b7dc54ab5762a1f986.res"
+
+[deps]
+
+source_file="res://shaders/compute_hue_shift.glsl"
+dest_files=["res://.godot/imported/compute_hue_shift.glsl-bd7c7644af6da7b7dc54ab5762a1f986.res"]
+
+[params]
+
