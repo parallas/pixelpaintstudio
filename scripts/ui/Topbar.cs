@@ -30,6 +30,7 @@ public partial class Topbar : MarginContainer
             menuBar.Visible = isCurrent;
             menuBar.MouseFilter = isCurrent ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
             menuBar.SetDrawBehindParent(true);
+            menuBar.SetPivotOffset(new Vector2(0f, menuBar.Size.Y * 0.5f));
         }
     }
 
