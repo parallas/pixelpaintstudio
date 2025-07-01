@@ -7,18 +7,19 @@
 [ext_resource type="Script" uid="uid://b7qb4b8ako0hj" path="res://scripts/ui/ColorPaletteBar.cs" id="5_ar3oq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm8n6"]
-content_margin_left = 32.0
-content_margin_top = 32.0
-content_margin_right = 0.0
-content_margin_bottom = 32.0
+content_margin_left = 48.0
+content_margin_top = 64.0
+content_margin_right = 48.0
+content_margin_bottom = 64.0
 bg_color = Color(0.501961, 0.12549, 0.12549, 1)
 border_width_right = 8
 border_width_bottom = 32
 border_color = Color(0.18, 0, 0, 1)
 border_blend = true
-corner_radius_top_left = 64
+corner_radius_top_left = 100
+corner_radius_top_right = 16
+corner_radius_bottom_right = 32
 corner_radius_bottom_left = 64
-expand_margin_right = 77.0
 expand_margin_bottom = 24.0
 shadow_color = Color(0, 0, 0, 0.231373)
 shadow_size = 1
@@ -30,8 +31,9 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 192.0
 grow_horizontal = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_right = 32
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
 script = ExtResource("1_xm8n6")
 ColorPaletteBar = NodePath("HBoxContainer/Menu Panel/Color Palette")
 MenuBars = [NodePath("HBoxContainer/Menu Panel/Color Palette"), NodePath("HBoxContainer/Menu Panel/Stencil Menu")]
@@ -45,9 +47,12 @@ custom_minimum_size = Vector2(2350, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 32
+theme_override_constants/separation = 0
+alignment = 1
 
 [node name="Menu Switcher" type="PanelContainer" parent="HBoxContainer"]
+z_index = 1
+custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -68,9 +73,10 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
 [node name="Menu Panel" type="Control" parent="HBoxContainer"]
-custom_minimum_size = Vector2(2000, 200)
+custom_minimum_size = Vector2(2000, 170)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 
 [node name="Color Palette" type="PanelContainer" parent="HBoxContainer/Menu Panel" node_paths=PackedStringArray("_paintColorButtons")]
 layout_mode = 1
