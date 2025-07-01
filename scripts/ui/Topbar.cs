@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Parallas;
 
 public partial class Topbar : MarginContainer
 {
@@ -17,15 +18,18 @@ public partial class Topbar : MarginContainer
 
     [Export] public PaintColorButton OpenColorsButton { get; private set; }
 
+    private float _squashStretchAmount = 0f;
+    private float _squashStretchVelocity = 0f;
+
     public override void _Ready()
     {
         base._Ready();
         foreach (var menuBar in MenuBars)
         {
-            menuBar.Visible = true;
-            float moveTarget = -500f;
-            if (menuBar == CurrentMenuBar) moveTarget = 0f;
-            menuBar.Position = menuBar.Position with { Y = moveTarget };
+            bool isCurrent = menuBar == CurrentMenuBar;
+            menuBar.Visible = isCurrent;
+            menuBar.MouseFilter = isCurrent ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
+            menuBar.SetDrawBehindParent(true);
         }
     }
 
@@ -40,11 +44,24 @@ public partial class Topbar : MarginContainer
     {
         base._Process(delta);
 
+        MathUtil.Spring(
+            ref _squashStretchAmount,
+            ref _squashStretchVelocity,
+            0f,
+            0.1f,
+            33f,
+            (float)delta
+        );
+
+        Vector2 squashStretch = MathUtil.SquashScale(1f + _squashStretchAmount * 0.1f).ToVector2();
+        CurrentMenuBar.Scale = new Vector2(Mathf.Lerp(squashStretch.X, 1f, 0.7f), squashStretch.Y);
+
         foreach (var menuBar in MenuBars)
         {
-            float moveTarget = -500f;
-            if (menuBar == CurrentMenuBar) moveTarget = 0f;
-            menuBar.Position = menuBar.Position with { Y = moveTarget };
+            bool isCurrent = menuBar == CurrentMenuBar;
+            menuBar.Visible = isCurrent;
+            menuBar.MouseFilter = isCurrent ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
+            menuBar.SetDrawBehindParent(true);
         }
     }
 
@@ -67,10 +84,12 @@ public partial class Topbar : MarginContainer
     public void SwitchToColorsMenu()
     {
         CurrentMenuBar = InkMenu;
+        _squashStretchAmount = 1f;
     }
 
     public void SwitchToToolOptionsMenu()
     {
         CurrentMenuBar = ToolOptionsMenu;
+        _squashStretchAmount = 1f;
     }
 }
