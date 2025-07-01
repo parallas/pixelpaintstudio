@@ -41,7 +41,9 @@ ToolOptionsMenu = NodePath("HBoxContainer/Menu Panel/Stencil Menu")
 OpenColorsButton = NodePath("HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(2350, 0)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 32
 
