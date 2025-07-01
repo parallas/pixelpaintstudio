@@ -7,6 +7,7 @@ public partial class PaintColorButton : Button
     [Export] private PaintBlob _paintBlob;
     [Export] private Control _visualRoot;
     [Export] private Color _paintColor = Colors.Red;
+    [Export] private bool _scaleWhenSelected = true;
     private Vector2 _scale = Vector2.One;
     private Vector2 _scaleVelocity = Vector2.Zero;
     private ToolState _toolState;
@@ -30,7 +31,7 @@ public partial class PaintColorButton : Button
         var scaleTarget = 1f;
         if (IsHovered()) scaleTarget = 1.15f;
         if (IsPressed()) scaleTarget = 1f;
-        if (IsSelected) scaleTarget += 0.45f;
+        if (_scaleWhenSelected && IsSelected) scaleTarget += 0.45f;
         var (x, y) = _scale;
         var (xVel, yVel) = _scaleVelocity;
         MathUtil.Spring(
@@ -57,12 +58,8 @@ public partial class PaintColorButton : Button
         SetZIndex(IsHovered() ? 2 : IsSelected ? 1 : 0);
     }
 
-    public override void _Input(InputEvent @event)
+    public void SetToolToColor()
     {
-        base._Input(@event);
-
-        if (!IsHovered()) return;
-        if (!@event.IsActionPressed("click")) return;
         _toolState.SetColor(_paintColor);
         RandomizeOrientation();
         _scaleVelocity = Vector2.One * 10f;
@@ -81,5 +78,11 @@ public partial class PaintColorButton : Button
         _paintBlob.RotateZ(GD.Randf() * 2f * Mathf.Pi);
         if (GD.Randf() < 0.5f) _paintBlob.RotateX(Mathf.Pi);
         if (GD.Randf() < 0.5f) _paintBlob.RotateY(Mathf.Pi);
+    }
+
+    public void SetDisplayColor(Color color)
+    {
+        _paintColor = color;
+        _paintBlob.SetColor(color);
     }
 }

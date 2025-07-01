@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=10 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="Script" uid="uid://db74nfyn3mccf" path="res://scripts/ui/Topbar.cs" id="1_xm8n6"]
@@ -8,10 +8,28 @@
 [ext_resource type="StyleBox" uid="uid://dx6sib3bjuyju" path="res://styles/drawer.tres" id="4_2uv7f"]
 [ext_resource type="Script" uid="uid://b7qb4b8ako0hj" path="res://scripts/ui/ColorPaletteBar.cs" id="5_ar3oq"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm8n6"]
+content_margin_left = 24.0
+content_margin_top = 16.0
+content_margin_right = 32.0
+content_margin_bottom = 32.0
+bg_color = Color(0.501961, 0.12549, 0.12549, 1)
+border_width_right = 8
+border_width_bottom = 32
+border_color = Color(0.18, 0, 0, 1)
+border_blend = true
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 128
+expand_margin_top = 128.0
+expand_margin_bottom = 24.0
+shadow_color = Color(0, 0, 0, 0.231373)
+shadow_size = 1
+shadow_offset = Vector2(8, 16)
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_xm8n6"]
 viewport_path = NodePath("HBoxContainer/Second Menu/Stencil Drawer/HBoxContainer/MarginContainer/SubViewportContainer/SubViewport")
 
-[node name="Topbar" type="MarginContainer" node_paths=PackedStringArray("ColorPaletteBar")]
+[node name="Topbar" type="MarginContainer" node_paths=PackedStringArray("ColorPaletteBar", "MenuBars", "CurrentMenuBar", "InkMenu", "ToolOptionsMenu", "OpenColorsButton")]
 custom_minimum_size = Vector2(0, 128)
 anchors_preset = 10
 anchor_right = 1.0
@@ -22,6 +40,11 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 script = ExtResource("1_xm8n6")
 ColorPaletteBar = NodePath("HBoxContainer/Menu Panel/Color Palette")
+MenuBars = [NodePath("HBoxContainer/Menu Panel/Color Palette"), NodePath("HBoxContainer/Menu Panel/Stencil Menu")]
+CurrentMenuBar = NodePath("HBoxContainer/Menu Panel/Color Palette")
+InkMenu = NodePath("HBoxContainer/Menu Panel/Color Palette")
+ToolOptionsMenu = NodePath("HBoxContainer/Menu Panel/Stencil Menu")
+OpenColorsButton = NodePath("HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -32,15 +55,17 @@ theme_override_constants/separation = 32
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = ExtResource("4_2uv7f")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xm8n6")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Menu Switcher"]
 layout_mode = 2
 
-[node name="Paint Color Button" parent="HBoxContainer/Menu Switcher/HBoxContainer" instance=ExtResource("2_hf8t1")]
+[node name="Ink Menu Button" parent="HBoxContainer/Menu Switcher/HBoxContainer" instance=ExtResource("2_hf8t1")]
 layout_mode = 2
+_scaleWhenSelected = false
 
-[node name="Paint Color Button2" parent="HBoxContainer/Menu Switcher/HBoxContainer" instance=ExtResource("2_hf8t1")]
+[node name="Button2" type="Button" parent="HBoxContainer/Menu Switcher/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 
 [node name="Menu Panel" type="Control" parent="HBoxContainer"]
@@ -57,92 +82,244 @@ grow_vertical = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = ExtResource("1_fg84n")
 script = ExtResource("5_ar3oq")
-_paintColorButtons = [NodePath("HBoxContainer2/Colors/Paint Color Button"), NodePath("HBoxContainer2/Colors/Paint Color Button2"), NodePath("HBoxContainer2/Colors/Paint Color Button3"), NodePath("HBoxContainer2/Colors/Paint Color Button4"), NodePath("HBoxContainer2/Colors/Paint Color Button13"), NodePath("HBoxContainer2/Colors/Paint Color Button5"), NodePath("HBoxContainer2/Colors/Paint Color Button6"), NodePath("HBoxContainer2/Colors/Paint Color Button7"), NodePath("HBoxContainer2/Colors/Paint Color Button12"), NodePath("HBoxContainer2/Colors/Paint Color Button8"), NodePath("HBoxContainer2/Colors/Paint Color Button18"), NodePath("HBoxContainer2/Colors/Paint Color Button17"), NodePath("HBoxContainer2/Colors/Paint Color Button14"), NodePath("HBoxContainer2/Colors/Paint Color Button9"), NodePath("HBoxContainer2/Colors/Paint Color Button10"), NodePath("HBoxContainer2/Colors/Paint Color Button11")]
+_paintColorButtons = [NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button2"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button3"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button4"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button13"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button5"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button6"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button7"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button12"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button8"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button18"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button17"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button14"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button9"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button10"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button11")]
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Color Palette"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Color Palette"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Colors" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/separation = -24
-
-[node name="Paint Color Button" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Colors Container" type="Control" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer"]
+custom_minimum_size = Vector2(1688, 128)
 layout_mode = 2
 
-[node name="Paint Color Button2" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Colors" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Paint Color Button" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="Paint Color Button2" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(1, 0.47451, 0, 1)
 
-[node name="Paint Color Button3" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button3" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(1, 0.8, 0, 1)
 
-[node name="Paint Color Button4" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button4" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.0470588, 0.788235, 0.176471, 1)
 
-[node name="Paint Color Button13" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button13" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.057, 0.57, 0.35625, 1)
 
-[node name="Paint Color Button5" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button5" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0, 0.666667, 1, 1)
 
-[node name="Paint Color Button6" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button6" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.25098, 0.156863, 0.945098, 1)
 
-[node name="Paint Color Button7" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button7" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.576471, 0, 1, 1)
 
-[node name="Paint Color Button12" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button12" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(1, 0.46, 1, 1)
 
-[node name="Paint Color Button8" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button8" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(1, 0.765333, 0.56, 1)
 
-[node name="Paint Color Button18" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button18" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.78, 0.57044, 0.3744, 1)
 
-[node name="Paint Color Button17" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button17" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.644939, 0.369016, 0.118474, 1)
 
-[node name="Paint Color Button14" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button14" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.41, 0.236297, 0.0738, 1)
 
-[node name="Paint Color Button9" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button9" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0, 0, 0, 1)
 
-[node name="Paint Color Button10" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button10" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(0.52, 0.52, 0.52, 1)
 
-[node name="Paint Color Button11" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button11" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+custom_minimum_size = Vector2(104, 128)
 layout_mode = 2
 _paintColor = Color(1, 1, 1, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2"]
+[node name="Page Buttons" type="Control" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer"]
+custom_minimum_size = Vector2(240, 128)
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Page Buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="Next Page Button" type="Button" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(80, 0)
+[node name="Next Page Button" type="Button" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Page Buttons/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 64
 text = "<"
 
-[node name="Next Page Button2" type="Button" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(80, 0)
+[node name="Next Page Button2" type="Button" parent="HBoxContainer/Menu Panel/Color Palette/HBoxContainer/Page Buttons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 64
+text = ">"
+
+[node name="Stencil Menu" type="PanelContainer" parent="HBoxContainer/Menu Panel" node_paths=PackedStringArray("_paintColorButtons")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -500.0
+offset_bottom = -500.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("4_2uv7f")
+script = ExtResource("5_ar3oq")
+_paintColorButtons = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Stencil Menu"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Item Container" type="Control" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer"]
+custom_minimum_size = Vector2(1688, 128)
+layout_mode = 2
+
+[node name="Items" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TestButton" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton2" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton3" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton4" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton5" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton6" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton7" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton8" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton9" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton10" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton11" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton12" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton13" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton14" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton15" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="TestButton16" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Item Container/Items"]
+custom_minimum_size = Vector2(104, 128)
+layout_mode = 2
+
+[node name="Page Buttons" type="Control" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer"]
+custom_minimum_size = Vector2(240, 128)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Page Buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Next Page Button" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 64
+text = "<"
+
+[node name="Next Page Button2" type="Button" parent="HBoxContainer/Menu Panel/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 64
@@ -201,3 +378,6 @@ texture = SubResource("ViewportTexture_xm8n6")
 script = ExtResource("3_fg84n")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu"]
+[connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Button2" to="." method="SwitchToToolOptionsMenu"]
