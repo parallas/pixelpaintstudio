@@ -139,6 +139,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Topbar" parent="Layout" instance=ExtResource("6_b65ll")]
+z_index = 1
 layout_mode = 2
 
 [node name="Center" type="MarginContainer" parent="Layout"]
@@ -171,8 +172,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 2199.02
-offset_bottom = 1244.0
+offset_right = 2227.46
+offset_bottom = 1260.0
 texture = SubResource("ImageTexture_b1beo")
 script = ExtResource("3_travt")
 _referenceControl = NodePath("..")
