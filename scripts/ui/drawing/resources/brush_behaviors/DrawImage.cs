@@ -13,6 +13,15 @@ public partial class DrawImage : BrushBehavior
     [Export] public Vector2 RandomAngleRange { get; set; }
     [Export] public Vector2 RandomScaleRange { get; set; } = Vector2.One;
 
+    private BrushUtils.ImageDataCache _imageDataCache;
+
+    public override void Process(BrushDefinition brushDefinition)
+    {
+        base.Process(brushDefinition);
+
+        _imageDataCache = BrushUtils.ImageDataCacher.CreateOrGet(Texture, _imageDataCache);
+    }
+
     public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
     {
         base.Draw(brushDefinition, canvasItem);
@@ -25,9 +34,8 @@ public partial class DrawImage : BrushBehavior
             ;
         canvasItem.DrawSetTransformMatrix(transform);
 
-        var texture = Texture;
-        // if (TintUsingColor) texture = BrushUtils.Colorize(Texture, brushDefinition.EvaluatedColor);
-        canvasItem.DrawTextureRect(texture, new Rect2(Vector2.Zero, Size), false, Colors.White);
+        BrushUtils.Colorize(_imageDataCache, brushDefinition.EvaluatedColor);
+        canvasItem.DrawTextureRect(_imageDataCache.ImageTexture, new Rect2(Vector2.Zero, Size), false, Colors.White);
 
         canvasItem.DrawSetTransformMatrix(Transform2D.Identity);
     }
