@@ -26,7 +26,7 @@ public partial class DrawImage : BrushBehavior
         canvasItem.DrawSetTransformMatrix(transform);
 
         var texture = Texture;
-        if (TintUsingColor) texture = BrushUtils.Colorize(Texture, brushDefinition.EvaluatedColor);
+        // if (TintUsingColor) texture = BrushUtils.Colorize(Texture, brushDefinition.EvaluatedColor);
         canvasItem.DrawTextureRect(texture, new Rect2(Vector2.Zero, Size), false, Colors.White);
 
         canvasItem.DrawSetTransformMatrix(Transform2D.Identity);
