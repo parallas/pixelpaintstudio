@@ -40,6 +40,7 @@ public partial class ToolbarButton : Button
         _modelRoot.AddChild(_model);
         _animationPlayer = _model.GetNode<AnimationPlayer>("AnimationPlayer");
         _animationPlayer.Play("RESET");
+        _animationPlayer.Advance(0);
     }
 
     public override void _Process(double delta)
