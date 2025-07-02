@@ -15,8 +15,6 @@ public partial class DrawImageBrush : BrushBehavior
 
     private Vector2 _lastPosition = Vector2.Zero;
 
-    private ulong _imageInstanceId;
-    private Dictionary<ulong, BrushUtils.ImageDataCache> _imageDataCaches;
     private BrushUtils.ImageDataCache _imageDataCache;
 
     public override void Initialize(Vector2 cursorPosition, Color cursorColor)
@@ -24,24 +22,18 @@ public partial class DrawImageBrush : BrushBehavior
         base.Initialize(cursorPosition, cursorColor);
 
         _lastPosition = -Vector2.Inf;
+    }
 
-        _imageDataCaches = new Dictionary<ulong, BrushUtils.ImageDataCache>();
+    public override void Process(BrushDefinition brushDefinition)
+    {
+        base.Process(brushDefinition);
+
+        _imageDataCache = BrushUtils.ImageDataCacher.CreateOrGet(Texture, _imageDataCache);
     }
 
     public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
     {
         base.Draw(brushDefinition, canvasItem);
-
-        var thisImageInstanceId = Texture.GetInstanceId();
-        if (!_imageDataCaches.ContainsKey(thisImageInstanceId))
-        {
-            _imageDataCaches.Add(thisImageInstanceId, BrushUtils.ImageDataCache.CreateFromTexture(Texture));
-        }
-        if (thisImageInstanceId != _imageInstanceId)
-        {
-            _imageInstanceId = thisImageInstanceId;
-            _imageDataCache = _imageDataCaches[thisImageInstanceId];
-        }
 
         BrushUtils.Colorize(_imageDataCache, brushDefinition.EvaluatedColor);
 

@@ -76,8 +76,30 @@ public static class BrushUtils
 
     public static class ImageDataCacher
     {
-        public static Dictionary<ulong, ImageDataCache> ImageDataCaches = new Dictionary<ulong, ImageDataCache>();
+        public static Dictionary<ulong, ImageDataCache> ImageDataCaches { get; private set; } = new Dictionary<ulong, ImageDataCache>();
 
+        private static ImageDataCache CacheImageData(Texture2D texture)
+        {
+            var key = texture.GetInstanceId();
+            var newData = ImageDataCache.CreateFromTexture(texture);
+            ImageDataCaches.Add(key, newData);
+            return newData;
+        }
+
+        public static ImageDataCache CreateOrGet(Texture2D texture, ImageDataCache? current = null)
+        {
+            var key = texture.GetInstanceId();
+            if (current.GetValueOrDefault() is var currentValue && currentValue.InstanceId == key)
+                return currentValue;
+            if (TryGet(key, out ImageDataCache cache)) return cache;
+            return CacheImageData(texture);
+        }
+
+        public static bool TryGet(ulong uniqueId, out ImageDataCache result)
+        {
+            if (ImageDataCaches.TryGetValue(uniqueId, out result)) return true;
+            return false;
+        }
     }
 
     #endregion
