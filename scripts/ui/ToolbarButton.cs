@@ -3,7 +3,7 @@ using System;
 using Parallas;
 
 [GlobalClass]
-public partial class ToolbarButton : Button
+public partial class ToolbarButton : VirtualCursorButton
 {
     [Signal] public delegate void OnToolSelectedEventHandler(ToolDefinition tool);
 
@@ -111,12 +111,10 @@ public partial class ToolbarButton : Button
         }
     }
 
-    public override void _Input(InputEvent @event)
+    protected override void VirtualCursorPressed(InputEventMouseButton eventMouseButton)
     {
-        base._Input(@event);
+        base.VirtualCursorPressed(eventMouseButton);
 
-        if (!IsHovered()) return;
-        if (!@event.IsActionPressed("click")) return;
         ToolState.SetTool(ToolDefinition);
         EmitSignalOnToolSelected(ToolDefinition);
     }

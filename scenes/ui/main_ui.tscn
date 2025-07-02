@@ -45,7 +45,7 @@ background_color = Color(1, 1, 1, 0)
 [sub_resource type="World3D" id="World3D_aa6wj"]
 environment = SubResource("Environment_oi40j")
 
-[node name="Main Editor" type="Control" node_paths=PackedStringArray("Toolbar", "Topbar", "GameCursor")]
+[node name="Main Editor" type="Control" node_paths=PackedStringArray("Toolbar", "Topbar", "GameCursors")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,7 +56,7 @@ script = ExtResource("1_46cp5")
 ToolState = SubResource("Resource_t0li6")
 Toolbar = NodePath("Layout/Toolbar")
 Topbar = NodePath("Layout/Topbar")
-GameCursor = NodePath("Game Cursor")
+GameCursors = [NodePath("Game Cursor"), NodePath("Game Cursor2")]
 
 [node name="Background" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -171,8 +171,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 2135.02
-offset_bottom = 1208.0
+offset_right = 66.0
+offset_bottom = 66.0
 texture = SubResource("ImageTexture_b1beo")
 script = ExtResource("3_travt")
 _referenceControl = NodePath("..")
@@ -220,5 +220,11 @@ layout_mode = 2
 
 [node name="Game Cursor" parent="." node_paths=PackedStringArray("TargetDrawCanvas", "CanvasRoot") instance=ExtResource("7_t0li6")]
 layout_mode = 0
+TargetDrawCanvas = NodePath("../Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas Viewport/Canvas")
+CanvasRoot = NodePath("../Layout/Center/AspectRatioContainer/Canvas Stuff/TextureRect")
+
+[node name="Game Cursor2" parent="." node_paths=PackedStringArray("TargetDrawCanvas", "CanvasRoot") instance=ExtResource("7_t0li6")]
+layout_mode = 0
+PlayerId = 1
 TargetDrawCanvas = NodePath("../Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas Viewport/Canvas")
 CanvasRoot = NodePath("../Layout/Center/AspectRatioContainer/Canvas Stuff/TextureRect")

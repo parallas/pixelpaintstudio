@@ -3,10 +3,9 @@ using Godot;
 using Godot.Collections;
 using Parallas;
 
-public partial class GameCursor : Control
+public partial class GameCursor : CenterContainer
 {
-    [Export] private float _baseSpeed = 128f;
-    [Export] private Vector2 _minMaxSpeedMultiplier = new Vector2(1, 5);
+    [Export] public int PlayerId { get; private set; } = 0;
     [Export] private Node3D _contentRoot3d;
 
     [Export] public ToolState ToolState { get; private set; }
@@ -15,7 +14,6 @@ public partial class GameCursor : Control
     [Export] public Control CanvasRoot;
 
     public bool IsHighlighted { get; private set; }
-    private float _cursorCurrentSpeed = 1f;
 
     private float _squashStretchAmount = 0f;
     private float _squashStretchVelocity = 0f;
@@ -25,6 +23,7 @@ public partial class GameCursor : Control
     private AnimationPlayer _currentAnimationPlayer;
 
     private bool _clickHeld = false;
+    private Vector2 _moveAmount = Vector2.Zero;
 
     public override void _Ready()
     {
@@ -39,20 +38,10 @@ public partial class GameCursor : Control
         MathUtil.Spring(ref _squashStretchAmount, ref _squashStretchVelocity, 0f, 0.2f, 20f, (float)delta);
         Scale = MathUtil.SquashScale(1f + _squashStretchAmount).ToVector2();
 
-        Vector2 newPos = Position;
-        Vector2 moveAmount = Input.GetVector(
-            "cursor_left",
-            "cursor_right",
-            "cursor_up",
-            "cursor_down"
-        ).Clamp(-1f, 1f);
-        if (moveAmount.LengthSquared() > 0)
-            _cursorCurrentSpeed = MathUtil.ExpDecay(_cursorCurrentSpeed, _minMaxSpeedMultiplier.Y, 1f, (float)delta);
-        else
-            _cursorCurrentSpeed = _minMaxSpeedMultiplier.X;
-        newPos += moveAmount * _baseSpeed * _cursorCurrentSpeed * (float)delta;
-        newPos = newPos.Clamp(Vector2.Zero, GetViewportRect().Size);
-        SetPosition(newPos);
+        if (PlayerDeviceMapper.TryGetPlayerDeviceMap(PlayerId, out PlayerDeviceMap deviceMap))
+        {
+            Position = deviceMap.MousePosition;
+        }
 
         if (Input.IsKeyPressed(Key.Escape)) Input.SetMouseMode(Input.MouseModeEnum.Visible);
         if (Input.IsMouseButtonPressed(MouseButton.Left)) Input.SetMouseMode(Input.MouseModeEnum.Hidden);
@@ -68,27 +57,23 @@ public partial class GameCursor : Control
     public override void _Input(InputEvent @event)
     {
         base._Input(@event);
+        if (!PlayerDeviceMapper.IsInputFromPlayer(@event, PlayerId)) return;
+
         InputFixer.UpdateInput(@event);
 
-        if (@event is InputEventJoypadMotion joypadMotion || @event is InputEventJoypadButton joypadButton)
+        if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left } mouseButtonEvent)
         {
-            Input.ParseInputEvent(new InputEventMouseMotion() { Position = Position });
-        }
-        if (@event is InputEventMouseMotion mouseEvent)
-        {
-            SetPosition(mouseEvent.Position, true);
-        }
-
-        if (@event.IsActionPressed("click"))
-        {
-            _clickHeld = true;
-            _squashStretchAmount += 0.2f;
-            ToolState?.ToolDefinition.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor, 0);
-        }
-        if (@event.IsActionReleased("click"))
-        {
-            _clickHeld = false;
-            ToolState?.ToolDefinition.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor, 0);
+            if (mouseButtonEvent.IsPressed())
+            {
+                _clickHeld = true;
+                _squashStretchAmount += 0.2f;
+                ToolState?.ToolDefinition.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor, 0);
+            }
+            if (mouseButtonEvent.IsReleased())
+            {
+                _clickHeld = false;
+                ToolState?.ToolDefinition.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor, 0);
+            }
         }
     }
 
