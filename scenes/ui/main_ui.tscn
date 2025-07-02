@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dikgniiqb312x" path="res://scenes/ui/topbar.tscn" id="6_b65ll"]
 [ext_resource type="PackedScene" uid="uid://bvjmrg7av4u7l" path="res://scenes/ui/game_cursor.tscn" id="7_t0li6"]
 [ext_resource type="Material" uid="uid://d4jyrw3g2qr1l" path="res://materials/brush_mix.tres" id="8_oi40j"]
-[ext_resource type="Resource" uid="uid://doi7aq6mlanfb" path="res://brushes/brush_pen_medium.tres" id="9_yc0ux"]
+[ext_resource type="Resource" uid="uid://doi7aq6mlanfb" path="res://drawing_resources/brushes/brush_pen_medium.tres" id="9_yc0ux"]
 
 [sub_resource type="Resource" id="Resource_t0li6"]
 script = ExtResource("2_b1beo")

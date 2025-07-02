@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ToolDefinition" load_steps=3 format=3 uid="uid://daf3kkfx85q8e"]
+
+[ext_resource type="PackedScene" uid="uid://b0oebfbxvgkam" path="res://models/tools/tool_sponge.glb" id="1_tah1y"]
+[ext_resource type="Script" uid="uid://iid6uckh4k5i" path="res://scripts/resources/ToolDefinition.cs" id="2_d6vpv"]
+
+[resource]
+script = ExtResource("2_d6vpv")
+ModelScene = ExtResource("1_tah1y")
+metadata/_custom_type_script = "uid://iid6uckh4k5i"

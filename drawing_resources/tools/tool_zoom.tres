@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ToolDefinition" load_steps=3 format=3 uid="uid://y88bren8gajp"]
+
+[ext_resource type="PackedScene" uid="uid://bpdxvrtexr571" path="res://models/tools/tool_zoom.glb" id="1_0tr65"]
+[ext_resource type="Script" uid="uid://iid6uckh4k5i" path="res://scripts/resources/ToolDefinition.cs" id="2_rqqoj"]
+
+[resource]
+script = ExtResource("2_rqqoj")
+ModelScene = ExtResource("1_0tr65")
+metadata/_custom_type_script = "uid://iid6uckh4k5i"

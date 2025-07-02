@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ToolDefinition" load_steps=4 format=3 uid="uid://bjdlfscp6y1c0"]
+
+[ext_resource type="Resource" uid="uid://doi7aq6mlanfb" path="res://drawing_resources/brushes/brush_pen_medium.tres" id="1_ytkhq"]
+[ext_resource type="PackedScene" uid="uid://ywayhrhgys52" path="res://models/tools/tool_marker_medium.glb" id="2_4jbfv"]
+[ext_resource type="Script" uid="uid://iid6uckh4k5i" path="res://scripts/resources/ToolDefinition.cs" id="3_vybep"]
+
+[resource]
+script = ExtResource("3_vybep")
+BrushDefinition = ExtResource("1_ytkhq")
+ModelScene = ExtResource("2_4jbfv")
+metadata/_custom_type_script = "uid://iid6uckh4k5i"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ToolDefinition" load_steps=3 format=3 uid="uid://dgfv6qtsjquq7"]
+
+[ext_resource type="PackedScene" uid="uid://dka8oduueknq8" path="res://models/tools/tool_bubble.glb" id="1_kxdor"]
+[ext_resource type="Script" uid="uid://iid6uckh4k5i" path="res://scripts/resources/ToolDefinition.cs" id="3_6v2cs"]
+
+[resource]
+script = ExtResource("3_6v2cs")
+ModelScene = ExtResource("1_kxdor")
+metadata/_custom_type_script = "uid://iid6uckh4k5i"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ToolDefinition" load_steps=4 format=3 uid="uid://b27d33d7e8bw"]
+
+[ext_resource type="Resource" uid="uid://btxag5m8sl4tr" path="res://drawing_resources/brushes/brush_christmaslights.tres" id="1_4fokr"]
+[ext_resource type="PackedScene" uid="uid://c5lwyosp4q0kg" path="res://models/tools/tool_wand.glb" id="2_3ynvp"]
+[ext_resource type="Script" uid="uid://iid6uckh4k5i" path="res://scripts/resources/ToolDefinition.cs" id="3_wsw83"]
+
+[resource]
+script = ExtResource("3_wsw83")
+BrushDefinition = ExtResource("1_4fokr")
+ModelScene = ExtResource("2_3ynvp")
+metadata/_custom_type_script = "uid://iid6uckh4k5i"
