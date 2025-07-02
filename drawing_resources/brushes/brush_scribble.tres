@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=10 format=3 uid="uid://eskiul5aq8wf"]
+
+[ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_rkuwu"]
+[ext_resource type="Script" uid="uid://ch5fau1pmecjr" path="res://scripts/ui/drawing/resources/brush_behaviors/OffsetScribble.cs" id="2_yad3m"]
+[ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="3_ojodb"]
+[ext_resource type="Script" uid="uid://c5caugpc02fc2" path="res://scripts/ui/drawing/resources/brush_behaviors/BasicDraw.cs" id="4_rkuwu"]
+[ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="6_dsmge"]
+
+[sub_resource type="Resource" id="Resource_mhy3e"]
+script = ExtResource("1_rkuwu")
+metadata/_custom_type_script = "uid://cmv66q4eh60qf"
+
+[sub_resource type="Resource" id="Resource_asqja"]
+script = ExtResource("2_yad3m")
+Radius = 16.0
+UseEvaluatedDirection = true
+metadata/_custom_type_script = "uid://ch5fau1pmecjr"
+
+[sub_resource type="Resource" id="Resource_cj32i"]
+script = ExtResource("3_ojodb")
+metadata/_custom_type_script = "uid://ctwr7tpgocsul"
+
+[sub_resource type="Resource" id="Resource_ojodb"]
+script = ExtResource("4_rkuwu")
+Radius = 1.0
+metadata/_custom_type_script = "uid://c5caugpc02fc2"
+
+[resource]
+script = ExtResource("6_dsmge")
+Name = "Christmas Lights"
+Behaviors = Array[Object]([SubResource("Resource_mhy3e"), SubResource("Resource_asqja"), SubResource("Resource_cj32i"), SubResource("Resource_ojodb")])
+StartBehaviors = null
+FinishBehaviors = null
+metadata/_custom_type_script = "uid://wqjbvlsij6wj"

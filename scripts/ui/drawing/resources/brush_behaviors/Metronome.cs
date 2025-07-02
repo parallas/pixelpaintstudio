@@ -9,9 +9,9 @@ public partial class Metronome : BrushBehavior
     private float _lastTriggerTime = 0f;
     private bool _triggered = false;
 
-    public override void Process(BrushDefinition brushDefinition)
+    public override void Process(BrushDefinition brushDefinition, double delta)
     {
-        base.Process(brushDefinition);
+        base.Process(brushDefinition, delta);
 
         if (_triggered) return;
         if (brushDefinition.DrawingTime - _lastTriggerTime > Interval)

@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=9 format=3 uid="uid://cas86clwqh8d8"]
+
+[ext_resource type="Script" uid="uid://beh8dtjiumggc" path="res://scripts/ui/drawing/resources/brush_behaviors/SpringToCursor.cs" id="1_3mpqm"]
+[ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_5a71b"]
+[ext_resource type="Texture2D" uid="uid://mdc7jwpl37gv" path="res://textures/glob.png" id="3_7qajg"]
+[ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="4_00ker"]
+[ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="5_mlred"]
+
+[sub_resource type="Resource" id="Resource_5a71b"]
+script = ExtResource("1_3mpqm")
+_dampingRatio = 0.2
+_frequency = 5.0
+metadata/_custom_type_script = "uid://beh8dtjiumggc"
+
+[sub_resource type="Resource" id="Resource_cj32i"]
+script = ExtResource("2_5a71b")
+metadata/_custom_type_script = "uid://ctwr7tpgocsul"
+
+[sub_resource type="Resource" id="Resource_goqy0"]
+script = ExtResource("4_00ker")
+Texture = ExtResource("3_7qajg")
+SizeOverride = Vector2(64, 64)
+TintUsingColor = true
+FillGapsBetweenDraws = true
+RandomAngleRange = Vector2(0, 0)
+RandomScaleRange = Vector2(1, 1)
+metadata/_custom_type_script = "uid://drcqrruwqhh3q"
+
+[resource]
+script = ExtResource("5_mlred")
+Name = "Christmas Lights"
+Behaviors = Array[Object]([SubResource("Resource_5a71b"), SubResource("Resource_cj32i"), SubResource("Resource_goqy0")])
+StartBehaviors = null
+FinishBehaviors = null
+metadata/_custom_type_script = "uid://wqjbvlsij6wj"

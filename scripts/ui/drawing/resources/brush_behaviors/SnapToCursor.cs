@@ -4,9 +4,9 @@ using System;
 [GlobalClass]
 public partial class SnapToCursor : BrushBehavior
 {
-    public override void Process(BrushDefinition brushDefinition)
+    public override void Process(BrushDefinition brushDefinition, double delta)
     {
-        base.Process(brushDefinition);
+        base.Process(brushDefinition, delta);
 
         brushDefinition.EvaluatedPosition = brushDefinition.CursorPosition;
     }

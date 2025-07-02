@@ -83,12 +83,12 @@ public partial class GameCursor : Control
         {
             _clickHeld = true;
             _squashStretchAmount += 0.2f;
-            ToolState?.ToolDefinition.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor);
+            ToolState?.ToolDefinition.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor, 0);
         }
         if (@event.IsActionReleased("click"))
         {
             _clickHeld = false;
-            ToolState?.ToolDefinition.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor);
+            ToolState?.ToolDefinition.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor, 0);
         }
     }
 

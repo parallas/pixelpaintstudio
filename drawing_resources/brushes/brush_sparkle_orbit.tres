@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=11 format=3 uid="uid://ccfc6mthnew5q"]
+
+[ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_cwpcv"]
+[ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_cwpcv"]
+[ext_resource type="Script" uid="uid://0qd7dwd56ck5" path="res://scripts/ui/drawing/resources/brush_behaviors/OffsetRandomRadius.cs" id="3_cwpcv"]
+[ext_resource type="Script" uid="uid://c884dpjmfme40" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImage.cs" id="3_rsj5p"]
+[ext_resource type="Texture2D" uid="uid://b7iypcajly1qt" path="res://textures/star.png" id="3_tb5ir"]
+[ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="5_cjn3m"]
+
+[sub_resource type="Resource" id="Resource_mhy3e"]
+script = ExtResource("1_cwpcv")
+metadata/_custom_type_script = "uid://cmv66q4eh60qf"
+
+[sub_resource type="Resource" id="Resource_7iq2r"]
+script = ExtResource("3_cwpcv")
+InnerRadius = 0.0
+OuterRadius = 16.0
+metadata/_custom_type_script = "uid://0qd7dwd56ck5"
+
+[sub_resource type="Resource" id="Resource_cj32i"]
+script = ExtResource("2_cwpcv")
+metadata/_custom_type_script = "uid://ctwr7tpgocsul"
+
+[sub_resource type="Resource" id="Resource_tb5ir"]
+script = ExtResource("3_rsj5p")
+Textures = Array[Texture2D]([ExtResource("3_tb5ir")])
+Size = Vector2(16, 16)
+Offset = Vector2(-8, -8)
+TintUsingColor = true
+RandomAngleRange = Vector2(-180, 180)
+RandomScaleRange = Vector2(0.2, 1)
+metadata/_custom_type_script = "uid://c884dpjmfme40"
+
+[resource]
+script = ExtResource("5_cjn3m")
+Name = "Christmas Lights"
+Behaviors = Array[Object]([SubResource("Resource_mhy3e"), SubResource("Resource_7iq2r"), SubResource("Resource_cj32i"), SubResource("Resource_tb5ir")])
+StartBehaviors = null
+FinishBehaviors = null
+metadata/_custom_type_script = "uid://wqjbvlsij6wj"

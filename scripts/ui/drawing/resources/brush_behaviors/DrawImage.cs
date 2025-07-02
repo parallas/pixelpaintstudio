@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 [GlobalClass]
 public partial class DrawImage : BrushBehavior
 {
-    [Export] public Texture2D Texture { get; set; }
+    [Export] public Array<Texture2D> Textures { get; set; }
     [Export] public Vector2 Size { get; set; }
     [Export] public Vector2 Offset { get; set; }
     [Export] public bool TintUsingColor { get; set; }
@@ -15,11 +16,12 @@ public partial class DrawImage : BrushBehavior
 
     private BrushUtils.ImageDataCache _imageDataCache;
 
-    public override void Process(BrushDefinition brushDefinition)
+    public override void Process(BrushDefinition brushDefinition, double delta)
     {
-        base.Process(brushDefinition);
+        base.Process(brushDefinition, delta);
 
-        _imageDataCache = BrushUtils.ImageDataCacher.CreateOrGet(Texture, _imageDataCache);
+        _imageDataCache =
+            BrushUtils.ImageDataCacher.CreateOrGet(Textures[GD.RandRange(0, Textures.Count)], _imageDataCache);
     }
 
     public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
@@ -34,7 +36,7 @@ public partial class DrawImage : BrushBehavior
             ;
         canvasItem.DrawSetTransformMatrix(transform);
 
-        BrushUtils.Colorize(_imageDataCache, brushDefinition.EvaluatedColor);
+        if (TintUsingColor) BrushUtils.Colorize(_imageDataCache, brushDefinition.EvaluatedColor);
         canvasItem.DrawTextureRect(_imageDataCache.ImageTexture, new Rect2(Vector2.Zero, Size), false, Colors.White);
 
         canvasItem.DrawSetTransformMatrix(Transform2D.Identity);

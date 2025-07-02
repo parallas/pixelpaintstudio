@@ -34,7 +34,7 @@ public partial class BrushDefinition : Resource
         CanvasItem.Draw -= Draw;
     }
 
-    public void Start(CanvasItem canvasItem, Vector2 cursorPosition, Color cursorColor)
+    public void Start(CanvasItem canvasItem, Vector2 cursorPosition, Color cursorColor, double delta)
     {
         DrawState = DrawStates.Start;
         CursorColor = cursorColor;
@@ -63,14 +63,14 @@ public partial class BrushDefinition : Resource
         // Run behavior logic
         foreach (var brushBehavior in StartBehaviors)
         {
-            brushBehavior.Process(this);
+            brushBehavior.Process(this, delta);
             if (!brushBehavior.CanContinueProcess(this)) break;
         }
 
         CanvasItem?.QueueRedraw();
     }
 
-    public void Process(Vector2 cursorPosition, Color cursorColor, double deltaTime)
+    public void Process(Vector2 cursorPosition, Color cursorColor, double delta)
     {
         CursorPosition = cursorPosition;
         CursorColor = cursorColor;
@@ -78,16 +78,16 @@ public partial class BrushDefinition : Resource
         // Run behavior logic
         foreach (var brushBehavior in Behaviors)
         {
-            brushBehavior.Process(this);
+            brushBehavior.Process(this, delta);
             if (!brushBehavior.CanContinueProcess(this)) break;
         }
 
         CanvasItem?.QueueRedraw();
 
-        DrawingTime += (float)deltaTime;
+        DrawingTime += (float)delta;
     }
 
-    public void Finish(Vector2 cursorPosition, Color cursorColor)
+    public void Finish(Vector2 cursorPosition, Color cursorColor, double delta)
     {
         DrawState = DrawStates.Finish;
         CursorPosition = cursorPosition;
@@ -96,7 +96,7 @@ public partial class BrushDefinition : Resource
         // Run behavior logic
         foreach (var brushBehavior in FinishBehaviors)
         {
-            brushBehavior.Process(this);
+            brushBehavior.Process(this, delta);
             if (!brushBehavior.CanContinueProcess(this)) break;
         }
 

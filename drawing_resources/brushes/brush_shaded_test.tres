@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="3_mqqvn"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="8_266s0"]
 
-[sub_resource type="Resource" id="Resource_m82f4"]
+[sub_resource type="Resource" id="Resource_5mx1t"]
 script = ExtResource("1_g62dg")
 metadata/_custom_type_script = "uid://cmv66q4eh60qf"
 
@@ -26,8 +26,8 @@ metadata/_custom_type_script = "uid://drcqrruwqhh3q"
 
 [resource]
 script = ExtResource("8_266s0")
-Name = "Christmas Lights"
-Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_cj32i"), SubResource("Resource_goqy0")])
+Name = "Spring Test"
+Behaviors = Array[Object]([SubResource("Resource_5mx1t"), SubResource("Resource_cj32i"), SubResource("Resource_goqy0")])
 StartBehaviors = null
 FinishBehaviors = null
 metadata/_custom_type_script = "uid://wqjbvlsij6wj"

@@ -48,7 +48,7 @@ metadata/_custom_type_script = "uid://dtfcaotk1gw1y"
 
 [sub_resource type="Resource" id="Resource_jnkqf"]
 script = ExtResource("6_r4vfi")
-Texture = ExtResource("6_lssp1")
+Textures = Array[Texture2D]([ExtResource("6_lssp1")])
 Size = Vector2(40, 40)
 Offset = Vector2(-20, 0)
 TintUsingColor = true

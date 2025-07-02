@@ -24,9 +24,9 @@ public partial class DrawImageBrush : BrushBehavior
         _lastPosition = -Vector2.Inf;
     }
 
-    public override void Process(BrushDefinition brushDefinition)
+    public override void Process(BrushDefinition brushDefinition, double delta)
     {
-        base.Process(brushDefinition);
+        base.Process(brushDefinition, delta);
 
         _imageDataCache = BrushUtils.ImageDataCacher.CreateOrGet(Texture, _imageDataCache);
     }
