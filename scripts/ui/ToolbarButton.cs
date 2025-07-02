@@ -5,14 +5,14 @@ using Parallas;
 [GlobalClass]
 public partial class ToolbarButton : Button
 {
-    [Signal] public delegate void OnToolSelectedEventHandler(ToolState.DrawingTools tool);
+    [Signal] public delegate void OnToolSelectedEventHandler(ToolDefinition tool);
 
     [Export] public ToolState ToolState;
-    [Export] public ToolState.DrawingTools Tool { get; private set; }
-    [Export] private Control VisualRoot;
-    [Export] private Node3D Model;
+    [Export] public ToolDefinition ToolDefinition { get; private set; }
+    [Export] private Control _visualRoot;
+    [Export] private Node3D _modelRoot;
 
-    [Export] public BrushDefinition BrushDefinition { get; private set; }
+    private Node3D _model;
 
     private AnimationPlayer _animationPlayer;
     private float _hoverTime = 0;
@@ -26,17 +26,19 @@ public partial class ToolbarButton : Button
     private float _tabLiftTarget = 0f;
     private float _tabLiftVelocity = 0f;
 
-    private bool IsSelected => ToolState.DrawingTool == Tool;
+    private bool IsSelected => ToolState.ToolDefinition == ToolDefinition;
 
     public override void _Ready()
     {
         base._Ready();
 
-        VisualRoot.Material = null;
-        VisualRoot.UseParentMaterial = true;
-        VisualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
+        _visualRoot.Material = null;
+        _visualRoot.UseParentMaterial = true;
+        _visualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
-        _animationPlayer = Model.GetNode<AnimationPlayer>("AnimationPlayer");
+        _model = ToolDefinition.ModelScene.Instantiate<Node3D>();
+        _modelRoot.AddChild(_model);
+        _animationPlayer = _model.GetNode<AnimationPlayer>("AnimationPlayer");
         _animationPlayer.Play("RESET");
     }
 
@@ -46,7 +48,7 @@ public partial class ToolbarButton : Button
 
         if ((IsHovered() || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
         if ((!IsHovered() && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
-        VisualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
+        _visualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
         MathUtil.Spring(
             ref _squashStretchAmount,
@@ -77,9 +79,9 @@ public partial class ToolbarButton : Button
 
         _squashStretchScale = MathUtil.SquashScale(1f + _squashStretchAmount).ToVector2();
 
-        VisualRoot.Scale = _hoverScale * _squashStretchScale;
-        Model?.SetQuaternion(MathUtil.ExpDecay(
-            Model.Quaternion,
+        _visualRoot.Scale = _hoverScale * _squashStretchScale;
+        _model?.SetQuaternion(MathUtil.ExpDecay(
+            _model.Quaternion,
             Quaternion.FromEuler(new Vector3(0f, _hoverTime * 2f, 0f)),
             16f,
             (float)delta
@@ -114,9 +116,7 @@ public partial class ToolbarButton : Button
 
         if (!IsHovered()) return;
         if (!@event.IsActionPressed("click")) return;
-        ToolState.SetDrawingTool(Tool);
-        EmitSignalOnToolSelected(Tool);
-
-        if (BrushDefinition is not null) ToolState.SetBrush(BrushDefinition);
+        ToolState.SetTool(ToolDefinition);
+        EmitSignalOnToolSelected(ToolDefinition);
     }
 }

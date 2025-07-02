@@ -8,15 +8,6 @@ public partial class GameCursor : Control
     [Export] private float _baseSpeed = 128f;
     [Export] private Vector2 _minMaxSpeedMultiplier = new Vector2(1, 5);
     [Export] private Node3D _contentRoot3d;
-    [Export] private Node3D _iconToolPenSmall;
-    [Export] private Node3D _iconToolPenMedium;
-    [Export] private Node3D _iconToolPenLarge;
-    [Export] private Node3D _iconToolBubble;
-    [Export] private Node3D _iconToolSponge;
-    [Export] private Node3D _iconToolStamp;
-    [Export] private Node3D _iconToolSticker;
-    [Export] private Node3D _iconToolWand;
-    [Export] private Node3D _iconToolZoom;
 
     [Export] public ToolState ToolState { get; private set; }
 
@@ -29,9 +20,8 @@ public partial class GameCursor : Control
     private float _squashStretchAmount = 0f;
     private float _squashStretchVelocity = 0f;
 
-    private Array<Node> _contents3d;
     private String _currentIconName;
-    private Dictionary<String, AnimationPlayer> _animationPlayers = new();
+    private Node3D _currentIconNode;
     private AnimationPlayer _currentAnimationPlayer;
 
     private bool _clickHeld = false;
@@ -42,17 +32,6 @@ public partial class GameCursor : Control
 
         Input.SetMouseMode(Input.MouseModeEnum.Hidden);
         Godot.Engine.MaxFps = 120;
-
-        _contents3d = _contentRoot3d.GetChildren();
-        foreach (var node in _contents3d)
-        {
-            if (node.FindChild("AnimationPlayer") is not AnimationPlayer animationPlayer) continue;
-            _animationPlayers.Add(node.Name, animationPlayer);
-
-            if (!animationPlayer.HasAnimation("Cursor")) continue;
-            animationPlayer.Play("Cursor");
-        }
-        HideAllObjects();
     }
 
     public override void _Process(double delta)
@@ -80,7 +59,7 @@ public partial class GameCursor : Control
 
         if (_clickHeld)
         {
-            ToolState?.BrushDefinition?.Process(GetCanvasPosition(), ToolState.BrushColor, delta);
+            ToolState?.ToolDefinition.BrushDefinition?.Process(GetCanvasPosition(), ToolState.BrushColor, delta);
             if (_currentAnimationPlayer?.CurrentAnimation != "Cursor")
                 _currentAnimationPlayer?.Play("Cursor");
         }
@@ -104,20 +83,20 @@ public partial class GameCursor : Control
         {
             _clickHeld = true;
             _squashStretchAmount += 0.2f;
-            ToolState?.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor);
+            ToolState?.ToolDefinition.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor);
         }
         if (@event.IsActionReleased("click"))
         {
             _clickHeld = false;
-            ToolState?.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor);
+            ToolState?.ToolDefinition.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor);
         }
     }
 
     public void SetToolState(ToolState toolState)
     {
-        if (ToolState is not null) ToolState.DrawingToolChanged -= ReactToDrawingToolChange;
+        if (ToolState is not null) ToolState.ToolChanged -= ReactToDrawingToolChange;
         ToolState = toolState;
-        toolState.DrawingToolChanged += ReactToDrawingToolChange;
+        toolState.ToolChanged += ReactToDrawingToolChange;
         UpdateIcon();
     }
 
@@ -138,69 +117,36 @@ public partial class GameCursor : Control
         }
     }
 
-    private void HideAllObjects()
-    {
-        foreach (var child in _contents3d)
-        {
-            if (child is not Node3D node3d) continue;
-            node3d.SetVisible(false);
-        }
-    }
-
     private Node3D GetIconNode()
     {
-        switch (ToolState.DrawingTool)
-        {
-            case ToolState.DrawingTools.PenSmall:
-                return _iconToolPenSmall;
-            case ToolState.DrawingTools.PenMedium:
-                return _iconToolPenMedium;
-            case ToolState.DrawingTools.PenLarge:
-                return _iconToolPenLarge;
-            case ToolState.DrawingTools.BubbleWand:
-                return _iconToolBubble;
-            case ToolState.DrawingTools.Sponge:
-                return _iconToolSponge;
-            case ToolState.DrawingTools.Stamp:
-                return _iconToolStamp;
-            case ToolState.DrawingTools.Sticker:
-                return _iconToolSticker;
-            case ToolState.DrawingTools.Wand:
-                return _iconToolWand;
-            case ToolState.DrawingTools.Zoom:
-                return _iconToolZoom;
-        }
-
-        return null;
+        return ToolState.ToolDefinition.ModelScene.Instantiate<Node3D>();
     }
 
     private void UpdateIcon()
     {
+        if (IsInstanceValid(_currentIconNode)) _currentIconNode.QueueFree();
         var toolIconNode = GetIconNode();
-        if (toolIconNode is null) return;
-        if (toolIconNode.Name == _currentIconName) return;
+        _contentRoot3d.AddChild(toolIconNode);
+        _currentIconNode = toolIconNode;
 
-        HideAllObjects();
-        if (_animationPlayers.TryGetValue(toolIconNode.Name, out var animationPlayer))
-        {
-            _currentAnimationPlayer = animationPlayer;
-            animationPlayer.Play("Cursor");
-        }
-        toolIconNode.SetVisible(true);
+        _currentAnimationPlayer = toolIconNode.FindChild("AnimationPlayer") as AnimationPlayer;
+        if (_currentAnimationPlayer is not null && _currentAnimationPlayer.HasAnimation("Cursor"))
+            _currentAnimationPlayer?.Play("Cursor");
+        _currentAnimationPlayer?.Advance(0);
+
         _squashStretchAmount = 0.25f;
     }
 
-    private void ReactToDrawingToolChange(ToolState.DrawingTools drawingTool)
+    private void ReactToDrawingToolChange(ToolDefinition tool)
     {
         UpdateIcon();
     }
 
     private Vector2 GetCanvasPosition()
     {
-        Vector2 finalValue = Vector2.Zero;
         if (TargetDrawCanvas.GetViewport().GetParent() is SubViewportContainer)
         {
-            finalValue = TargetDrawCanvas.GetScreenTransform().AffineInverse().BasisXform(
+            var finalValue = TargetDrawCanvas.GetScreenTransform().AffineInverse().BasisXform(
                 GlobalPosition - TargetDrawCanvas.GetScreenPosition()
             );
             return finalValue;

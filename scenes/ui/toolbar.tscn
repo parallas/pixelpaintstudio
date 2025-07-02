@@ -1,24 +1,20 @@
-[gd_scene load_steps=31 format=3 uid="uid://3i8sakgujhkd"]
+[gd_scene load_steps=27 format=3 uid="uid://3i8sakgujhkd"]
 
 [ext_resource type="Script" uid="uid://ciiyfrdjg73jx" path="res://scripts/ui/Toolbar.cs" id="1_cicof"]
 [ext_resource type="PackedScene" uid="uid://bb27qsdfplrcs" path="res://scenes/ui/tool_button.tscn" id="1_ieq13"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_7r4a7"]
-[ext_resource type="PackedScene" uid="uid://c5khalp47htu0" path="res://models/tools/tool_marker_small.glb" id="3_pr1jq"]
-[ext_resource type="Resource" uid="uid://bivnpqp3qo50n" path="res://drawing_resources/brushes/brush_pen_small.tres" id="4_f0xeq"]
-[ext_resource type="PackedScene" uid="uid://dktkhomrfbvxd" path="res://models/tools/tool_marker_big.glb" id="4_j4jut"]
-[ext_resource type="PackedScene" uid="uid://ywayhrhgys52" path="res://models/tools/tool_marker_medium.glb" id="5_7r4a7"]
-[ext_resource type="PackedScene" uid="uid://b5lhqngmc12e5" path="res://models/tools/tool_stamp.glb" id="6_7r4a7"]
-[ext_resource type="Resource" uid="uid://doi7aq6mlanfb" path="res://drawing_resources/brushes/brush_pen_medium.tres" id="7_71qqi"]
-[ext_resource type="PackedScene" uid="uid://dka8oduueknq8" path="res://models/tools/tool_bubble.glb" id="7_lcige"]
-[ext_resource type="PackedScene" uid="uid://bpdxvrtexr571" path="res://models/tools/tool_zoom.glb" id="7_pr1jq"]
-[ext_resource type="PackedScene" uid="uid://c385xiljxr1wj" path="res://models/tools/tool_sticker.glb" id="8_ne8ky"]
-[ext_resource type="PackedScene" uid="uid://b0oebfbxvgkam" path="res://models/tools/tool_sponge.glb" id="9_725x6"]
-[ext_resource type="Resource" uid="uid://d4b71w5paugyf" path="res://drawing_resources/brushes/brush_pen_large.tres" id="9_m5qa8"]
+[ext_resource type="Resource" uid="uid://cycjlc7a1giig" path="res://drawing_resources/tools/tool_pen_small.tres" id="4_4dr0l"]
+[ext_resource type="Resource" uid="uid://bjdlfscp6y1c0" path="res://drawing_resources/tools/tool_pen_medium.tres" id="7_mbflq"]
+[ext_resource type="Resource" uid="uid://bp610a2qspe5x" path="res://drawing_resources/tools/tool_pen_large.tres" id="9_kceen"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="9_ukw8a"]
-[ext_resource type="PackedScene" uid="uid://c5lwyosp4q0kg" path="res://models/tools/tool_wand.glb" id="15_vhrfc"]
-[ext_resource type="Resource" uid="uid://btxag5m8sl4tr" path="res://drawing_resources/brushes/brush_christmaslights.tres" id="15_wmx1g"]
+[ext_resource type="Resource" uid="uid://dgfv6qtsjquq7" path="res://drawing_resources/tools/tool_bubble.tres" id="11_idg7t"]
+[ext_resource type="Resource" uid="uid://rbqke8dy2k8" path="res://drawing_resources/tools/tool_sponge.tres" id="13_d043o"]
+[ext_resource type="Resource" uid="uid://daf3kkfx85q8e" path="res://drawing_resources/tools/tool_stamp.tres" id="15_ks7f1"]
+[ext_resource type="Resource" uid="uid://7pry6uurysp4" path="res://drawing_resources/tools/tool_sticker.tres" id="17_2d5xk"]
+[ext_resource type="Resource" uid="uid://b27d33d7e8bw" path="res://drawing_resources/tools/tool_wand.tres" id="19_aai5f"]
+[ext_resource type="Resource" uid="uid://y88bren8gajp" path="res://drawing_resources/tools/tool_zoom.tres" id="21_mbflq"]
 
-[sub_resource type="Image" id="Image_wmx1g"]
+[sub_resource type="Image" id="Image_f0xeq"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -28,9 +24,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_lcige"]
-image = SubResource("Image_wmx1g")
+image = SubResource("Image_f0xeq")
 
-[sub_resource type="Image" id="Image_lnpyt"]
+[sub_resource type="Image" id="Image_71qqi"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -40,33 +36,33 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_cicof"]
-image = SubResource("Image_lnpyt")
+image = SubResource("Image_71qqi")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_i1qcg"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_m5qa8"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_vhrfc"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Medium/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_4dr0l"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_wmx1g"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_mbflq"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_lnpyt"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Bubble/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_kceen"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_i1qcg"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_idg7t"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_d043o"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_4dr0l"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Sticker/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ks7f1"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_mbflq"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_2d5xk"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_kceen"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport")
 
 [node name="Toolbar" type="MarginContainer" node_paths=PackedStringArray("ToolbarButtons")]
@@ -210,11 +206,11 @@ custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Pen Small" parent="Item Bar/MarginContainer/Items/Pens" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Pen Small" parent="Item Bar/MarginContainer/Items/Pens" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_small")
-BrushDefinition = ExtResource("4_f0xeq")
+ToolDefinition = ExtResource("4_4dr0l")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Root")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Pens/Pen Small"]
 use_parent_material = true
@@ -232,8 +228,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_marker_small" parent="Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2/SubViewport" instance=ExtResource("3_pr1jq")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -241,22 +235,23 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Root" type="Node3D" parent="Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_i1qcg")
+texture = SubResource("ViewportTexture_m5qa8")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Pen Medium" parent="Item Bar/MarginContainer/Items/Pens" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Pen Medium" parent="Item Bar/MarginContainer/Items/Pens" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 1
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_medium")
-BrushDefinition = ExtResource("7_71qqi")
+ToolDefinition = ExtResource("7_mbflq")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Pens/Pen Medium"]
 use_parent_material = true
@@ -272,8 +267,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_marker_medium" parent="Item Bar/MarginContainer/Items/Pens/Pen Medium/SubViewportContainer2/SubViewport" instance=ExtResource("5_7r4a7")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Pens/Pen Medium/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -281,22 +274,23 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Pens/Pen Medium/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Pens/Pen Medium/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_ljjj3")
+texture = SubResource("ViewportTexture_vhrfc")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Pen Large" parent="Item Bar/MarginContainer/Items/Pens" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Pen Large" parent="Item Bar/MarginContainer/Items/Pens" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 2
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_marker_big")
-BrushDefinition = ExtResource("9_m5qa8")
+ToolDefinition = ExtResource("9_kceen")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Pens/Pen Large"]
 use_parent_material = true
@@ -312,8 +306,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_marker_big" parent="Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewportContainer2/SubViewport" instance=ExtResource("4_j4jut")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -321,12 +313,14 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_4dr0l")
+texture = SubResource("ViewportTexture_wmx1g")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -336,11 +330,11 @@ custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Bubble" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Bubble" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 3
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_bubble")
+ToolDefinition = ExtResource("11_idg7t")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Tools/Bubble"]
 use_parent_material = true
@@ -356,8 +350,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_bubble" parent="Item Bar/MarginContainer/Items/Tools/Bubble/SubViewportContainer2/SubViewport" instance=ExtResource("7_lcige")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Tools/Bubble/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -365,21 +357,23 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Tools/Bubble/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Tools/Bubble/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_mbflq")
+texture = SubResource("ViewportTexture_lnpyt")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Sponge" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Sponge" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 4
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_sponge")
+ToolDefinition = ExtResource("13_d043o")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Tools/Sponge"]
 use_parent_material = true
@@ -395,8 +389,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_sponge" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport" instance=ExtResource("9_725x6")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -404,12 +396,14 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_kceen")
+texture = SubResource("ViewportTexture_i1qcg")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -419,11 +413,11 @@ custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Stamp" parent="Item Bar/MarginContainer/Items/Copying" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Stamp" parent="Item Bar/MarginContainer/Items/Copying" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 5
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_stamp")
+ToolDefinition = ExtResource("15_ks7f1")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Copying/Stamp"]
 use_parent_material = true
@@ -439,8 +433,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_stamp" parent="Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport" instance=ExtResource("6_7r4a7")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -448,21 +440,23 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_idg7t")
+texture = SubResource("ViewportTexture_ljjj3")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Sticker" parent="Item Bar/MarginContainer/Items/Copying" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Sticker" parent="Item Bar/MarginContainer/Items/Copying" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 6
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_sticker")
+ToolDefinition = ExtResource("17_2d5xk")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Copying/Sticker"]
 use_parent_material = true
@@ -478,8 +472,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_sticker" parent="Item Bar/MarginContainer/Items/Copying/Sticker/SubViewportContainer2/SubViewport" instance=ExtResource("8_ne8ky")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Copying/Sticker/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -487,22 +479,23 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Copying/Sticker/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Copying/Sticker/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_d043o")
+texture = SubResource("ViewportTexture_4dr0l")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Wand" parent="Item Bar/MarginContainer/Items/Copying" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Wand" parent="Item Bar/MarginContainer/Items/Copying" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 8
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_wand")
-BrushDefinition = ExtResource("15_wmx1g")
+ToolDefinition = ExtResource("19_aai5f")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Copying/Wand"]
 use_parent_material = true
@@ -518,8 +511,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_wand" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2/SubViewport" instance=ExtResource("15_vhrfc")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -527,21 +518,23 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Copying/Wand/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_ks7f1")
+texture = SubResource("ViewportTexture_mbflq")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Zoom" parent="Item Bar/MarginContainer/Items" node_paths=PackedStringArray("VisualRoot", "Model") instance=ExtResource("1_ieq13")]
+[node name="Zoom" parent="Item Bar/MarginContainer/Items" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
-Tool = 7
-VisualRoot = NodePath("SubViewportContainer2")
-Model = NodePath("SubViewportContainer2/SubViewport/tool_zoom")
+ToolDefinition = ExtResource("21_mbflq")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Zoom"]
 use_parent_material = true
@@ -557,8 +550,6 @@ msaa_3d = 2
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="tool_zoom" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport" instance=ExtResource("7_pr1jq")]
-
 [node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 projection = 1
@@ -566,12 +557,14 @@ current = true
 size = 6.5
 far = 50.0
 
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport"]
+
 [node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_2d5xk")
+texture = SubResource("ViewportTexture_kceen")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ToolDefinition" load_steps=3 format=3 uid="uid://7pry6uurysp4"]
 
-[ext_resource type="PackedScene" uid="uid://b5lhqngmc12e5" path="res://models/tools/tool_stamp.glb" id="1_twl5y"]
+[ext_resource type="PackedScene" uid="uid://c385xiljxr1wj" path="res://models/tools/tool_sticker.glb" id="1_twl5y"]
 [ext_resource type="Script" uid="uid://iid6uckh4k5i" path="res://scripts/resources/ToolDefinition.cs" id="2_yyeku"]
 
 [resource]

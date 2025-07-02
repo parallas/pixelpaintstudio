@@ -5,7 +5,7 @@ using Parallas;
 
 public partial class Topbar : MarginContainer
 {
-    [Signal] public delegate void OnSettingsChangeEventHandler(ToolState.DrawingTools tool);
+    [Signal] public delegate void OnSettingsChangeEventHandler(ToolDefinition tool);
 
     [Export] public ToolState ToolState { get; private set; }
 

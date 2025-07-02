@@ -3,7 +3,7 @@ using System;
 
 public partial class Toolbar : MarginContainer
 {
-    [Signal] public delegate void OnToolSelectedEventHandler(ToolState.DrawingTools tool);
+    [Signal] public delegate void OnToolSelectedEventHandler(ToolDefinition tool);
 
     [Export] public ToolState ToolState { get; private set; }
 
@@ -18,9 +18,9 @@ public partial class Toolbar : MarginContainer
         }
     }
 
-    public void SetDrawingTool(ToolState.DrawingTools tool)
+    public void SetDrawingTool(ToolDefinition tool)
     {
-        ToolState.SetDrawingTool(tool);
+        ToolState.SetTool(tool);
         EmitSignalOnToolSelected(tool);
     }
 
