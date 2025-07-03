@@ -70,12 +70,6 @@ public partial class GamepadToMouseTranslator : Node
                         ButtonIndex = MouseButton.Left,
                         Position = deviceMap.MousePosition,
                     });
-                    Input.ParseInputEvent(new InputEventAction
-                    {
-                        Device = deviceId,
-                        Pressed = true,
-                        Action = "click",
-                    });
                 }
                 if (joypadButton.IsActionReleased("click"))
                 {
@@ -85,12 +79,6 @@ public partial class GamepadToMouseTranslator : Node
                         Pressed = false,
                         ButtonIndex = MouseButton.Left,
                         Position = deviceMap.MousePosition,
-                    });
-                    Input.ParseInputEvent(new InputEventAction
-                    {
-                        Device = deviceId,
-                        Pressed = false,
-                        Action = "click",
                     });
                 }
                 break;

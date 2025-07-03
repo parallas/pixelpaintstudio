@@ -19,13 +19,6 @@ public static class PlayerDeviceMapper
         foreach (var (key, value) in IdToPlayerDevices)
         {
             value.Process(delta);
-
-            if (value.PlayerId != 0) break; // Only allow player 1 to interact with UI
-            Input.ParseInputEvent(new InputEventMouseMotion()
-            {
-                Device = value.DeviceIds[0],
-                Position = value.MousePosition,
-            });
         }
     }
 
