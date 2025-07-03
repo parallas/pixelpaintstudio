@@ -1,8 +1,9 @@
 using Godot;
 using System;
+using System.Linq;
 using Parallas;
 
-public partial class PaintColorButton : Button
+public partial class PaintColorButton : VirtualCursorButton
 {
     [Export] private PaintBlob _paintBlob;
     [Export] private Control _visualRoot;
@@ -29,8 +30,8 @@ public partial class PaintColorButton : Button
         _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
 
         var scaleTarget = 1f;
-        if (IsHovered()) scaleTarget = 1.15f;
-        if (IsPressed()) scaleTarget = 1f;
+        if (IsHoveredVirtually) scaleTarget = 1.15f;
+        if (IsPressedVirtually) scaleTarget = 1f;
         if (_scaleWhenSelected && IsSelected) scaleTarget += 0.45f;
         var (x, y) = _scale;
         var (xVel, yVel) = _scaleVelocity;
@@ -55,7 +56,19 @@ public partial class PaintColorButton : Button
 
         _visualRoot.Scale = _scale;
 
-        SetZIndex(IsHovered() ? 2 : IsSelected ? 1 : 0);
+        SetZIndex(IsHoveredVirtually ? 2 : IsSelected ? 1 : 0);
+    }
+
+    protected override void VirtualCursorPressed(InputEvent @event, int playerId)
+    {
+        base.VirtualCursorPressed(@event, playerId);
+
+        var gameCursorFetched = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>()
+            .FirstOrDefault(cursor => cursor.PlayerId == playerId);
+        if (gameCursorFetched is not { } gameCursor) return;
+
+        _toolState = gameCursor.ToolState;
+        SetToolToColor();
     }
 
     public void SetToolToColor()

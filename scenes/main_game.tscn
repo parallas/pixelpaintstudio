@@ -1,7 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://1dgjl4mfmmc0"]
+[gd_scene load_steps=9 format=3 uid="uid://1dgjl4mfmmc0"]
 
 [ext_resource type="PackedScene" uid="uid://bcs3ibma0b68n" path="res://scenes/ui/main_ui.tscn" id="1_s3esy"]
 [ext_resource type="Script" uid="uid://dy007rmbyjgxk" path="res://scripts/ui/GamepadToMouseTranslator.cs" id="2_72e8q"]
+[ext_resource type="PackedScene" uid="uid://bvjmrg7av4u7l" path="res://scenes/ui/game_cursor.tscn" id="3_ipu61"]
+[ext_resource type="Resource" uid="uid://b27d33d7e8bw" path="res://drawing_resources/tools/tool_wand.tres" id="4_ipu61"]
+[ext_resource type="Resource" uid="uid://bjdlfscp6y1c0" path="res://drawing_resources/tools/tool_pen_medium.tres" id="4_ygxny"]
+[ext_resource type="Script" uid="uid://bv6edhv10dqh5" path="res://scripts/resources/ToolState.cs" id="5_wi4c7"]
+
+[sub_resource type="Resource" id="Resource_70vka"]
+script = ExtResource("5_wi4c7")
+ToolDefinition = ExtResource("4_ygxny")
+BrushColor = Color(0.654668, 0.349391, 0.9522, 1)
+metadata/_custom_type_script = "uid://bv6edhv10dqh5"
+
+[sub_resource type="Resource" id="Resource_ygxny"]
+script = ExtResource("5_wi4c7")
+ToolDefinition = ExtResource("4_ipu61")
+BrushColor = Color(0.654668, 0.349391, 0.9522, 1)
+metadata/_custom_type_script = "uid://bv6edhv10dqh5"
 
 [node name="Node" type="Node"]
 
@@ -9,3 +25,10 @@
 script = ExtResource("2_72e8q")
 
 [node name="Main Editor" parent="." instance=ExtResource("1_s3esy")]
+
+[node name="Game Cursor" parent="." instance=ExtResource("3_ipu61")]
+ToolState = SubResource("Resource_70vka")
+
+[node name="Game Cursor2" parent="." instance=ExtResource("3_ipu61")]
+PlayerId = 1
+ToolState = SubResource("Resource_ygxny")

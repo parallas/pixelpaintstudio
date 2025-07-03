@@ -1,37 +1,74 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using Parallas;
 
 public partial class VirtualCursorButton : Button
 {
-    public bool IsHoveredVirtually { get; private set; } = false;
-    private int _pressedDeviceId = -1;
+    public bool IsHoveredVirtually => _hoveredPlayerIds.Count > 0;
+    public bool IsPressedVirtually => _pressedPlayerIds.Count > 0;
+    private readonly HashSet<int> _hoveredPlayerIds = [];
+    private readonly HashSet<int> _pressedPlayerIds = [];
 
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        var gameCursors = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>().ToArray();
+        foreach (var gameCursor in gameCursors)
+        {
+            if (IsIntersecting(gameCursor.GlobalPosition))
+            {
+                _hoveredPlayerIds.Add(gameCursor.PlayerId);
+            }
+            else
+            {
+                _hoveredPlayerIds.Remove(gameCursor.PlayerId);
+            }
+        }
+    }
+
+    private bool IsIntersecting(Vector2 cursorPosition)
+    {
+        var globalRect = GetGlobalRect();
+        return globalRect.HasPoint(cursorPosition);
+    }
 
     public override void _Input(InputEvent @event)
     {
         base._Input(@event);
 
-        if (!IsHovered())
-        {
-            if (_pressedDeviceId == @event.Device)
-                _pressedDeviceId = -1;
-            return;
-        }
+        HandleInput(@event);
+    }
+
+    protected virtual void VirtualCursorPressed(InputEvent @event, int playerId) { }
+
+    private void HandleInput(InputEvent @event)
+    {
         if (@event is not InputEventMouseButton eventMouseButton) return;
+
+        var deviceId = PlayerDeviceMapper.GetControllerOffsetDeviceId(@event);
+        if (!PlayerDeviceMapper.TryGetPlayerDeviceMapFromDevice(deviceId, out var deviceMap)) return;
+        var playerId = deviceMap.PlayerId;
+        bool wasPressed = _pressedPlayerIds.Contains(playerId);
+        bool wasHovered = _hoveredPlayerIds.Contains(playerId);
+
+        bool isPressed = eventMouseButton.IsPressed();
+        bool pressed = isPressed && !wasPressed && wasHovered;
+        bool released = !isPressed && wasPressed && wasHovered;
+
+        if (pressed) _pressedPlayerIds.Add(playerId);
+        if (!pressed) _pressedPlayerIds.Remove(playerId);
+
         if (GetActionMode() == ActionModeEnum.Release)
         {
-            if (_pressedDeviceId > -1 && eventMouseButton.Device != _pressedDeviceId) return;
-            if (eventMouseButton.IsPressed())
-                _pressedDeviceId = eventMouseButton.Device;
-            if (!eventMouseButton.IsReleased()) return;
-            _pressedDeviceId = -1;
-            VirtualCursorPressed(eventMouseButton);
+            if (!released) return;
+            VirtualCursorPressed(@event, playerId);
         }
         else
         {
-            if (!eventMouseButton.IsPressed()) return;
-            VirtualCursorPressed(eventMouseButton);
+            if (!pressed) return;
+            VirtualCursorPressed(@event, playerId);
         }
     }
-
-    protected virtual void VirtualCursorPressed(InputEventMouseButton eventMouseButton) { }
 }

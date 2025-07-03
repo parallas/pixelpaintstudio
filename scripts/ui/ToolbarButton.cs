@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using Parallas;
 
 [GlobalClass]
@@ -47,8 +48,8 @@ public partial class ToolbarButton : VirtualCursorButton
     {
         base._Process(delta);
 
-        if ((IsHovered() || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
-        if ((!IsHovered() && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
+        if ((IsHoveredVirtually || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
+        if ((!IsHoveredVirtually && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
         _visualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
         MathUtil.Spring(
@@ -73,7 +74,7 @@ public partial class ToolbarButton : VirtualCursorButton
 
         _hoverScale = MathUtil.ExpDecay(
             _hoverScale,
-            IsHovered() ? Vector2.One * 1.15f : Vector2.One,
+            IsHoveredVirtually ? Vector2.One * 1.15f : Vector2.One,
             16f,
             (float)delta
         );
@@ -88,9 +89,9 @@ public partial class ToolbarButton : VirtualCursorButton
             (float)delta
         ));
 
-        _tabLiftTarget = (IsHovered() ? -50 : 0) + (IsSelected ? -25 : 0);
+        _tabLiftTarget = (IsHoveredVirtually ? -50 : 0) + (IsSelected ? -25 : 0);
 
-        if (IsHovered() || IsSelected)
+        if (IsHoveredVirtually || IsSelected)
         {
             if (_hoverTime == 0) _squashStretchAmount = 0.25f;
             _hoverTime += (float)delta;
@@ -101,7 +102,7 @@ public partial class ToolbarButton : VirtualCursorButton
             _hoverTime = 0;
         }
 
-        if (IsHovered() || IsSelected)
+        if (IsHoveredVirtually || IsSelected)
         {
             _colorBlend = MathUtil.ExpDecay(_colorBlend, 1f, 40f, (float)delta);
         }
@@ -111,11 +112,16 @@ public partial class ToolbarButton : VirtualCursorButton
         }
     }
 
-    protected override void VirtualCursorPressed(InputEventMouseButton eventMouseButton)
+    protected override void VirtualCursorPressed(InputEvent @event, int playerId)
     {
-        base.VirtualCursorPressed(eventMouseButton);
+        base.VirtualCursorPressed(@event, playerId);
 
-        ToolState.SetTool(ToolDefinition);
+        var gameCursorFetched = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>()
+            .FirstOrDefault(cursor => cursor.PlayerId == playerId);
+        if (gameCursorFetched is not { } gameCursor) return;
+
+        ToolState = gameCursor.ToolState;
+        gameCursor.ToolState.SetTool(ToolDefinition);
         EmitSignalOnToolSelected(ToolDefinition);
     }
 }

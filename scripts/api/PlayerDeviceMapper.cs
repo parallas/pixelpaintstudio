@@ -92,7 +92,6 @@ public static class PlayerDeviceMapper
     public static int GetControllerOffsetDeviceId(InputEvent @event)
     {
         var device = @event.Device;
-        // if (device == 0) return 0;
         if (@event is InputEventJoypadMotion or InputEventJoypadButton) device += 1;
         return device;
     }

@@ -31,6 +31,10 @@ project/assembly_name="fun_drawing"
 
 import/blender/enabled=false
 
+[global_group]
+
+player_cursors=""
+
 [input]
 
 ui_accept={
