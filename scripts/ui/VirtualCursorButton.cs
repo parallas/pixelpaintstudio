@@ -10,12 +10,14 @@ public partial class VirtualCursorButton : Button
     private readonly HashSet<int> _hoveredPlayerIds = [];
     private readonly HashSet<int> _pressedPlayerIds = [];
 
+    protected GameCursor[] GameCursors { get; private set; }
+
     public override void _Process(double delta)
     {
         base._Process(delta);
 
-        var gameCursors = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>().ToArray();
-        foreach (var gameCursor in gameCursors)
+        GameCursors = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>().ToArray();
+        foreach (var gameCursor in GameCursors)
         {
             if (IsIntersecting(gameCursor.GlobalPosition))
             {
@@ -64,11 +66,13 @@ public partial class VirtualCursorButton : Button
         {
             if (!released) return;
             VirtualCursorPressed(@event, playerId);
+            EmitSignalPressed();
         }
         else
         {
             if (!pressed) return;
             VirtualCursorPressed(@event, playerId);
+            EmitSignalPressed();
         }
     }
 }

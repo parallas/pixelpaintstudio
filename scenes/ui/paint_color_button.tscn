@@ -54,5 +54,3 @@ texture = SubResource("ViewportTexture_atk6x")
 script = ExtResource("3_gnlmx")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
-
-[connection signal="pressed" from="." to="." method="SetToolToColor"]

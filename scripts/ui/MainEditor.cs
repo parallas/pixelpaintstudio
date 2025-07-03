@@ -7,7 +7,6 @@ using Parallas;
 
 public partial class MainEditor : Control
 {
-    [Export] public ToolState ToolState { get; set; }
     [Export] public Toolbar Toolbar { get; set; }
     [Export] public Topbar Topbar { get; set; }
 
@@ -22,9 +21,6 @@ public partial class MainEditor : Control
 
         Input.SetMouseMode(Input.MouseModeEnum.Hidden);
         Godot.Engine.MaxFps = 120;
-
-        Toolbar.SetToolState(ToolState);
-        Topbar.SetToolState(ToolState);
     }
 
     public override void _Process(double delta)

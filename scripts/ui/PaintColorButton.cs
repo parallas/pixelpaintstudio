@@ -9,11 +9,12 @@ public partial class PaintColorButton : VirtualCursorButton
     [Export] private Control _visualRoot;
     [Export] private Color _paintColor = Colors.Red;
     [Export] private bool _scaleWhenSelected = true;
+    [Export] private bool _setToolColorWhenClicked = true;
     private Vector2 _scale = Vector2.One;
     private Vector2 _scaleVelocity = Vector2.Zero;
-    private ToolState _toolState;
+    public ToolState ToolState { get; private set; }
 
-    private bool IsSelected => _paintColor == _toolState?.BrushColor;
+    public bool IsSelected { get; private set; }
 
     public override void _Ready()
     {
@@ -26,6 +27,9 @@ public partial class PaintColorButton : VirtualCursorButton
     public override void _Process(double delta)
     {
         base._Process(delta);
+
+        IsSelected =
+            GameCursors.FirstOrDefault(cursor => cursor.ToolState.BrushColor == _paintColor) is not null;
 
         _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
 
@@ -67,20 +71,28 @@ public partial class PaintColorButton : VirtualCursorButton
             .FirstOrDefault(cursor => cursor.PlayerId == playerId);
         if (gameCursorFetched is not { } gameCursor) return;
 
-        _toolState = gameCursor.ToolState;
-        SetToolToColor();
+        ToolState = gameCursor.ToolState;
+
+        if (_setToolColorWhenClicked)
+            SetToolToColor();
+        else
+        {
+            RandomizeOrientation();
+            _scaleVelocity = Vector2.One * 10f;
+        }
+        SetDisplayColor(ToolState.BrushColor);
     }
 
     public void SetToolToColor()
     {
-        _toolState.SetColor(_paintColor);
+        ToolState.SetColor(_paintColor);
         RandomizeOrientation();
         _scaleVelocity = Vector2.One * 10f;
     }
 
     public void SetToolState(ToolState toolState)
     {
-        _toolState = toolState;
+        ToolState = toolState;
 
         if (toolState.BrushColor == _paintColor) return;
         RandomizeOrientation();

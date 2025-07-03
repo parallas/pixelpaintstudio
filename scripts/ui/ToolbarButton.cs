@@ -27,7 +27,7 @@ public partial class ToolbarButton : VirtualCursorButton
     private float _tabLiftTarget = 0f;
     private float _tabLiftVelocity = 0f;
 
-    private bool IsSelected => ToolState.ToolDefinition == ToolDefinition;
+    public bool IsSelected { get; private set; }
 
     public override void _Ready()
     {
@@ -47,6 +47,9 @@ public partial class ToolbarButton : VirtualCursorButton
     public override void _Process(double delta)
     {
         base._Process(delta);
+
+        IsSelected =
+            GameCursors.FirstOrDefault(cursor => cursor.ToolState.ToolDefinition == ToolDefinition) is not null;
 
         if ((IsHoveredVirtually || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
         if ((!IsHoveredVirtually && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
@@ -116,8 +119,7 @@ public partial class ToolbarButton : VirtualCursorButton
     {
         base.VirtualCursorPressed(@event, playerId);
 
-        var gameCursorFetched = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>()
-            .FirstOrDefault(cursor => cursor.PlayerId == playerId);
+        var gameCursorFetched = GameCursors.FirstOrDefault(cursor => cursor.PlayerId == playerId);
         if (gameCursorFetched is not { } gameCursor) return;
 
         ToolState = gameCursor.ToolState;

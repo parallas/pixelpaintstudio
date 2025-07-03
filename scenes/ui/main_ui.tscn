@@ -1,21 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=15 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
 [ext_resource type="Shader" uid="uid://8qc7y5sk72ig" path="res://shaders/background_scroll.gdshader" id="1_l8t6x"]
-[ext_resource type="Script" uid="uid://bv6edhv10dqh5" path="res://scripts/resources/ToolState.cs" id="2_b1beo"]
 [ext_resource type="Texture2D" uid="uid://sof3dakv1wbd" path="res://textures/bg_grid.png" id="2_l8t6x"]
-[ext_resource type="Resource" uid="uid://bjdlfscp6y1c0" path="res://drawing_resources/tools/tool_pen_medium.tres" id="2_oi40j"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="3_travt"]
 [ext_resource type="Script" uid="uid://dhj15jvhu7awh" path="res://scripts/ui/drawing/DrawCanvas.cs" id="5_oxwcw"]
 [ext_resource type="PackedScene" uid="uid://dikgniiqb312x" path="res://scenes/ui/topbar.tscn" id="6_b65ll"]
 [ext_resource type="Material" uid="uid://d4jyrw3g2qr1l" path="res://materials/brush_mix.tres" id="8_oi40j"]
-
-[sub_resource type="Resource" id="Resource_t0li6"]
-script = ExtResource("2_b1beo")
-ToolDefinition = ExtResource("2_oi40j")
-BrushColor = Color(1, 0, 0, 1)
-metadata/_custom_type_script = "uid://bv6edhv10dqh5"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_46cp5"]
 shader = ExtResource("1_l8t6x")
@@ -52,7 +44,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_46cp5")
-ToolState = SubResource("Resource_t0li6")
 Toolbar = NodePath("Layout/Toolbar")
 Topbar = NodePath("Layout/Topbar")
 TargetDrawCanvas = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas Viewport/Canvas")
