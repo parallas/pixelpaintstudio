@@ -18,6 +18,9 @@ public partial class PlayerCursorSpawnManager : Node
             var newCursor = _cursorScene.Instantiate<GameCursor>();
             newCursor.SetToolState(_defaultToolState.Duplicate() as ToolState);
             newCursor.SetPlayerId(i);
+            newCursor.Position = _parentForNewCursors.GetGlobalRect().GetCenter();
+            if (PlayerDeviceMapper.TryGetPlayerDeviceMap(i, out var deviceMap))
+                deviceMap.MousePosition = newCursor.Position;
             _parentForNewCursors.AddChild(newCursor);
         };
 
