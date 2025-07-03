@@ -74,6 +74,11 @@ public partial class GameCursor : CenterContainer
         }
     }
 
+    public void SetPlayerId(int playerId)
+    {
+        PlayerId = playerId;
+    }
+
     public void SetToolState(ToolState toolState)
     {
         if (ToolState is not null) ToolState.ToolChanged -= ReactToDrawingToolChange;

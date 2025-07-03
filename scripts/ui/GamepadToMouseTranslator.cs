@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Parallas;
 
@@ -7,8 +8,6 @@ public partial class GamepadToMouseTranslator : Node
     public override void _Ready()
     {
         base._Ready();
-
-        PlayerDeviceMapper.RegisterNewPlayer(0);
 
         Input.JoyConnectionChanged += JoyConnectionChanged;
 
