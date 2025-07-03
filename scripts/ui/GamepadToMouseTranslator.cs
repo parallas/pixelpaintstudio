@@ -62,6 +62,7 @@ public partial class GamepadToMouseTranslator : Node
             }
             case InputEventJoypadButton joypadButton:
             {
+                if (deviceId != 0) break;
                 if (joypadButton.IsActionPressed("click"))
                 {
                     Input.ParseInputEvent(new InputEventMouseButton

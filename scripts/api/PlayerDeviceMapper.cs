@@ -20,7 +20,7 @@ public static class PlayerDeviceMapper
         {
             value.Process(delta);
 
-            if (key != 0) continue;
+            if (value.PlayerId != 0) break; // Only allow player 1 to interact with UI
             Input.ParseInputEvent(new InputEventMouseMotion()
             {
                 Device = value.DeviceIds[0],
@@ -84,14 +84,15 @@ public static class PlayerDeviceMapper
 
     public static bool IsInputFromPlayer(InputEvent @event, int playerId)
     {
+        var device = GetControllerOffsetDeviceId(@event);
         if (!IdToPlayerDevices.TryGetValue(playerId, out PlayerDeviceMap map)) return false;
-        return map.DeviceIds.Contains(@event.Device);
+        return map.DeviceIds.Contains(device);
     }
 
     public static int GetControllerOffsetDeviceId(InputEvent @event)
     {
         var device = @event.Device;
-        if (device == 0) return 0;
+        // if (device == 0) return 0;
         if (@event is InputEventJoypadMotion or InputEventJoypadButton) device += 1;
         return device;
     }

@@ -61,19 +61,16 @@ public partial class GameCursor : CenterContainer
 
         InputFixer.UpdateInput(@event);
 
-        if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left } mouseButtonEvent)
+        if (@event.IsActionPressed("click"))
         {
-            if (mouseButtonEvent.IsPressed())
-            {
-                _clickHeld = true;
-                _squashStretchAmount += 0.2f;
-                ToolState?.ToolDefinition.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor, 0);
-            }
-            if (mouseButtonEvent.IsReleased())
-            {
-                _clickHeld = false;
-                ToolState?.ToolDefinition.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor, 0);
-            }
+            _clickHeld = true;
+            _squashStretchAmount += 0.2f;
+            ToolState?.ToolDefinition.BrushDefinition?.Start(TargetDrawCanvas, GetCanvasPosition(), ToolState.BrushColor, 0);
+        }
+        if (@event.IsActionReleased("click"))
+        {
+            _clickHeld = false;
+            ToolState?.ToolDefinition.BrushDefinition?.Finish(GetCanvasPosition(), ToolState.BrushColor, 0);
         }
     }
 
