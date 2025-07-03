@@ -45,10 +45,9 @@ public partial class MainEditor : Control
         if (!PlayerDeviceMapper.TryGetPlayerDeviceMapFromDevice(deviceId, out PlayerDeviceMap deviceMap)) return;
         int playerId = deviceMap.PlayerId;
 
-        var gameCursors = GetTree().GetNodesInGroup("player_cursors");
-        GameCursor gameCursorFetched = gameCursors.Cast<GameCursor>()
+        var gameCursor = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>()
             .FirstOrDefault(cursor => cursor.PlayerId == playerId);
-        if (gameCursorFetched is not { } gameCursor) return;
+        if (gameCursor is null) return;
         var toolState = gameCursor.ToolState;
 
         if (@event.IsActionPressed("click"))

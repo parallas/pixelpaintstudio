@@ -67,11 +67,9 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base.VirtualCursorPressed(@event, playerId);
 
-        var gameCursorFetched = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>()
-            .FirstOrDefault(cursor => cursor.PlayerId == playerId);
-        if (gameCursorFetched is not { } gameCursor) return;
-
-        ToolState = gameCursor.ToolState;
+        var cursor = GameCursors.FirstOrDefault(cursor => cursor.PlayerId == playerId);
+        if (cursor is null) return;
+        ToolState = cursor.ToolState;
 
         if (_setToolColorWhenClicked)
             SetToolToColor();
