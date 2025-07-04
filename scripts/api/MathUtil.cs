@@ -297,6 +297,11 @@ public static class MathUtil
         return Random.Shared.NextSingle() * (max - min) + min;
     }
 
+    public static int RandomRange(int min, int max)
+    {
+        return (int)Random.Shared.NextInt64(min, max);
+    }
+
     public static Vector3 RandomInsideUnitSphere() {
         var u = Random.Shared.NextSingle();
         var v = Random.Shared.NextSingle();
@@ -495,5 +500,20 @@ public static class MathUtil
         velocity = new Vector3(velocity.X, velocity.Y, velocity.Z);
     }
 
+    public static Vector2 RandomPointInRect(Rect2 rect)
+    {
+        return new Vector2(
+            RandomRange(rect.Position.X, rect.Position.X + rect.Size.X),
+            RandomRange(rect.Position.Y, rect.Position.Y + rect.Size.Y)
+        );
+    }
+
+    public static Vector2 RandomPointInRect(Rect2I rect)
+    {
+        return new Vector2I(
+            RandomRange(rect.Position.X, rect.Position.X + rect.Size.X),
+            RandomRange(rect.Position.Y, rect.Position.Y + rect.Size.Y)
+        );
+    }
 
 }
