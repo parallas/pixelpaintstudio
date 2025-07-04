@@ -29,6 +29,8 @@ public partial class ToolbarButton : VirtualCursorButton
 
     public bool IsSelected { get; private set; }
 
+    private MainEditor _editor;
+
     public override void _Ready()
     {
         base._Ready();
@@ -48,8 +50,11 @@ public partial class ToolbarButton : VirtualCursorButton
     {
         base._Process(delta);
 
+        _editor ??= GetTree().GetFirstNodeInGroup("main_editor") as MainEditor;
+        if (_editor is null) return;
+
         IsSelected =
-            GameCursors.FirstOrDefault(cursor => cursor.ToolState.ToolDefinition == ToolDefinition) is not null;
+            _editor.PlayerToolStates.Values.FirstOrDefault(toolState => toolState.ToolDefinition == ToolDefinition) is not null;
 
         if ((IsHoveredVirtually || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
         if ((!IsHoveredVirtually && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
@@ -118,12 +123,12 @@ public partial class ToolbarButton : VirtualCursorButton
     protected override void VirtualCursorPressed(InputEvent @event, int playerId)
     {
         base.VirtualCursorPressed(@event, playerId);
+        if (_editor is null) return;
 
-        var gameCursorFetched = GameCursors.FirstOrDefault(cursor => cursor.PlayerId == playerId);
-        if (gameCursorFetched is not { } gameCursor) return;
+        if (!_editor.PlayerToolStates.TryGetValue(playerId, out var toolState)) return;
+        ToolState = toolState;
 
-        ToolState = gameCursor.ToolState;
-        gameCursor.ToolState.SetTool(ToolDefinition);
+        toolState.SetTool(ToolDefinition);
         EmitSignalOnToolSelected(ToolDefinition);
     }
 }

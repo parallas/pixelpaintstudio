@@ -12,9 +12,5 @@ public partial class ColorPaletteBar : PanelContainer
     public void SetToolState(ToolState toolState)
     {
         ToolState = toolState;
-        foreach (var button in _paintColorButtons)
-        {
-            button.SetToolState(toolState);
-        }
     }
 }

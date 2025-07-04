@@ -6,7 +6,6 @@ using Parallas;
 public partial class PlayerCursorSpawnManager : Node
 {
     [Export] private PackedScene _cursorScene;
-    [Export] private ToolState _defaultToolState;
     [Export] private Control _parentForNewCursors;
 
     public override void _Ready()
@@ -16,7 +15,6 @@ public partial class PlayerCursorSpawnManager : Node
         PlayerDeviceMapper.PlayerCreated += i =>
         {
             var newCursor = _cursorScene.Instantiate<GameCursor>();
-            newCursor.SetToolState(_defaultToolState.Duplicate() as ToolState);
             newCursor.SetPlayerId(i);
             newCursor.Position = _parentForNewCursors.GetGlobalRect().GetCenter();
             if (PlayerDeviceMapper.TryGetPlayerDeviceMap(i, out var deviceMap))

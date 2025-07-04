@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Parallas;
 
 public partial class PaintColorButton : VirtualCursorButton
@@ -16,6 +17,8 @@ public partial class PaintColorButton : VirtualCursorButton
 
     public bool IsSelected { get; private set; }
 
+    private MainEditor _editor;
+
     public override void _Ready()
     {
         base._Ready();
@@ -28,8 +31,11 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base._Process(delta);
 
+        _editor ??= GetTree().GetFirstNodeInGroup("main_editor") as MainEditor;
+        if (_editor is null) return;
+
         IsSelected =
-            GameCursors.FirstOrDefault(cursor => cursor.ToolState.BrushColor == _paintColor) is not null;
+            _editor.PlayerToolStates.Values.FirstOrDefault(toolState => toolState.BrushColor == _paintColor) is not null;
 
         _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
 
@@ -67,33 +73,26 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base.VirtualCursorPressed(@event, playerId);
 
-        var cursor = GameCursors.FirstOrDefault(cursor => cursor.PlayerId == playerId);
-        if (cursor is null) return;
-        ToolState = cursor.ToolState;
+        if (_editor is null) return;
+
+        if (!_editor.PlayerToolStates.TryGetValue(playerId, out var toolState)) return;
+        ToolState = toolState;
 
         if (_setToolColorWhenClicked)
-            SetToolToColor();
+            SetToolToColor(toolState);
         else
         {
             RandomizeOrientation();
             _scaleVelocity = Vector2.One * 10f;
         }
-        SetDisplayColor(ToolState.BrushColor);
+        SetDisplayColor(toolState.BrushColor);
     }
 
-    public void SetToolToColor()
+    public void SetToolToColor(ToolState toolState)
     {
-        ToolState.SetColor(_paintColor);
+        toolState.SetColor(_paintColor);
         RandomizeOrientation();
         _scaleVelocity = Vector2.One * 10f;
-    }
-
-    public void SetToolState(ToolState toolState)
-    {
-        ToolState = toolState;
-
-        if (toolState.BrushColor == _paintColor) return;
-        RandomizeOrientation();
     }
 
     private void RandomizeOrientation()

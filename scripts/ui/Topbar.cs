@@ -74,7 +74,6 @@ public partial class Topbar : MarginContainer
 
         ToolState = toolState;
         ColorPaletteBar.SetToolState(toolState);
-        OpenColorsButton.SetToolState(toolState);
 
         ToolState.ColorChanged += SetColorMenuButtonColor;
     }
