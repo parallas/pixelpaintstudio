@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using Parallas;
 
 [GlobalClass]
 public partial class DrawImageBrush : BrushBehavior
@@ -45,16 +46,11 @@ public partial class DrawImageBrush : BrushBehavior
         var size = SizeOverride;
         if (size == Vector2.Zero) size = _imageDataCache.ImageTexture.GetSize();
 
-        int distanceInPixels = (int)drawState.EvaluatedPosition.DistanceTo(_lastPosition);
-        for (int i = 0; i < distanceInPixels; i++)
+        var linePoints = Geometry2D.BresenhamLine(_lastPosition.ToVector2I(), drawState.EvaluatedPosition.ToVector2I());
+        for (int i = 0; i < linePoints.Count; i++)
         {
-            float percent = i / (float)distanceInPixels;
-            Vector2 position = _lastPosition.Lerp(drawState.EvaluatedPosition, percent);
-
-            DrawAt(canvasItem, _imageDataCache.ImageTexture, size, position);
+            DrawAt(canvasItem, _imageDataCache.ImageTexture, size, linePoints[i]);
         }
-
-        DrawAt(canvasItem, _imageDataCache.ImageTexture, size, drawState.EvaluatedPosition);
 
         _lastPosition = drawState.EvaluatedPosition;
     }
