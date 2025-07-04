@@ -9,6 +9,8 @@ public partial class DrawCanvas : Control
     [Export] private AspectRatioContainer _aspectRatioContainer;
     [Export] public Vector2I Resolution = new Vector2I(640, 360);
 
+    public Rect2I SizeRect => new Rect2I(Vector2I.Zero, Resolution);
+
     public override void _Process(double delta)
     {
         base._Process(delta);
@@ -32,5 +34,11 @@ public partial class DrawCanvas : Control
         var canvasRelativePosition = posLocalToRect * scaleFactor;
         var pixelPosition = canvasRelativePosition.Round();
         return pixelPosition;
+    }
+
+    public bool IsWithinCanvas(Vector2 cursorPosition)
+    {
+        var canvasPosition = GetCanvasPosition(cursorPosition).ToVector2I();
+        return SizeRect.HasPoint(canvasPosition);
     }
 }

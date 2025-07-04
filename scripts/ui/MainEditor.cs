@@ -50,7 +50,7 @@ public partial class MainEditor : Control
         if (gameCursor is null) return;
         var toolState = gameCursor.ToolState;
 
-        if (@event.IsActionPressed("click"))
+        if (@event.IsActionPressed("click") && TargetDrawCanvas.IsWithinCanvas(gameCursor.GlobalPosition))
         {
             if (_drawingCursors.Contains(gameCursor)) return;
             toolState.ToolDefinition.BrushDefinition?.Start(
