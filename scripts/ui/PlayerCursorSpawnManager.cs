@@ -16,7 +16,15 @@ public partial class PlayerCursorSpawnManager : Node
         {
             var newCursor = _cursorScene.Instantiate<GameCursor>();
             newCursor.SetPlayerId(i);
-            newCursor.Position = _parentForNewCursors.GetGlobalRect().GetCenter();
+            var rect = _parentForNewCursors.GetGlobalRect();
+            var spawnRect = rect.GrowIndividual(
+                -rect.Size.X * 0.3f,
+                -rect.Size.Y * 0.3f,
+                -rect.Size.X * 0.3f,
+                -rect.Size.Y * 0.3f
+            );
+            var spawnPos = MathUtil.RandomPointInRect(spawnRect);
+            newCursor.Position = spawnPos;
             if (PlayerDeviceMapper.TryGetPlayerDeviceMap(i, out var deviceMap))
                 deviceMap.MousePosition = newCursor.Position;
             _parentForNewCursors.AddChild(newCursor);
