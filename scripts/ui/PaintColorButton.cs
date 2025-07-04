@@ -1,18 +1,20 @@
 using Godot;
 using System;
+using System.Linq;
 using Parallas;
 
-public partial class PaintColorButton : Button
+public partial class PaintColorButton : VirtualCursorButton
 {
     [Export] private PaintBlob _paintBlob;
     [Export] private Control _visualRoot;
     [Export] private Color _paintColor = Colors.Red;
     [Export] private bool _scaleWhenSelected = true;
+    [Export] private bool _setToolColorWhenClicked = true;
     private Vector2 _scale = Vector2.One;
     private Vector2 _scaleVelocity = Vector2.Zero;
-    private ToolState _toolState;
+    public ToolState ToolState { get; private set; }
 
-    private bool IsSelected => _paintColor == _toolState?.BrushColor;
+    public bool IsSelected { get; private set; }
 
     public override void _Ready()
     {
@@ -26,11 +28,14 @@ public partial class PaintColorButton : Button
     {
         base._Process(delta);
 
+        IsSelected =
+            GameCursors.FirstOrDefault(cursor => cursor.ToolState.BrushColor == _paintColor) is not null;
+
         _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
 
         var scaleTarget = 1f;
-        if (IsHovered()) scaleTarget = 1.15f;
-        if (IsPressed()) scaleTarget = 1f;
+        if (IsHoveredVirtually) scaleTarget = 1.15f;
+        if (IsPressedVirtually) scaleTarget = 1f;
         if (_scaleWhenSelected && IsSelected) scaleTarget += 0.45f;
         var (x, y) = _scale;
         var (xVel, yVel) = _scaleVelocity;
@@ -55,19 +60,37 @@ public partial class PaintColorButton : Button
 
         _visualRoot.Scale = _scale;
 
-        SetZIndex(IsHovered() ? 2 : IsSelected ? 1 : 0);
+        SetZIndex(IsHoveredVirtually ? 2 : IsSelected ? 1 : 0);
+    }
+
+    protected override void VirtualCursorPressed(InputEvent @event, int playerId)
+    {
+        base.VirtualCursorPressed(@event, playerId);
+
+        var cursor = GameCursors.FirstOrDefault(cursor => cursor.PlayerId == playerId);
+        if (cursor is null) return;
+        ToolState = cursor.ToolState;
+
+        if (_setToolColorWhenClicked)
+            SetToolToColor();
+        else
+        {
+            RandomizeOrientation();
+            _scaleVelocity = Vector2.One * 10f;
+        }
+        SetDisplayColor(ToolState.BrushColor);
     }
 
     public void SetToolToColor()
     {
-        _toolState.SetColor(_paintColor);
+        ToolState.SetColor(_paintColor);
         RandomizeOrientation();
         _scaleVelocity = Vector2.One * 10f;
     }
 
     public void SetToolState(ToolState toolState)
     {
-        _toolState = toolState;
+        ToolState = toolState;
 
         if (toolState.BrushColor == _paintColor) return;
         RandomizeOrientation();

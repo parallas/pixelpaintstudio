@@ -45,6 +45,8 @@ public partial class Topbar : MarginContainer
     {
         base._Process(delta);
 
+        SetColorMenuButtonColor(OpenColorsButton.ToolState?.BrushColor ?? Colors.Red);
+
         MathUtil.Spring(
             ref _squashStretchAmount,
             ref _squashStretchVelocity,

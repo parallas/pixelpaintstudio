@@ -1,9 +1,10 @@
 using Godot;
 using System;
+using System.Linq;
 using Parallas;
 
 [GlobalClass]
-public partial class ToolbarButton : Button
+public partial class ToolbarButton : VirtualCursorButton
 {
     [Signal] public delegate void OnToolSelectedEventHandler(ToolDefinition tool);
 
@@ -26,7 +27,7 @@ public partial class ToolbarButton : Button
     private float _tabLiftTarget = 0f;
     private float _tabLiftVelocity = 0f;
 
-    private bool IsSelected => ToolState.ToolDefinition == ToolDefinition;
+    public bool IsSelected { get; private set; }
 
     public override void _Ready()
     {
@@ -47,8 +48,11 @@ public partial class ToolbarButton : Button
     {
         base._Process(delta);
 
-        if ((IsHovered() || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
-        if ((!IsHovered() && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
+        IsSelected =
+            GameCursors.FirstOrDefault(cursor => cursor.ToolState.ToolDefinition == ToolDefinition) is not null;
+
+        if ((IsHoveredVirtually || IsSelected) && _animationPlayer.AssignedAnimation != "Open") _animationPlayer.Play("Open");
+        if ((!IsHoveredVirtually && !IsSelected) && _animationPlayer.AssignedAnimation != "Close" && _animationPlayer.AssignedAnimation != "RESET") _animationPlayer.Play("Close");
         _visualRoot.SetInstanceShaderParameter("color_blend", _colorBlend);
 
         MathUtil.Spring(
@@ -73,7 +77,7 @@ public partial class ToolbarButton : Button
 
         _hoverScale = MathUtil.ExpDecay(
             _hoverScale,
-            IsHovered() ? Vector2.One * 1.15f : Vector2.One,
+            IsHoveredVirtually ? Vector2.One * 1.15f : Vector2.One,
             16f,
             (float)delta
         );
@@ -88,9 +92,9 @@ public partial class ToolbarButton : Button
             (float)delta
         ));
 
-        _tabLiftTarget = (IsHovered() ? -50 : 0) + (IsSelected ? -25 : 0);
+        _tabLiftTarget = (IsHoveredVirtually ? -50 : 0) + (IsSelected ? -25 : 0);
 
-        if (IsHovered() || IsSelected)
+        if (IsHoveredVirtually || IsSelected)
         {
             if (_hoverTime == 0) _squashStretchAmount = 0.25f;
             _hoverTime += (float)delta;
@@ -101,7 +105,7 @@ public partial class ToolbarButton : Button
             _hoverTime = 0;
         }
 
-        if (IsHovered() || IsSelected)
+        if (IsHoveredVirtually || IsSelected)
         {
             _colorBlend = MathUtil.ExpDecay(_colorBlend, 1f, 40f, (float)delta);
         }
@@ -111,13 +115,15 @@ public partial class ToolbarButton : Button
         }
     }
 
-    public override void _Input(InputEvent @event)
+    protected override void VirtualCursorPressed(InputEvent @event, int playerId)
     {
-        base._Input(@event);
+        base.VirtualCursorPressed(@event, playerId);
 
-        if (!IsHovered()) return;
-        if (!@event.IsActionPressed("click")) return;
-        ToolState.SetTool(ToolDefinition);
+        var gameCursorFetched = GameCursors.FirstOrDefault(cursor => cursor.PlayerId == playerId);
+        if (gameCursorFetched is not { } gameCursor) return;
+
+        ToolState = gameCursor.ToolState;
+        gameCursor.ToolState.SetTool(ToolDefinition);
         EmitSignalOnToolSelected(ToolDefinition);
     }
 }
