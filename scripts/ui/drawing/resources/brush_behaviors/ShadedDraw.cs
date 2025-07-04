@@ -20,28 +20,28 @@ public partial class ShadedDraw : BrushBehavior
         _linePointsDark.Clear();
     }
 
-    public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
+    public override void Draw(DrawState drawState, CanvasItem canvasItem)
     {
-        base.Draw(brushDefinition, canvasItem);
+        base.Draw(drawState, canvasItem);
 
-        Color colorLight = brushDefinition.EvaluatedColor.Lerp(Colors.White, 0.75f);
-        Color colorDark = brushDefinition.EvaluatedColor.Lerp(Colors.Black, 0.75f);
+        Color colorLight = drawState.EvaluatedColor.Lerp(Colors.White, 0.75f);
+        Color colorDark = drawState.EvaluatedColor.Lerp(Colors.Black, 0.75f);
 
-        if (brushDefinition.EvaluatedPosition == brushDefinition.LastEvaluatedPosition) return;
-        Vector2 direction = (brushDefinition.EvaluatedPosition - brushDefinition.LastEvaluatedPosition).Normalized();
+        if (drawState.EvaluatedPosition == drawState.LastEvaluatedPosition) return;
+        Vector2 direction = (drawState.EvaluatedPosition - drawState.LastEvaluatedPosition).Normalized();
         Vector2 offsetDirection = new Vector2(direction.Y, -direction.X);
         Vector2 offset = offsetDirection * Radius;
 
-        _linePoints.Add(brushDefinition.EvaluatedPosition);
-        _linePointsLight.Add(brushDefinition.EvaluatedPosition - offset);
-        _linePointsDark.Add(brushDefinition.EvaluatedPosition + offset);
+        _linePoints.Add(drawState.EvaluatedPosition);
+        _linePointsLight.Add(drawState.EvaluatedPosition - offset);
+        _linePointsDark.Add(drawState.EvaluatedPosition + offset);
 
         if (_linePoints.Count >= 2)
         {
             float rimWidth = 4f;
             canvasItem.DrawPolyline(_linePointsLight.ToArray(), colorLight, rimWidth, false);
             canvasItem.DrawPolyline(_linePointsDark.ToArray(), colorDark, rimWidth, false);
-            canvasItem.DrawPolyline(_linePoints.ToArray(), brushDefinition.EvaluatedColor, Radius * 2f, false);
+            canvasItem.DrawPolyline(_linePoints.ToArray(), drawState.EvaluatedColor, Radius * 2f, false);
         }
 
         // var shadeAmount = Mathf.Abs((brushDefinition.EvaluatedPosition - brushDefinition.LastEvaluatedPosition).Normalized().Dot(Vector2.Up));

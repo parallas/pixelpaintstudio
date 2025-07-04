@@ -4,9 +4,9 @@ using System;
 [GlobalClass]
 public partial class SetColorFromPalette : BrushBehavior
 {
-    public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
+    public override void Draw(DrawState drawState, CanvasItem canvasItem)
     {
-        base.Draw(brushDefinition, canvasItem);
-        brushDefinition.EvaluatedColor = brushDefinition.CursorColor;
+        base.Draw(drawState, canvasItem);
+        drawState.EvaluatedColor = drawState.CursorColor;
     }
 }

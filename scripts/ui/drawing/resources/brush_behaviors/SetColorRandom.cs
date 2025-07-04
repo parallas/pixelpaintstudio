@@ -6,9 +6,9 @@ public partial class SetColorRandom : BrushBehavior
 {
     [Export] public Gradient Gradient;
 
-    public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
+    public override void Draw(DrawState drawState, CanvasItem canvasItem)
     {
-        base.Draw(brushDefinition, canvasItem);
-        brushDefinition.EvaluatedColor = Gradient.Sample(Random.Shared.NextSingle());
+        base.Draw(drawState, canvasItem);
+        drawState.EvaluatedColor = Gradient.Sample(Random.Shared.NextSingle());
     }
 }

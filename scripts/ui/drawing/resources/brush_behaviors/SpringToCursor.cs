@@ -17,11 +17,11 @@ public partial class SpringToCursor : BrushBehavior
         _springVelocity = Vector2.Zero;
     }
 
-    public override void Process(BrushDefinition brushDefinition, double delta)
+    public override void Process(DrawState drawState, double delta)
     {
-        base.Process(brushDefinition, delta);
+        base.Process(drawState, delta);
 
-        MathUtil.Spring(ref brushDefinition.EvaluatedPosition, ref _springVelocity,
-            brushDefinition.CursorPosition, _dampingRatio, _frequency, (float)delta);
+        MathUtil.Spring(ref drawState.EvaluatedPosition, ref _springVelocity,
+            drawState.CursorPosition, _dampingRatio, _frequency, (float)delta);
     }
 }

@@ -9,19 +9,19 @@ public partial class Metronome : BrushBehavior
     private float _lastTriggerTime = 0f;
     private bool _triggered = false;
 
-    public override void Process(BrushDefinition brushDefinition, double delta)
+    public override void Process(DrawState drawState, double delta)
     {
-        base.Process(brushDefinition, delta);
+        base.Process(drawState, delta);
 
         if (_triggered) return;
-        if (brushDefinition.DrawingTime - _lastTriggerTime > Interval)
+        if (drawState.DrawingTime - _lastTriggerTime > Interval)
         {
             _triggered = true;
-            _lastTriggerTime = brushDefinition.DrawingTime;
+            _lastTriggerTime = drawState.DrawingTime;
         }
     }
 
-    public override bool CanContinueDraw(BrushDefinition brushDefinition)
+    public override bool CanContinueDraw(DrawState drawState)
     {
         if (!_triggered) return false;
         _triggered = false;

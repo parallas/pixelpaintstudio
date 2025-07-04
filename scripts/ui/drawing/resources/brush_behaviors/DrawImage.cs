@@ -16,27 +16,27 @@ public partial class DrawImage : BrushBehavior
 
     private BrushUtils.ImageDataCache _imageDataCache;
 
-    public override void Process(BrushDefinition brushDefinition, double delta)
+    public override void Process(DrawState drawState, double delta)
     {
-        base.Process(brushDefinition, delta);
+        base.Process(drawState, delta);
 
         _imageDataCache =
             BrushUtils.ImageDataCacher.CreateOrGet(Textures[GD.RandRange(0, Textures.Count)], _imageDataCache);
     }
 
-    public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
+    public override void Draw(DrawState drawState, CanvasItem canvasItem)
     {
-        base.Draw(brushDefinition, canvasItem);
+        base.Draw(drawState, canvasItem);
 
         var transform = Transform2D.Identity
                 .Translated(Offset)
                 .Scaled(Vector2.One * (float)GD.RandRange(RandomScaleRange.X, RandomScaleRange.Y))
                 .Rotated(Mathf.DegToRad((float)GD.RandRange(RandomAngleRange.X, RandomAngleRange.Y)))
-                .Translated(brushDefinition.EvaluatedPosition)
+                .Translated(drawState.EvaluatedPosition)
             ;
         canvasItem.DrawSetTransformMatrix(transform);
 
-        if (TintUsingColor) BrushUtils.Colorize(_imageDataCache, brushDefinition.EvaluatedColor);
+        if (TintUsingColor) BrushUtils.Colorize(_imageDataCache, drawState.EvaluatedColor);
         canvasItem.DrawTextureRect(_imageDataCache.ImageTexture, new Rect2(Vector2.Zero, Size), false, Colors.White);
 
         canvasItem.DrawSetTransformMatrix(Transform2D.Identity);

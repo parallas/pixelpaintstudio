@@ -24,39 +24,39 @@ public partial class DrawImageBrush : BrushBehavior
         _lastPosition = -Vector2.Inf;
     }
 
-    public override void Process(BrushDefinition brushDefinition, double delta)
+    public override void Process(DrawState drawState, double delta)
     {
-        base.Process(brushDefinition, delta);
+        base.Process(drawState, delta);
 
         _imageDataCache = BrushUtils.ImageDataCacher.CreateOrGet(Texture, _imageDataCache);
     }
 
-    public override void Draw(BrushDefinition brushDefinition, CanvasItem canvasItem)
+    public override void Draw(DrawState drawState, CanvasItem canvasItem)
     {
-        base.Draw(brushDefinition, canvasItem);
+        base.Draw(drawState, canvasItem);
 
-        BrushUtils.Colorize(_imageDataCache, brushDefinition.EvaluatedColor);
+        BrushUtils.Colorize(_imageDataCache, drawState.EvaluatedColor);
 
         if (_lastPosition == -Vector2.Inf)
-            _lastPosition = brushDefinition.EvaluatedPosition;
+            _lastPosition = drawState.EvaluatedPosition;
 
-        if (!FillGapsBetweenDraws) _lastPosition = brushDefinition.EvaluatedPosition;
+        if (!FillGapsBetweenDraws) _lastPosition = drawState.EvaluatedPosition;
 
         var size = SizeOverride;
         if (size == Vector2.Zero) size = _imageDataCache.ImageTexture.GetSize();
 
-        int distanceInPixels = (int)brushDefinition.EvaluatedPosition.DistanceTo(_lastPosition);
+        int distanceInPixels = (int)drawState.EvaluatedPosition.DistanceTo(_lastPosition);
         for (int i = 0; i < distanceInPixels; i++)
         {
             float percent = i / (float)distanceInPixels;
-            Vector2 position = _lastPosition.Lerp(brushDefinition.EvaluatedPosition, percent);
+            Vector2 position = _lastPosition.Lerp(drawState.EvaluatedPosition, percent);
 
             DrawAt(canvasItem, _imageDataCache.ImageTexture, size, position);
         }
 
-        DrawAt(canvasItem, _imageDataCache.ImageTexture, size, brushDefinition.EvaluatedPosition);
+        DrawAt(canvasItem, _imageDataCache.ImageTexture, size, drawState.EvaluatedPosition);
 
-        _lastPosition = brushDefinition.EvaluatedPosition;
+        _lastPosition = drawState.EvaluatedPosition;
     }
 
     private void DrawAt(CanvasItem canvasItem, Texture2D texture, Vector2 size, Vector2 position)

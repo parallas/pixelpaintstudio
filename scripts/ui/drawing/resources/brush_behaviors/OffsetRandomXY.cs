@@ -8,15 +8,15 @@ public partial class OffsetRandomXY : BrushBehavior
     [Export] public Vector2 OffsetMin = new Vector2();
     [Export] public Vector2 OffsetMax = new Vector2();
 
-    public override void Process(BrushDefinition brushDefinition, double delta)
+    public override void Process(DrawState drawState, double delta)
     {
-        base.Process(brushDefinition, delta);
+        base.Process(drawState, delta);
 
         var offset = new Vector2(
             (float)GD.RandRange(OffsetMin.X, OffsetMax.X),
             (float)GD.RandRange(OffsetMin.Y, OffsetMax.Y)
         );
         if (!FromCenter) offset -= offset * 0.5f;
-        brushDefinition.EvaluatedPosition += offset;
+        drawState.EvaluatedPosition += offset;
     }
 }
