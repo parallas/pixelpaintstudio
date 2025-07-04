@@ -21,7 +21,7 @@ public partial class DrawImage : BrushBehavior
         base.Process(drawState, delta);
 
         _imageDataCache =
-            BrushUtils.ImageDataCacher.CreateOrGet(Textures[GD.RandRange(0, Textures.Count)], _imageDataCache);
+            BrushUtils.ImageDataCacher.CreateOrGet(Textures[GD.RandRange(0, Textures.Count - 1)], _imageDataCache);
     }
 
     public override void Draw(DrawState drawState, CanvasItem canvasItem)
