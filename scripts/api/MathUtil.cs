@@ -516,4 +516,27 @@ public static class MathUtil
         );
     }
 
+    public static Vector2 BezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
+    {
+        var a1 = p0.Lerp(p1, t);
+        var b1 = p1.Lerp(p2, t);
+        var c1 = p2.Lerp(p3, t);
+
+        var a1b1 = a1.Lerp(b1, t);
+        var b1c1 = b1.Lerp(c1, t);
+
+        var finalPoint = a1b1.Lerp(b1c1, t);
+        return finalPoint;
+    }
+
+    public static Vector2 BezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2)
+    {
+        var a1 = p0.Lerp(p1, t);
+        var b1 = p1.Lerp(p2, t);
+
+        var a1b1 = a1.Lerp(b1, t);
+
+        return a1b1;
+    }
+
 }
