@@ -33,6 +33,55 @@ public static class BrushUtils
         return ImageTexture.CreateFromImage(image);
     }
 
+    public static void ColorizeBasic(ImageTexture imageTexture, Image image, byte[] imageData, Color color)
+    {
+        Color newColor = color;
+        Color okColor = Color.FromOkHsl(newColor.OkHslH, newColor.OkHslS, newColor.OkHslL);
+        okColor.ToHsv(out var newHsvH, out var newHsvS, out var newHsvV);
+        var okH = okColor.OkHslH;
+        var okS = okColor.OkHslS;
+        var okL = okColor.OkHslL;
+
+        byte r = 0;
+        byte g = 0;
+        byte b = 0;
+        byte a = 0;
+
+        var editingData = new byte[imageData.Length];
+        for (int i = 0; i < imageData.Length; i+=4)
+        {
+            r = imageData[i];
+            g = imageData[i + 1];
+            b = imageData[i + 2];
+            a = imageData[i + 3];
+
+            Color c = new Color(r, g, b, a);
+            c.ToHsv(out var h, out var s, out var v);
+            h = newHsvH;
+            v *= Mathf.Lerp(1f, newHsvV, s);
+            s *= newHsvS;
+            Color cFromHsv = Color.FromHsv(h, s, v, a);
+            editingData[i] = (byte)cFromHsv.R;
+            editingData[i + 1] = (byte)cFromHsv.G;
+            editingData[i + 2] = (byte)cFromHsv.B;
+            editingData[i + 3] = (byte)cFromHsv.A;
+        }
+
+        image.SetData(image.GetWidth(), image.GetHeight(), image.HasMipmaps(), image.GetFormat(), editingData);
+        if (image.HasMipmaps()) image.GenerateMipmaps(true);
+
+        imageTexture.Update(image);
+    }
+
+    public static void ColorizeBasic(ImageDataCache imageDataCache, Color color)
+    {
+        var imageData = imageDataCache.ImageData;
+        var image = imageDataCache.Image;
+        var imageTexture = imageDataCache.ImageTexture;
+
+        ColorizeBasic(imageTexture, image, imageData, color);
+    }
+
     public static void Colorize(ImageTexture imageTexture, Image image, byte[] imageData, Color color)
     {
         var editingData = new byte[imageData.Length];

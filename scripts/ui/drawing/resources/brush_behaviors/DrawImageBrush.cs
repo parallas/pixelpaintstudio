@@ -38,7 +38,7 @@ public partial class DrawImageBrush : BrushBehavior
     {
         base.Draw(drawState, canvasItem);
 
-        if (TintUsingColor) BrushUtils.Colorize(_imageDataCache, drawState.EvaluatedColor);
+        if (TintUsingColor) BrushUtils.ColorizeBasic(_imageDataCache, drawState.EvaluatedColor);
 
         if (_lastPosition == -Vector2.Inf)
             _lastPosition = drawState.EvaluatedPosition;

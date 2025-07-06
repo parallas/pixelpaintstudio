@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://beh8dtjiumggc" path="res://scripts/ui/drawing/resources/brush_behaviors/SpringToCursor.cs" id="1_3mpqm"]
 [ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_5a71b"]
-[ext_resource type="Texture2D" uid="uid://mdc7jwpl37gv" path="res://textures/glob.png" id="3_7qajg"]
+[ext_resource type="Texture2D" uid="uid://cno0oj7x5m83v" path="res://textures/glob_light.png" id="3_ohrtu"]
 [ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="4_00ker"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="5_mlred"]
 [ext_resource type="Script" uid="uid://8u4mcihu24sy" path="res://scripts/ui/drawing/resources/brush_behaviors/ColorAdjust.cs" id="5_ohrtu"]
@@ -23,7 +23,7 @@ metadata/_custom_type_script = "uid://ctwr7tpgocsul"
 
 [sub_resource type="Resource" id="Resource_goqy0"]
 script = ExtResource("4_00ker")
-Texture = ExtResource("3_7qajg")
+Texture = ExtResource("3_ohrtu")
 SizeOverride = Vector2(32, 32)
 TintUsingColor = true
 MultiplyByColor = false

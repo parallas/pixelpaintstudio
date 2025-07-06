@@ -37,7 +37,7 @@ public partial class DrawImage : BrushBehavior
             ;
         canvasItem.DrawSetTransformMatrix(transform);
 
-        if (TintUsingColor) BrushUtils.Colorize(_imageDataCache, drawState.EvaluatedColor);
+        if (TintUsingColor) BrushUtils.ColorizeBasic(_imageDataCache, drawState.EvaluatedColor);
         Color color = MultiplyByColor ? drawState.EvaluatedColor : Colors.White;
         canvasItem.DrawTextureRect(_imageDataCache.ImageTexture, new Rect2(Vector2.Zero, Size), false, color);
 
