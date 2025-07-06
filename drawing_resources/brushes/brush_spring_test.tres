@@ -1,10 +1,15 @@
-[gd_resource type="Resource" script_class="BrushDefinition" load_steps=9 format=3 uid="uid://cas86clwqh8d8"]
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=18 format=3 uid="uid://cas86clwqh8d8"]
 
 [ext_resource type="Script" uid="uid://beh8dtjiumggc" path="res://scripts/ui/drawing/resources/brush_behaviors/SpringToCursor.cs" id="1_3mpqm"]
 [ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_5a71b"]
 [ext_resource type="Texture2D" uid="uid://mdc7jwpl37gv" path="res://textures/glob.png" id="3_7qajg"]
 [ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="4_00ker"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="5_mlred"]
+[ext_resource type="Script" uid="uid://8u4mcihu24sy" path="res://scripts/ui/drawing/resources/brush_behaviors/ColorAdjust.cs" id="5_ohrtu"]
+[ext_resource type="Texture2D" uid="uid://b7iypcajly1qt" path="res://textures/star.png" id="6_mlred"]
+[ext_resource type="Script" uid="uid://0qd7dwd56ck5" path="res://scripts/ui/drawing/resources/brush_behaviors/OffsetRandomRadius.cs" id="6_ohrtu"]
+[ext_resource type="Script" uid="uid://c884dpjmfme40" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImage.cs" id="7_ohrtu"]
+[ext_resource type="Script" uid="uid://wt4wwjsqhumd" path="res://scripts/ui/drawing/resources/brush_behaviors/TempState.cs" id="9_ohrtu"]
 
 [sub_resource type="Resource" id="Resource_5a71b"]
 script = ExtResource("1_3mpqm")
@@ -19,17 +24,48 @@ metadata/_custom_type_script = "uid://ctwr7tpgocsul"
 [sub_resource type="Resource" id="Resource_goqy0"]
 script = ExtResource("4_00ker")
 Texture = ExtResource("3_7qajg")
-SizeOverride = Vector2(64, 64)
+SizeOverride = Vector2(32, 32)
 TintUsingColor = true
+MultiplyByColor = false
 FillGapsBetweenDraws = true
 RandomAngleRange = Vector2(0, 0)
 RandomScaleRange = Vector2(1, 1)
 metadata/_custom_type_script = "uid://drcqrruwqhh3q"
 
+[sub_resource type="Resource" id="Resource_ohrtu"]
+script = ExtResource("5_ohrtu")
+_hueChange = 0.0
+_saturationMultiplier = 0.5
+_valueMultiplier = 1.0
+metadata/_custom_type_script = "uid://8u4mcihu24sy"
+
+[sub_resource type="Resource" id="Resource_x58fj"]
+script = ExtResource("6_ohrtu")
+InnerRadius = 16.0
+OuterRadius = 17.0
+metadata/_custom_type_script = "uid://0qd7dwd56ck5"
+
+[sub_resource type="Resource" id="Resource_p24ke"]
+script = ExtResource("7_ohrtu")
+Textures = Array[Texture2D]([ExtResource("6_mlred")])
+Size = Vector2(4, 4)
+Offset = Vector2(-2, -2)
+TintUsingColor = false
+MultiplyByColor = true
+RandomAngleRange = Vector2(0, 0)
+RandomScaleRange = Vector2(0.5, 1)
+metadata/_custom_type_script = "uid://c884dpjmfme40"
+
+[sub_resource type="Resource" id="Resource_av3hk"]
+script = ExtResource("9_ohrtu")
+_resampleDistance = true
+_brushBehaviors = Array[Object]([SubResource("Resource_x58fj"), SubResource("Resource_p24ke")])
+metadata/_custom_type_script = "uid://wt4wwjsqhumd"
+
 [resource]
 script = ExtResource("5_mlred")
 Name = "Christmas Lights"
-Behaviors = Array[Object]([SubResource("Resource_5a71b"), SubResource("Resource_cj32i"), SubResource("Resource_goqy0")])
+Behaviors = Array[Object]([SubResource("Resource_5a71b"), SubResource("Resource_cj32i"), SubResource("Resource_goqy0"), SubResource("Resource_ohrtu"), SubResource("Resource_av3hk")])
 StartBehaviors = null
 FinishBehaviors = null
 metadata/_custom_type_script = "uid://wqjbvlsij6wj"

@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=15 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
 [ext_resource type="Shader" uid="uid://8qc7y5sk72ig" path="res://shaders/background_scroll.gdshader" id="1_l8t6x"]
 [ext_resource type="Texture2D" uid="uid://sof3dakv1wbd" path="res://textures/bg_grid.png" id="2_l8t6x"]
+[ext_resource type="Resource" uid="uid://cmvktdutecflg" path="res://drawing_resources/default_tool_state.tres" id="2_yc0ux"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="3_travt"]
 [ext_resource type="Script" uid="uid://dhj15jvhu7awh" path="res://scripts/ui/drawing/DrawCanvas.cs" id="5_oxwcw"]
 [ext_resource type="PackedScene" uid="uid://dikgniiqb312x" path="res://scenes/ui/topbar.tscn" id="6_b65ll"]
@@ -14,7 +15,7 @@ shader = ExtResource("1_l8t6x")
 shader_parameter/uv_scale = Vector2(1.5, 1.5)
 shader_parameter/scroll_speed = Vector2(0.5, 0.25)
 
-[sub_resource type="Image" id="Image_oxwcw"]
+[sub_resource type="Image" id="Image_yc0ux"]
 data = {
 "data": PackedByteArray(255, 255, 255, 255),
 "format": "RGBA8",
@@ -24,7 +25,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_b1beo"]
-image = SubResource("Image_oxwcw")
+image = SubResource("Image_yc0ux")
 
 [sub_resource type="Environment" id="Environment_oi40j"]
 background_mode = 1
@@ -45,6 +46,7 @@ Toolbar = NodePath("Layout/Toolbar")
 Topbar = NodePath("Layout/Topbar")
 TargetDrawCanvas = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Canvas Viewport/Canvas")
 CanvasRoot = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/TextureRect")
+DefaultToolState = ExtResource("2_yc0ux")
 
 [node name="Background" type="MarginContainer" parent="."]
 layout_mode = 1

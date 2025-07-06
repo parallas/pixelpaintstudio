@@ -6,9 +6,9 @@ public partial class ToolState : Resource
 {
     [Signal] public delegate void ToolChangedEventHandler(ToolDefinition toolDefinition);
     [Signal] public delegate void BrushChangedEventHandler(BrushDefinition brushDefinition);
-    [Signal] public delegate void ColorChangedEventHandler(Color color);
+    [Signal] public delegate void InkChangedEventHandler(InkDefinition ink);
     [Export] public ToolDefinition ToolDefinition { get; private set; }
-    [Export] public Color BrushColor { get; private set; } = Colors.Red;
+    [Export] public InkDefinition InkDefinition { get; private set; }
 
     public void SetTool(ToolDefinition tool)
     {
@@ -17,10 +17,10 @@ public partial class ToolState : Resource
         EmitSignalToolChanged(tool);
     }
 
-    public void SetColor(Color color)
+    public void SetInk(InkDefinition ink)
     {
-        if (color == BrushColor) return;
-        BrushColor = color;
-        EmitSignalColorChanged(color);
+        if (ink == InkDefinition) return;
+        InkDefinition = ink;
+        EmitSignalInkChanged(ink);
     }
 }

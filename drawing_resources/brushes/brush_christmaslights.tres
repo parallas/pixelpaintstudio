@@ -24,6 +24,7 @@ script = ExtResource("4_r4vfi")
 Texture = ExtResource("3_3yagk")
 SizeOverride = Vector2(8, 8)
 TintUsingColor = true
+MultiplyByColor = false
 FillGapsBetweenDraws = true
 RandomAngleRange = Vector2(0, 0)
 RandomScaleRange = Vector2(1, 1)
@@ -38,8 +39,8 @@ metadata/_custom_type_script = "uid://6tsv2hlggasd"
 
 [sub_resource type="Gradient" id="Gradient_3yagk"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8)
-colors = PackedColorArray(1, 0, 0, 1, 1, 0.684, 0.21, 1, 0.171, 0.57, 0.21755, 1, 0.1914, 0.38367, 0.87, 1, 0.92, 0.3588, 0.80776, 1)
+offsets = PackedFloat32Array(0, 0.201622, 0.4, 0.6, 0.8)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.75, 0, 1, 0.049, 0.49, 0.10045, 1, 0.0483, 0.230115, 0.69, 1, 1, 0.27, 0.854, 1)
 
 [sub_resource type="Resource" id="Resource_r4vfi"]
 script = ExtResource("5_lssp1")
@@ -52,6 +53,7 @@ Textures = Array[Texture2D]([ExtResource("6_lssp1")])
 Size = Vector2(40, 40)
 Offset = Vector2(-20, 0)
 TintUsingColor = true
+MultiplyByColor = false
 RandomAngleRange = Vector2(-45, 45)
 RandomScaleRange = Vector2(0.8, 1.8)
 metadata/_custom_type_script = "uid://c884dpjmfme40"

@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://1dgjl4mfmmc0"]
+[gd_scene load_steps=5 format=3 uid="uid://1dgjl4mfmmc0"]
 
 [ext_resource type="PackedScene" uid="uid://bcs3ibma0b68n" path="res://scenes/ui/main_ui.tscn" id="1_s3esy"]
 [ext_resource type="Script" uid="uid://dy007rmbyjgxk" path="res://scripts/ui/GamepadToMouseTranslator.cs" id="2_72e8q"]
 [ext_resource type="Script" uid="uid://cva3v86q0cc55" path="res://scripts/ui/PlayerCursorSpawnManager.cs" id="2_ygxny"]
 [ext_resource type="PackedScene" uid="uid://bvjmrg7av4u7l" path="res://scenes/ui/game_cursor.tscn" id="3_ipu61"]
-[ext_resource type="Resource" uid="uid://cmvktdutecflg" path="res://drawing_resources/default_tool_state.tres" id="4_ipu61"]
 
 [node name="Node" type="Node"]
 
@@ -17,4 +16,3 @@ _cursorScene = ExtResource("3_ipu61")
 _parentForNewCursors = NodePath("../Main Editor")
 
 [node name="Main Editor" parent="." instance=ExtResource("1_s3esy")]
-DefaultToolState = ExtResource("4_ipu61")

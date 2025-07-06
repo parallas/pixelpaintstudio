@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="ToolState" load_steps=3 format=3 uid="uid://cmvktdutecflg"]
+[gd_resource type="Resource" script_class="ToolState" load_steps=4 format=3 uid="uid://cmvktdutecflg"]
 
+[ext_resource type="Resource" uid="uid://bra1qssvdlufc" path="res://drawing_resources/ink/ink_main_00_red.tres" id="1_g8y3n"]
 [ext_resource type="Resource" uid="uid://bjdlfscp6y1c0" path="res://drawing_resources/tools/tool_pen_medium.tres" id="1_w5urp"]
 [ext_resource type="Script" uid="uid://bv6edhv10dqh5" path="res://scripts/resources/ToolState.cs" id="2_g8y3n"]
 
 [resource]
 script = ExtResource("2_g8y3n")
 ToolDefinition = ExtResource("1_w5urp")
-BrushColor = Color(1, 0, 0, 1)
+InkDefinition = ExtResource("1_g8y3n")
 metadata/_custom_type_script = "uid://bv6edhv10dqh5"

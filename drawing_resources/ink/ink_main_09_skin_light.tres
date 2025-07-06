@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="InkDefinition" load_steps=2 format=3 uid="uid://bkincnv3g6d8e"]
+
+[ext_resource type="Script" uid="uid://bxus5qv2mj6u5" path="res://scripts/ui/drawing/resources/InkDefinition.cs" id="1_1n5vw"]
+
+[resource]
+script = ExtResource("1_1n5vw")
+_color = Color(1, 0.764706, 0.560784, 1)
+_colorMode = 0
+metadata/_custom_type_script = "uid://bxus5qv2mj6u5"

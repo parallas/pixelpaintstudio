@@ -6,11 +6,14 @@ public partial class ColorPaletteBar : PanelContainer
 {
     [Signal] public delegate void OnColorChangeEventHandler(Color color);
 
-    [Export] public ToolState ToolState { get; private set; }
-    [Export] private Array<PaintColorButton> _paintColorButtons = new Array<PaintColorButton>();
+    [Export] private Array<PaintColorButton> _paintColorButtons;
 
-    public void SetToolState(ToolState toolState)
+    public void SetInkArray(Array<InkDefinition> inkDefinitions)
     {
-        ToolState = toolState;
+        var min = Math.Min(inkDefinitions.Count, _paintColorButtons.Count);
+        for (var i = 0; i < min; i++)
+        {
+            _paintColorButtons[i].SetInkDefinition(inkDefinitions[i]);
+        }
     }
 }

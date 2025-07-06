@@ -539,4 +539,17 @@ public static class MathUtil
         return a1b1;
     }
 
+    public static (float h, float s, float l) HsvToHsl(float h, float s, float v)
+    {
+        float l = v * (1f - s / 2f);
+        s = l is 0 or 1 ? 0f : (v - l) / Mathf.Min(l, 1 - l);
+        return (h, s, l);
+    }
+
+    public static (float h, float s, float v) HslToHsv(float h, float s, float l)
+    {
+        float v = l + s * Mathf.Min(l, 1 - l);
+        s = (v is 0) ? 0f : 2 * (1f - l / v);
+        return (h, s, v);
+    }
 }

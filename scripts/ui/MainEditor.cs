@@ -56,7 +56,8 @@ public partial class MainEditor : Control
             if (drawingCursor is null) continue;
             if (!PlayerToolStates.TryGetValue(playerId, out var toolState)) continue;
 
-            drawState.Process(TargetDrawCanvas.GetCanvasPosition(drawingCursor.GlobalPosition), toolState.BrushColor, delta);
+            var color = toolState.InkDefinition.SampleColor(drawState.DrawingTime);
+            drawState.Process(TargetDrawCanvas.GetCanvasPosition(drawingCursor.GlobalPosition), color, delta);
             toolState.ToolDefinition.BrushDefinition?.Process(drawState, delta);
 
             drawState.CanvasItem?.QueueRedraw();
@@ -80,10 +81,11 @@ public partial class MainEditor : Control
         {
             if (PlayerDrawStates.ContainsKey(playerId)) return;
 
+            var color = toolState.InkDefinition.SampleColor(0);
             var drawState = DrawState.Start(
                 TargetDrawCanvas,
                 TargetDrawCanvas.GetCanvasPosition(gameCursor.GlobalPosition),
-                toolState.BrushColor
+                color
             );
             PlayerDrawStates.TryAdd(playerId, drawState);
 
@@ -92,9 +94,10 @@ public partial class MainEditor : Control
         if (@event.IsActionReleased("click"))
         {
             if (!PlayerDrawStates.TryGetValue(playerId, out var drawState)) return;
+            var color = toolState.InkDefinition.SampleColor(drawState.DrawingTime);
             drawState.Finish(
                 TargetDrawCanvas.GetCanvasPosition(gameCursor.GlobalPosition),
-                toolState.BrushColor,
+                color,
                 0
             );
             toolState.ToolDefinition.BrushDefinition?.Finish(drawState, 0);

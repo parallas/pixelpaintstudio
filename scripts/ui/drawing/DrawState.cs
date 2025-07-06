@@ -15,6 +15,8 @@ public class DrawState
     public Vector2 EvaluatedScale;
     public float DrawingTime;
 
+    public Vector2 EvaluatedVelocity => EvaluatedPosition - LastEvaluatedPosition;
+
     public enum States
     {
         Start,
@@ -53,5 +55,23 @@ public class DrawState
         CursorPosition = cursorPosition;
         CursorColor = cursorColor;
         DrawingTime += (float)delta;
+    }
+
+    public DrawState Duplicate()
+    {
+        return new DrawState()
+        {
+            State = State,
+            CanvasItem = CanvasItem,
+            CursorPosition = CursorPosition,
+            CursorStartPosition = CursorStartPosition,
+            LastCursorPosition = LastCursorPosition,
+            EvaluatedPosition = EvaluatedPosition,
+            LastEvaluatedPosition = LastEvaluatedPosition,
+            CursorColor = CursorColor,
+            EvaluatedColor = EvaluatedColor,
+            EvaluatedScale = EvaluatedScale,
+            DrawingTime = DrawingTime,
+        };
     }
 }

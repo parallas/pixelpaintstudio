@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Parallas;
@@ -8,12 +9,11 @@ public partial class PaintColorButton : VirtualCursorButton
 {
     [Export] private PaintBlob _paintBlob;
     [Export] private Control _visualRoot;
-    [Export] private Color _paintColor = Colors.Red;
+    [Export] private InkDefinition _inkDefinition;
     [Export] private bool _scaleWhenSelected = true;
     [Export] private bool _setToolColorWhenClicked = true;
     private Vector2 _scale = Vector2.One;
     private Vector2 _scaleVelocity = Vector2.Zero;
-    public ToolState ToolState { get; private set; }
 
     public bool IsSelected { get; private set; }
 
@@ -23,7 +23,6 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base._Ready();
 
-        _paintBlob.SetColor(_paintColor);
         RandomizeOrientation();
     }
 
@@ -31,11 +30,13 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base._Process(delta);
 
+        if (_inkDefinition is not null) _paintBlob.SetColor(_inkDefinition.SampleColor(Time.GetTicksMsec() / 1000.0f));
+
         _editor ??= GetTree().GetFirstNodeInGroup("main_editor") as MainEditor;
         if (_editor is null) return;
 
         IsSelected =
-            _editor.PlayerToolStates.Values.FirstOrDefault(toolState => toolState.BrushColor == _paintColor) is not null;
+            _editor.PlayerToolStates.Values.FirstOrDefault(toolState => toolState.InkDefinition == _inkDefinition) is not null;
 
         _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
 
@@ -76,7 +77,6 @@ public partial class PaintColorButton : VirtualCursorButton
         if (_editor is null) return;
 
         if (!_editor.PlayerToolStates.TryGetValue(playerId, out var toolState)) return;
-        ToolState = toolState;
 
         if (_setToolColorWhenClicked)
             SetToolToColor(toolState);
@@ -85,12 +85,11 @@ public partial class PaintColorButton : VirtualCursorButton
             RandomizeOrientation();
             _scaleVelocity = Vector2.One * 10f;
         }
-        SetDisplayColor(toolState.BrushColor);
     }
 
     public void SetToolToColor(ToolState toolState)
     {
-        toolState.SetColor(_paintColor);
+        toolState.SetInk(_inkDefinition);
         RandomizeOrientation();
         _scaleVelocity = Vector2.One * 10f;
     }
@@ -102,9 +101,9 @@ public partial class PaintColorButton : VirtualCursorButton
         if (GD.Randf() < 0.5f) _paintBlob.RotateY(Mathf.Pi);
     }
 
-    public void SetDisplayColor(Color color)
+    public void SetInkDefinition([NotNull]InkDefinition ink)
     {
-        _paintColor = color;
-        _paintBlob.SetColor(color);
+        _inkDefinition = ink;
+        _paintBlob.SetColor(_inkDefinition.SampleColor(Time.GetTicksMsec() / 1000.0f));
     }
 }

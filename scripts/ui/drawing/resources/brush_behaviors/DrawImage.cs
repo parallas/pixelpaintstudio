@@ -9,6 +9,7 @@ public partial class DrawImage : BrushBehavior
     [Export] public Vector2 Size { get; set; }
     [Export] public Vector2 Offset { get; set; }
     [Export] public bool TintUsingColor { get; set; }
+    [Export] public bool MultiplyByColor { get; set; }
 
     [ExportGroup("Randomness")]
     [Export] public Vector2 RandomAngleRange { get; set; }
@@ -37,7 +38,8 @@ public partial class DrawImage : BrushBehavior
         canvasItem.DrawSetTransformMatrix(transform);
 
         if (TintUsingColor) BrushUtils.Colorize(_imageDataCache, drawState.EvaluatedColor);
-        canvasItem.DrawTextureRect(_imageDataCache.ImageTexture, new Rect2(Vector2.Zero, Size), false, Colors.White);
+        Color color = MultiplyByColor ? drawState.EvaluatedColor : Colors.White;
+        canvasItem.DrawTextureRect(_imageDataCache.ImageTexture, new Rect2(Vector2.Zero, Size), false, color);
 
         canvasItem.DrawSetTransformMatrix(Transform2D.Identity);
     }

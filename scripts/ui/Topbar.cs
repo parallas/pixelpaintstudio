@@ -10,8 +10,9 @@ public partial class Topbar : MarginContainer
     [Export] public ToolState ToolState { get; private set; }
 
     [Export] public ColorPaletteBar ColorPaletteBar { get; private set; }
+    [Export] public Array<InkDefinition> AllInk { get; private set; }
 
-    [Export] public Array<Control> MenuBars { get; private set; } = new Array<Control>();
+    [Export] public Array<Control> MenuBars { get; private set; }
     [Export] public Control CurrentMenuBar { get; private set; }
     [Export] public Control InkMenu { get; private set; }
     [Export] public Control ToolOptionsMenu { get; private set; }
@@ -32,20 +33,22 @@ public partial class Topbar : MarginContainer
             menuBar.SetDrawBehindParent(true);
             menuBar.SetPivotOffset(new Vector2(0f, menuBar.Size.Y * 0.5f));
         }
+
+        ColorPaletteBar.SetInkArray(AllInk);
     }
 
     public override void _ExitTree()
     {
         base._ExitTree();
 
-        if (ToolState is not null) ToolState.ColorChanged -= SetColorMenuButtonColor;
+        if (ToolState is not null) ToolState.InkChanged -= SetColorMenuButtonColor;
     }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
 
-        SetColorMenuButtonColor(OpenColorsButton.ToolState?.BrushColor ?? Colors.Red);
+        // SetColorMenuButtonColor(OpenColorsButton.ToolState?.InkDefinition);
 
         MathUtil.Spring(
             ref _squashStretchAmount,
@@ -70,17 +73,16 @@ public partial class Topbar : MarginContainer
 
     public void SetToolState(ToolState toolState)
     {
-        if (ToolState is not null) ToolState.ColorChanged -= SetColorMenuButtonColor;
+        if (ToolState is not null) ToolState.InkChanged -= SetColorMenuButtonColor;
 
         ToolState = toolState;
-        ColorPaletteBar.SetToolState(toolState);
 
-        ToolState.ColorChanged += SetColorMenuButtonColor;
+        ToolState.InkChanged += SetColorMenuButtonColor;
     }
 
-    private void SetColorMenuButtonColor(Color color)
+    private void SetColorMenuButtonColor(InkDefinition ink)
     {
-        OpenColorsButton.SetDisplayColor(color);
+        OpenColorsButton.SetInkDefinition(ink);
     }
 
     public void SwitchToColorsMenu()
