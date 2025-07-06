@@ -5,7 +5,6 @@ using Godot.Collections;
 [GlobalClass]
 public partial class BrushDefinition : Resource
 {
-    [Export] public string Name;
     [Export] public Array<BrushBehavior> Behaviors;
     [Export] public Array<BrushBehavior> StartBehaviors;
     [Export] public Array<BrushBehavior> FinishBehaviors;
