@@ -10,8 +10,6 @@ public partial class Topbar : MarginContainer
     [Export] public ToolState ToolState { get; private set; }
 
     [Export] public ColorPaletteBar ColorPaletteBar { get; private set; }
-    [Export] public Array<InkDefinition> AllInk { get; private set; }
-
     [Export] public Array<Control> MenuBars { get; private set; }
     [Export] public Control CurrentMenuBar { get; private set; }
     [Export] public Control InkMenu { get; private set; }
@@ -33,8 +31,6 @@ public partial class Topbar : MarginContainer
             menuBar.SetDrawBehindParent(true);
             menuBar.SetPivotOffset(new Vector2(0f, menuBar.Size.Y * 0.5f));
         }
-
-        ColorPaletteBar.SetInkArray(AllInk);
     }
 
     public override void _ExitTree()

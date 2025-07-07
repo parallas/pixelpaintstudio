@@ -17,6 +17,32 @@ public partial class MainEditor : Control
     public readonly Dictionary<int, ToolState> PlayerToolStates = new Dictionary<int, ToolState>();
     private readonly Dictionary<int, DrawState> PlayerDrawStates = new Dictionary<int, DrawState>();
 
+    public static readonly List<InkDefinition> AllInkDefinitions =
+    [
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_00_red.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_01_orange.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_02_yellow.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_03_lime.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_04_green.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_05_blue.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_06_indigo.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_07_violet.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_08_pink.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_09_skin_light.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_10_skin_medium.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_11_skin_tan.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_12_skin_dark.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_13_black.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_14_gray.tres"),
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_15_white.tres"),
+
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_rainbow.tres"),
+        new InkDefinition
+        {
+
+        }
+    ];
+
     public override void _Ready()
     {
         base._Ready();

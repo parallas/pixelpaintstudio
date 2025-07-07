@@ -4,7 +4,7 @@ using System;
 [GlobalClass]
 public partial class InkDefinition : Resource
 {
-    [Export] private Color _color;
+    [Export(PropertyHint.ColorNoAlpha)] private Color _color;
     [Export] private Gradient _gradient;
     [Export] private ColorModes _colorMode;
     [Export] private Texture2D _iconTexture;

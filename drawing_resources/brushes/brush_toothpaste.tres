@@ -1,16 +1,14 @@
 [gd_resource type="Resource" script_class="BrushDefinition" load_steps=9 format=3 uid="uid://6hhmc6ghd7gb"]
 
-[ext_resource type="Script" uid="uid://beh8dtjiumggc" path="res://scripts/ui/drawing/resources/brush_behaviors/SpringToCursor.cs" id="1_g05as"]
+[ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_bsohq"]
 [ext_resource type="Script" uid="uid://b17vdftr7prjq" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColor.cs" id="2_bsohq"]
 [ext_resource type="Texture2D" uid="uid://cuogndj0bb4h8" path="res://textures/glob_toothpaste.png" id="3_12i7m"]
 [ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="4_5wtyu"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="10_p325l"]
 
-[sub_resource type="Resource" id="Resource_5a71b"]
-script = ExtResource("1_g05as")
-_dampingRatio = 2.0
-_frequency = 100.0
-metadata/_custom_type_script = "uid://beh8dtjiumggc"
+[sub_resource type="Resource" id="Resource_12i7m"]
+script = ExtResource("1_bsohq")
+metadata/_custom_type_script = "uid://cmv66q4eh60qf"
 
 [sub_resource type="Resource" id="Resource_5f0ka"]
 script = ExtResource("2_bsohq")
@@ -30,8 +28,7 @@ metadata/_custom_type_script = "uid://drcqrruwqhh3q"
 
 [resource]
 script = ExtResource("10_p325l")
-Name = "Christmas Lights"
-Behaviors = Array[Object]([SubResource("Resource_5a71b"), SubResource("Resource_5f0ka"), SubResource("Resource_goqy0")])
+Behaviors = Array[Object]([SubResource("Resource_12i7m"), SubResource("Resource_5f0ka"), SubResource("Resource_goqy0")])
 StartBehaviors = null
 FinishBehaviors = null
 metadata/_custom_type_script = "uid://wqjbvlsij6wj"
