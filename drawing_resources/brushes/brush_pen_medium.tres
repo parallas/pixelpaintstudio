@@ -20,7 +20,6 @@ metadata/_custom_type_script = "uid://c5caugpc02fc2"
 
 [resource]
 script = ExtResource("4_4pfja")
-Name = "Pen Medium"
 Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_xeugy"), SubResource("Resource_oi40j")])
 StartBehaviors = null
 FinishBehaviors = null

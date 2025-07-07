@@ -10,7 +10,7 @@ colors = PackedColorArray(1, 0, 0, 1, 1, 0.501961, 0, 1, 1, 0.764706, 0, 1, 0, 1
 
 [resource]
 script = ExtResource("1_4pvv1")
-_color = Color(0, 0, 0, 0)
-_gradient = SubResource("Gradient_fjpf6")
-_colorMode = 1
+Color = Color(0, 0, 0, 0)
+Gradient = SubResource("Gradient_fjpf6")
+ColorMode = 1
 metadata/_custom_type_script = "uid://bxus5qv2mj6u5"

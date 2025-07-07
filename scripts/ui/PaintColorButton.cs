@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Parallas;
 
+[GlobalClass]
 public partial class PaintColorButton : VirtualCursorButton
 {
     [Export] private PaintBlob _paintBlob;
@@ -30,7 +31,7 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base._Process(delta);
 
-        if (_inkDefinition is not null) _paintBlob.SetColor(_inkDefinition.SampleColor(Time.GetTicksMsec() / 1000.0f));
+        // if (_inkDefinition is not null) _paintBlob.SetColor(_inkDefinition.SampleColor(Time.GetTicksMsec() / 1000.0f));
 
         _editor ??= GetTree().GetFirstNodeInGroup("main_editor") as MainEditor;
         if (_editor is null) return;
@@ -104,6 +105,25 @@ public partial class PaintColorButton : VirtualCursorButton
     public void SetInkDefinition([NotNull]InkDefinition ink)
     {
         _inkDefinition = ink;
-        _paintBlob.SetColor(_inkDefinition.SampleColor(Time.GetTicksMsec() / 1000.0f));
+
+        if (ink.Gradient is { } gradient)
+        {
+            _paintBlob.SetColor(Colors.White);
+            _paintBlob.SetTexture(new GradientTexture2D
+            {
+                Gradient = gradient,
+                Width = 64,
+                Height = 64,
+                Fill = GradientTexture2D.FillEnum.Linear,
+                FillFrom = Vector2.Right * 0.0f,
+                FillTo = Vector2.Right * 1.05f,
+                Repeat = GradientTexture2D.RepeatEnum.Repeat,
+            });
+        }
+        else
+        {
+            _paintBlob.SetTexture(null);
+            _paintBlob.SetColor(_inkDefinition.Color);
+        }
     }
 }
