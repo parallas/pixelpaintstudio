@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=9 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="Script" uid="uid://db74nfyn3mccf" path="res://scripts/ui/Topbar.cs" id="1_xm8n6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bra1qssvdlufc" path="res://drawing_resources/ink/ink_main_00_red.tres" id="2_mhh6w"]
 [ext_resource type="StyleBox" uid="uid://dx6sib3bjuyju" path="res://styles/drawer.tres" id="4_2uv7f"]
 [ext_resource type="Script" uid="uid://b7qb4b8ako0hj" path="res://scripts/ui/ColorPaletteBar.cs" id="5_ar3oq"]
+[ext_resource type="Script" uid="uid://hpmh2lxuwadp" path="res://scripts/ui/VirtualCursorButton.cs" id="6_xm8n6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm8n6"]
 content_margin_left = 48.0
@@ -188,12 +189,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 64
 text = "<"
+script = ExtResource("6_xm8n6")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"
 
 [node name="Next Page Button2" type="Button" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 64
 text = ">"
+script = ExtResource("6_xm8n6")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"
 
 [node name="Stencil Menu" type="PanelContainer" parent="HBoxContainer/Control"]
 visible = false
@@ -309,3 +314,5 @@ text = ">"
 
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu"]
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Button2" to="." method="SwitchToToolOptionsMenu"]
+[connection signal="pressed" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage"]
+[connection signal="pressed" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button2" to="HBoxContainer/Control/Color Palette" method="NextPage"]

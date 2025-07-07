@@ -25,22 +25,22 @@ public partial class ColorPaletteBar : PanelContainer
     public override void _Process(double delta)
     {
         base._Process(delta);
+    }
 
-        var pageBefore = _page;
-        if (Input.IsActionJustPressed("cursor_right"))
-        {
-            _page++;
-        }
-        if (Input.IsActionJustPressed("cursor_left"))
-        {
-            _page--;
-        }
-        _page = (int)Mathf.Clamp(_page, 0f, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
+    public void NextPage()
+    {
+        var newPage = Mathf.Min(_page + 1, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
+        if (_page == newPage) return;
+        _page = newPage;
+        SetPageValues();
+    }
 
-        if (pageBefore != _page)
-        {
-            SetPageValues();
-        }
+    public void PreviousPage()
+    {
+        var newPage = Mathf.Max(_page - 1, 0);
+        if (_page == newPage) return;
+        _page = newPage;
+        SetPageValues();
     }
 
     private void SetPageValues()

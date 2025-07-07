@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using Parallas;
 
+[GlobalClass]
 public partial class VirtualCursorButton : Button
 {
     public bool IsHoveredVirtually => _hoveredPlayerIds.Count > 0;
