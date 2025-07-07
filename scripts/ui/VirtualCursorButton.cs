@@ -6,6 +6,7 @@ using Parallas;
 [GlobalClass]
 public partial class VirtualCursorButton : Button
 {
+    [Signal] public delegate void PressedVirtuallyEventHandler();
     public bool IsHoveredVirtually => _hoveredPlayerIds.Count > 0;
     public bool IsPressedVirtually => _pressedPlayerIds.Count > 0;
     private readonly HashSet<int> _hoveredPlayerIds = [];
@@ -67,13 +68,15 @@ public partial class VirtualCursorButton : Button
         {
             if (!released) return;
             VirtualCursorPressed(@event, playerId);
-            EmitSignalPressed();
+            // EmitSignalPressed();
+            EmitSignalPressedVirtually();
         }
         else
         {
             if (!pressed) return;
             VirtualCursorPressed(@event, playerId);
-            EmitSignalPressed();
+            // EmitSignalPressed();
+            EmitSignalPressedVirtually();
         }
     }
 }

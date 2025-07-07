@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Godot.Collections;
 
 public partial class ColorPaletteBar : PanelContainer
@@ -33,6 +34,12 @@ public partial class ColorPaletteBar : PanelContainer
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
+
+        for (var i = 0; i < _paintColorButtons.Length; i++)
+        {
+            _paintColorButtons[i].RandomizeOrientation();
+        }
+        AnimateBounceDirection(-1);
     }
 
     public void PreviousPage()
@@ -41,6 +48,12 @@ public partial class ColorPaletteBar : PanelContainer
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
+
+        for (var i = 0; i < _paintColorButtons.Length; i++)
+        {
+            _paintColorButtons[i].RandomizeOrientation();
+        }
+        AnimateBounceDirection(-1);
     }
 
     private void SetPageValues()
@@ -60,14 +73,28 @@ public partial class ColorPaletteBar : PanelContainer
             if (!IsInstanceValid(button)) continue;
             if (i < inkDefinitions.Length) {
                 button.SetVisible(true);
-                button.SetProcess(true);
+                button.ProcessMode = ProcessModeEnum.Always;
                 button.SetInkDefinition(inkDefinitions[i]);
             }
             else
             {
                 button.SetVisible(false);
-                button.SetProcess(false);
+                button.ProcessMode = ProcessModeEnum.Disabled;
             }
+        }
+    }
+
+    private async Task AnimateBounceDirection(int direction)
+    {
+        if (direction != 1 && direction != -1) direction = 1;
+
+        var start = direction == 1 ? 0 : _paintColorButtons.Length - 1;
+        var end = direction == 1 ? _paintColorButtons.Length : 0;
+        for (var i = start; i != end; i += direction * 2)
+        {
+            _paintColorButtons[i].Bounce(5f);
+            _paintColorButtons[i + direction].Bounce(5f);
+            await Task.Delay(1);
         }
     }
 }

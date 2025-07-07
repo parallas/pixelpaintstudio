@@ -314,5 +314,5 @@ text = ">"
 
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu"]
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Button2" to="." method="SwitchToToolOptionsMenu"]
-[connection signal="pressed" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage"]
-[connection signal="pressed" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button2" to="HBoxContainer/Control/Color Palette" method="NextPage"]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage"]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button2" to="HBoxContainer/Control/Color Palette" method="NextPage"]

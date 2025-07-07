@@ -84,7 +84,7 @@ public partial class PaintColorButton : VirtualCursorButton
         else
         {
             RandomizeOrientation();
-            _scaleVelocity = Vector2.One * 10f;
+            Bounce();
         }
     }
 
@@ -92,14 +92,19 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         toolState.SetInk(_inkDefinition);
         RandomizeOrientation();
-        _scaleVelocity = Vector2.One * 10f;
+        Bounce();
     }
 
-    private void RandomizeOrientation()
+    public void RandomizeOrientation()
     {
         _paintBlob.RotateZ(GD.Randf() * 2f * Mathf.Pi);
         if (GD.Randf() < 0.5f) _paintBlob.RotateX(Mathf.Pi);
         if (GD.Randf() < 0.5f) _paintBlob.RotateY(Mathf.Pi);
+    }
+
+    public void Bounce(float intensity = 10f)
+    {
+        _scaleVelocity = Vector2.One * intensity;
     }
 
     public void SetInkDefinition([NotNull]InkDefinition ink)

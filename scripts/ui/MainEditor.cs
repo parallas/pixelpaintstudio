@@ -44,11 +44,13 @@ public partial class MainEditor : Control
         InkDefinition.FromColors(["b899de", "ffffff", "6b8e3b"], 0.8f), // Genderqueer Pride
         InkDefinition.FromColors(["000000", "b9b9b9", "ffffff", "b8f484", "ffffff", "b9b9b9", "000000"], 0.8f), // Agender Pride
         InkDefinition.FromColors(["c57aa1", "eba6cb", "d6c6e7", "ffffff", "d6c6e7", "9ac6e7", "6b83cf"], 0.8f), // Bigender Pride
+        InkDefinition.FromColors(["7f7f7f", "c3c3c3", "fbff73", "ffffff", "fbff73", "c3c3c3", "7f7f7f"], 0.8f), // Demigender Pride
         InkDefinition.FromColors(["d62c00", "ff9956", "ffffff", "d363a4", "a40062"], 0.8f), // Lesbian Pride
         InkDefinition.FromColors(["068e6f", "27cfaa", "98e9c1", "ffffff", "7aace3", "5049cb", "3c1a77"], 0.8f), // Gay Pride
         InkDefinition.FromColors(["d70271", "d70271", "734e97", "0038a8", "0038a8"], 0.8f), // Bi Pride
         InkDefinition.FromColors(["ff218b", "ffd900", "1fb3fe"], 0.8f), // Pan Pride
         InkDefinition.FromColors(["010101", "a0a0a0", "ffffff", "9a0878"], 0.8f), // Ace Pride
+        InkDefinition.FromColors(["f61db9", "05d569", "1d92f6"], 0.8f), // Polysexual Pride
         InkDefinition.FromColors(["623804", "d46400", "ffdd64", "fee6b8", "ffffff", "555555", "000000"], 0.8f), // Bear Pride
 
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_rainbow.tres"),
