@@ -1,19 +1,23 @@
 using Godot;
 using System;
+using System.Linq;
 using Godot.Collections;
 
 public partial class ColorPaletteBar : PanelContainer
 {
     [Signal] public delegate void OnColorChangeEventHandler(Color color);
 
-    [Export] private Array<PaintColorButton> _paintColorButtons;
+    private PaintColorButton[] _paintColorButtons;
 
-    private int ItemsPerPage => _paintColorButtons.Count;
+    private int ItemsPerPage => _paintColorButtons.Length;
     private int _page = 0;
 
     public override void _Ready()
     {
         base._Ready();
+
+        _paintColorButtons = FindChildren("*", "PaintColorButton").OfType<PaintColorButton>().ToArray();
+        GD.Print($"Found {_paintColorButtons.Length} color palette bars");
 
         SetPageValues();
     }
@@ -49,7 +53,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void SetInkArray(InkDefinition[] inkDefinitions)
     {
-        var min = _paintColorButtons.Count;
+        var min = _paintColorButtons.Length;
         for (var i = 0; i < min; i++)
         {
             var button = _paintColorButtons[i];

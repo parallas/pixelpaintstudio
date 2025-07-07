@@ -36,29 +36,22 @@ public partial class MainEditor : Control
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_14_gray.tres"),
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_15_white.tres"),
 
+        InkDefinition.FromColors(["e60001", "ff8d02", "ffed06", "008220", "004dfe", "760088"], 0.8f), // Pride
+        InkDefinition.FromColors(["5acffb", "f5abb9", "ffffff", "f5abb9", "5acffb"], 0.8f), // Trans Pride
+        InkDefinition.FromColors(["f5ea29", "ffffff", "9a59ce", "2d2d2d"], 0.8f), // NB Pride
+        InkDefinition.FromColors(["ffd900", "ffd900", "8d01af", "ffd900", "ffd900"], 0.8f), // Intersex Pride
+        InkDefinition.FromColors(["fe75a0", "f5f5f5", "bf16d5", "2c2c2c", "333ebc"], 0.8f), // Genderfluid Pride
+        InkDefinition.FromColors(["b899de", "ffffff", "6b8e3b"], 0.8f), // Genderqueer Pride
+        InkDefinition.FromColors(["000000", "b9b9b9", "ffffff", "b8f484", "ffffff", "b9b9b9", "000000"], 0.8f), // Agender Pride
+        InkDefinition.FromColors(["c57aa1", "eba6cb", "d6c6e7", "ffffff", "d6c6e7", "9ac6e7", "6b83cf"], 0.8f), // Bigender Pride
+        InkDefinition.FromColors(["d62c00", "ff9956", "ffffff", "d363a4", "a40062"], 0.8f), // Lesbian Pride
+        InkDefinition.FromColors(["068e6f", "27cfaa", "98e9c1", "ffffff", "7aace3", "5049cb", "3c1a77"], 0.8f), // Gay Pride
+        InkDefinition.FromColors(["d70271", "d70271", "734e97", "0038a8", "0038a8"], 0.8f), // Bi Pride
+        InkDefinition.FromColors(["ff218b", "ffd900", "1fb3fe"], 0.8f), // Pan Pride
+        InkDefinition.FromColors(["010101", "a0a0a0", "ffffff", "9a0878"], 0.8f), // Ace Pride
+        InkDefinition.FromColors(["623804", "d46400", "ffdd64", "fee6b8", "ffffff", "555555", "000000"], 0.8f), // Bear Pride
+
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_rainbow.tres"),
-        new InkDefinition
-        {
-            ColorMode = InkDefinition.ColorModes.Ordered,
-            Gradient = new Gradient
-            {
-                InterpolationColorSpace = Gradient.ColorSpace.Oklab,
-                Colors = [
-                    new Color("5acffb"),
-                    new Color("f5abb9"),
-                    new Color("ffffff"),
-                    new Color("f5abb9"),
-                    new Color("5acffb"),
-                ],
-                Offsets = [
-                    0.0f,
-                    0.2f,
-                    0.4f,
-                    0.6f,
-                    0.8f,
-                ]
-            }
-        }
     ];
 
     public override void _Ready()

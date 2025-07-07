@@ -80,11 +80,10 @@ size_flags_horizontal = 3
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="Color Palette" type="PanelContainer" parent="HBoxContainer/Control" node_paths=PackedStringArray("_paintColorButtons")]
+[node name="Color Palette" type="PanelContainer" parent="HBoxContainer/Control"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("1_fg84n")
 script = ExtResource("5_ar3oq")
-_paintColorButtons = [NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button2"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button3"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button4"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button13"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button5"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button6"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button7"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button12"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button8"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button18"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button17"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button14"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button9"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button10"), NodePath("HBoxContainer/Colors Container/Colors/Paint Color Button11")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Control/Color Palette"]
 layout_mode = 2
@@ -196,12 +195,11 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 64
 text = ">"
 
-[node name="Stencil Menu" type="PanelContainer" parent="HBoxContainer/Control" node_paths=PackedStringArray("_paintColorButtons")]
+[node name="Stencil Menu" type="PanelContainer" parent="HBoxContainer/Control"]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_2uv7f")
 script = ExtResource("5_ar3oq")
-_paintColorButtons = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Control/Stencil Menu"]
 layout_mode = 2
