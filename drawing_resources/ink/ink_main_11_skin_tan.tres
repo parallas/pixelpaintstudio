@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_mybfc")
-_color = Color(0.643137, 0.368627, 0.117647, 1)
-_colorMode = 0
+Color = Color(0.643137, 0.368627, 0.117647, 1)
+ColorMode = 0
 metadata/_custom_type_script = "uid://bxus5qv2mj6u5"

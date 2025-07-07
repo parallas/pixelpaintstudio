@@ -39,7 +39,25 @@ public partial class MainEditor : Control
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_rainbow.tres"),
         new InkDefinition
         {
-
+            ColorMode = InkDefinition.ColorModes.Ordered,
+            Gradient = new Gradient
+            {
+                InterpolationColorSpace = Gradient.ColorSpace.Oklab,
+                Colors = [
+                    new Color("5acffb"),
+                    new Color("f5abb9"),
+                    new Color("ffffff"),
+                    new Color("f5abb9"),
+                    new Color("5acffb"),
+                ],
+                Offsets = [
+                    0.0f,
+                    0.2f,
+                    0.4f,
+                    0.6f,
+                    0.8f,
+                ]
+            }
         }
     ];
 

@@ -4,10 +4,10 @@ using System;
 [GlobalClass]
 public partial class InkDefinition : Resource
 {
-    [Export(PropertyHint.ColorNoAlpha)] private Color _color;
-    [Export] private Gradient _gradient;
-    [Export] private ColorModes _colorMode;
-    [Export] private Texture2D _iconTexture;
+    [Export(PropertyHint.ColorNoAlpha)] public Color Color;
+    [Export] public Gradient Gradient;
+    [Export] public ColorModes ColorMode;
+    [Export] public Texture2D IconTexture;
     public enum ColorModes
     {
         Single,
@@ -17,16 +17,16 @@ public partial class InkDefinition : Resource
 
     public Color SampleColor(float drawTime)
     {
-        switch (_colorMode)
+        switch (ColorMode)
         {
             case ColorModes.Single:
-                return _color;
+                return Color;
             case ColorModes.Ordered:
-                return _gradient.Sample(drawTime % 1f);
+                return Gradient.Sample(drawTime % 1f);
             case ColorModes.Random:
-                return _gradient.Sample(GD.Randf());
+                return Gradient.Sample(GD.Randf());
             default:
-                return _color;
+                return Color;
         }
     }
 }

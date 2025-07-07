@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_xf0nm")
-_color = Color(0.29, 0.167137, 0.0522, 1)
-_colorMode = 0
+Color = Color(0.29, 0.167137, 0.0522, 1)
+ColorMode = 0
 metadata/_custom_type_script = "uid://bxus5qv2mj6u5"
