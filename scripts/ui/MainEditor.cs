@@ -19,6 +19,7 @@ public partial class MainEditor : Control
 
     public static readonly List<InkDefinition> AllInkDefinitions =
     [
+        // Base Colors (16/16)
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_00_red.tres"),
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_01_orange.tres"),
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_02_yellow.tres"),
@@ -36,6 +37,26 @@ public partial class MainEditor : Control
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_14_gray.tres"),
         GD.Load<InkDefinition>("res://drawing_resources/ink/ink_main_15_white.tres"),
 
+        // Gradients (7/16)
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_rainbow.tres"),
+        InkDefinition.FromColors(["ff0000", "ffff00", "0000ff"], 0.75f), // Red Yellow Blue
+        InkDefinition.FromColors(["ff0000", "00ff00", "0000ff"], 0.75f), // Red Green Blue
+        InkDefinition.FromColors(["00aaff", "ffaa00"], 0.75f, repeatCount: 3), // PixelDough Stripes
+        InkDefinition.FromColors(["1e1f21", "85c46c"], 0.85f, true), // Mimi Eyes
+        InkDefinition.FromColors(["0033aa", "00aaff"], 0.1f, repeatCount: 2), // Watery
+        InkDefinition.FromColors(["aa3300", "ffaa00"], 0.1f, repeatCount: 2), // Lavay
+        InkDefinition.FromColors(["00aa33", "00ffaa"], 0.1f, repeatCount: 2), // Acidy
+        InkDefinition.FromColors(["ff00aa", "aa00ff"], 0.1f, repeatCount: 2), // Poisony
+        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_metallic.tres"),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+
+        // Pride (16/16)
         InkDefinition.FromColors(["e60001", "ff8d02", "ffed06", "008220", "004dfe", "760088"], 0.8f), // Pride
         InkDefinition.FromColors(["5acffb", "f5abb9", "ffffff", "f5abb9", "5acffb"], 0.8f), // Trans Pride
         InkDefinition.FromColors(["f5ea29", "ffffff", "9a59ce", "2d2d2d"], 0.8f), // NB Pride
@@ -53,7 +74,41 @@ public partial class MainEditor : Control
         InkDefinition.FromColors(["f61db9", "05d569", "1d92f6"], 0.8f), // Polysexual Pride
         InkDefinition.FromColors(["623804", "d46400", "ffdd64", "fee6b8", "ffffff", "555555", "000000"], 0.8f), // Bear Pride
 
-        GD.Load<InkDefinition>("res://drawing_resources/ink/ink_rainbow.tres"),
+        // Holidays (10/16)
+        InkDefinition.FromColors(["ffff00", "ffaa00", "eef7f8"], 0.75f), // Candy Corn
+        InkDefinition.FromColors(["000000", "ffaa00"], 0.75f, repeatCount: 3), // Halloween Stripes (Black Orange)
+        InkDefinition.FromColors(["aa00ff", "ffaa00"], 0.75f, repeatCount: 3), // Halloween Stripes (Purple Orange)
+        InkDefinition.FromColors(["000000", "ffaa00", "aa00ff", "00aa33"], 0.75f, repeatCount: 2), // Halloween Stripes (Multicolor)
+        InkDefinition.FromColors(["ff0000", "eef7f8"], 0.85f, repeatCount: 3), // Candy Cane (Red White)
+        InkDefinition.FromColors(["00aa33", "eef7f8"], 0.85f, repeatCount: 3), // Candy Cane (Green White)
+        InkDefinition.FromColors(["ff0000", "eef7f8", "ffaaaa", "eef7f8"], 0.85f, repeatCount: 2), // Candy Cane (Red White Pink White)
+        InkDefinition.FromColors(["ff0000", "eef7f8", "00aa33", "eef7f8"], 0.85f, repeatCount: 2), // Candy Cane (Red White Green White)
+        InkDefinition.FromColors(["f8aea4", "f8aea4", "f8aea4", "eef7f8", "eef7f8", "65bb9d", "eef7f8", "f74966", "f74966", "65bb9d"], 0.85f), // Candy Cane (Special)
+        InkDefinition.FromColors(["0033ff", "eef7f8"], 0.85f, repeatCount: 3), // Hanukkah
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+
+        // Ponies (13/16)
+        InkDefinition.FromColors(["263774", "662d8c", "ed428a", "263774"], 0.9f), // Twi
+        InkDefinition.FromColors(["feb9dc", "fffaa3"], 0.9f), // Flutter
+        InkDefinition.FromColors(["ed458c", "f3b7d2", "7fd1f4", "f3b7d2", "fdf8a9", "f3b7d2"], 0.9f), // Pink
+        InkDefinition.FromColors(["674ca0", "edf1f4", "73e7fe", "edf1f4"], 0.9f), // Rarity
+        InkDefinition.FromColors(["fff9ac", "fbba63", "ea413e", "fbba63"], 0.9f), // Apple
+        InkDefinition.FromColors(["f6545b", "f78145", "f7f2b7", "74c962", "a6e3fe", "37a9e4", "76439b"], 0.9f), // RD
+        InkDefinition.FromColors(["61c0cf", "79e3ad", "84a4ea", "e8b0f4"], 0.9f), // Celeste
+        InkDefinition.FromColors(["75a5f9", "6469bc", "120a41", "237ce6"], 0.9f), // Moon
+        InkDefinition.FromColors(["5cb0e6", "b9e0f9", "d5e9e8"], 0.9f), // Trix
+        InkDefinition.FromColors(["9f7fe5", "8ec8e7", "9f7fe5", "f4eb7c"], 0.9f), // TrixHat
+        InkDefinition.FromColors(["f2c8f8", "853fb4", "99ead9", "853fb4", "f2c8f8"], 0.9f), // Star
+        InkDefinition.FromColors(["fddf80", "ec1641", "ecdb1c", "ec1641", "fddf80"], 0.9f), // Sunset
+        InkDefinition.FromColors(["363636", "2d6b7b", "363636", "228278", "3f9c74", "62c16d", "363636"], 0.5f), // Chrysalis
+        null,
+        null,
+        null,
     ];
 
     public override void _Ready()

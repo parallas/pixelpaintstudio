@@ -30,7 +30,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void NextPage()
     {
-        var newPage = Mathf.Min(_page + 1, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
+        var newPage = Mathf.Min(_page + 1, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage) - 1);
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -71,10 +71,11 @@ public partial class ColorPaletteBar : PanelContainer
         {
             var button = _paintColorButtons[i];
             if (!IsInstanceValid(button)) continue;
-            if (i < inkDefinitions.Length) {
+            var ink = inkDefinitions[i];
+            if (i < inkDefinitions.Length && ink is not null) {
                 button.SetVisible(true);
                 button.ProcessMode = ProcessModeEnum.Always;
-                button.SetInkDefinition(inkDefinitions[i]);
+                button.SetInkDefinition(ink);
             }
             else
             {

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="InkDefinition" load_steps=3 format=3 uid="uid://bqy4wflbadebh"]
+
+[ext_resource type="Script" uid="uid://bxus5qv2mj6u5" path="res://scripts/ui/drawing/resources/InkDefinition.cs" id="1_nmh7j"]
+
+[sub_resource type="Gradient" id="Gradient_fjpf6"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.474834, 0.481481, 0.663818, 1)
+colors = PackedColorArray(0.3306, 0.58232, 0.87, 1, 0.853363, 0.912277, 0.983364, 1, 0.52, 0.3328, 0.3328, 1, 0.860465, 0.70905, 0.705837, 1, 0.650859, 0.436778, 0.435991, 1)
+
+[resource]
+script = ExtResource("1_nmh7j")
+Color = Color(0, 0, 0, 0)
+Gradient = SubResource("Gradient_fjpf6")
+ColorMode = 1
+metadata/_custom_type_script = "uid://bxus5qv2mj6u5"
