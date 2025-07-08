@@ -54,7 +54,6 @@ public partial class MainEditor : Control
         null,
         null,
         null,
-        null,
 
         // Pride (16/16)
         InkDefinition.FromColors(["e60001", "ff8d02", "ffed06", "008220", "004dfe", "760088"], 0.8f), // Pride
