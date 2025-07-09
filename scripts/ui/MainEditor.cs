@@ -166,11 +166,9 @@ public partial class MainEditor : Control
             dialog.SetFilters(["png"]);
             dialog.FileSelected += dir =>
             {
-                GD.Print($"Saving image to: {dir}");
-                if (!dir.EndsWith(".png")) dir += ".png";
-                TargetDrawCanvas.SubViewport.GetTexture().GetImage().SavePng(dir);
-                // TargetDrawCanvas.OutputTextureTarget.Texture.GetImage().SavePng(dir);
+                SaveImage(dir);
                 Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+                RemoveChild(dialog);
             };
             AddChild(dialog);
             dialog.PopupCenteredRatio();
@@ -244,5 +242,33 @@ public partial class MainEditor : Control
     {
         if (!PlayerToolStates.ContainsKey(playerId)) return;
         PlayerToolStates.Remove(playerId);
+    }
+
+    private async void SaveImage(String dir)
+    {
+        GD.Print($"Saving image to: {dir}");
+        if (!dir.EndsWith(".png")) dir += ".png";
+        var viewport = new SubViewport() { RenderTargetUpdateMode = SubViewport.UpdateMode.Once };
+        viewport.Size = TargetDrawCanvas.SubViewport.Size;
+
+        var background = new ColorRect() { Color = Colors.White };
+        viewport.AddChild(background);
+        background.SetAnchorsPreset(LayoutPreset.FullRect);
+
+        var layerImageRect = new TextureRect()
+        {
+            Texture = TargetDrawCanvas.SubViewport.GetTexture(),
+            Material = GD.Load<Material>("res://materials/brush_mix.tres")
+        };
+        viewport.AddChild(layerImageRect);
+        layerImageRect.SetAnchorsPreset(LayoutPreset.FullRect);
+
+        AddChild(viewport);
+
+        await ToSignal(RenderingServer.Singleton, RenderingServerInstance.SignalName.FramePostDraw);
+        var viewportTexture = viewport.GetTexture();
+        viewportTexture.GetImage().SavePng(dir);
+
+        RemoveChild(viewport);
     }
 }
