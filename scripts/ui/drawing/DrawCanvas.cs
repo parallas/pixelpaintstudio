@@ -6,6 +6,7 @@ public partial class DrawCanvas : Control
 {
     [Export] public TextureRect OutputTextureTarget;
     [Export] private SubViewport _subViewport;
+    public SubViewport SubViewport => _subViewport;
     [Export] private AspectRatioContainer _aspectRatioContainer;
     [Export] public Vector2I Resolution = new Vector2I(640, 360);
 

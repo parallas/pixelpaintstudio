@@ -155,6 +155,26 @@ public partial class MainEditor : Control
 
             drawState.CanvasItem?.QueueRedraw();
         }
+
+        if (Input.IsActionJustPressed("quick_export"))
+        {
+            Input.SetMouseMode(Input.MouseModeEnum.Visible);
+            var dialog = new FileDialog();
+            dialog.SetFileMode(FileDialog.FileModeEnum.SaveFile);
+            dialog.SetAccess(FileDialog.AccessEnum.Filesystem);
+            dialog.SetUseNativeDialog(true);
+            dialog.SetFilters(["png"]);
+            dialog.FileSelected += dir =>
+            {
+                GD.Print($"Saving image to: {dir}");
+                if (!dir.EndsWith(".png")) dir += ".png";
+                TargetDrawCanvas.SubViewport.GetTexture().GetImage().SavePng(dir);
+                // TargetDrawCanvas.OutputTextureTarget.Texture.GetImage().SavePng(dir);
+                Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+            };
+            AddChild(dialog);
+            dialog.PopupCenteredRatio();
+        }
     }
 
     public override void _Input(InputEvent @event)
