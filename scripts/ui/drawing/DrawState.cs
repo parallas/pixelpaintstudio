@@ -12,6 +12,7 @@ public class DrawState
     public Vector2 LastEvaluatedPosition;
     public Color CursorColor = Colors.Red;
     public Color EvaluatedColor = Colors.Red;
+    public Color LastEvaluatedColor = Colors.Red;
     public Vector2 LastEvaluatedScale;
     public Vector2 EvaluatedScale;
     public float DrawingTime;
@@ -75,6 +76,7 @@ public class DrawState
             LastEvaluatedPosition = LastEvaluatedPosition,
             CursorColor = CursorColor,
             EvaluatedColor = EvaluatedColor,
+            LastEvaluatedColor = LastEvaluatedColor,
             EvaluatedScale = EvaluatedScale,
             LastEvaluatedScale = LastEvaluatedScale,
             DrawingTime = DrawingTime,

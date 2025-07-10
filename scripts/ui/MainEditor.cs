@@ -221,6 +221,8 @@ public partial class MainEditor : Control
             // Set the last frame properties
             drawState.LastCursorPosition = drawState.CursorPosition;
             drawState.LastEvaluatedPosition = drawState.EvaluatedPosition;
+            drawState.LastEvaluatedScale = drawState.EvaluatedScale;
+            drawState.LastEvaluatedColor = drawState.EvaluatedColor;
 
             if (drawState.State == DrawState.States.Start) drawState.State = DrawState.States.Draw;
             if (drawState.State == DrawState.States.Finish) PlayerDrawStates.Remove(playerId);

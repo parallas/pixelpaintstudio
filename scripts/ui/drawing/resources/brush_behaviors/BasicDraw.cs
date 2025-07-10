@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Parallas;
 
 [GlobalClass]
 public partial class BasicDraw : BrushBehavior
@@ -10,10 +11,19 @@ public partial class BasicDraw : BrushBehavior
     {
         base.Draw(drawState, canvasItem);
 
-        var radius = Radius * drawState.EvaluatedScaleUniform;
+        var linePoints = Geometry2D.BresenhamLine(drawState.LastEvaluatedPosition.ToVector2I(), drawState.EvaluatedPosition.ToVector2I());
+        for (int i = 0; i < linePoints.Count; i++)
+        {
+            float percent = (float)i / (linePoints.Count);
+            float scaleAmount = Mathf.Lerp(drawState.LastEvaluatedScaleUniform, drawState.EvaluatedScaleUniform, percent);
+            Color color = drawState.LastEvaluatedColor.Lerp(drawState.EvaluatedColor, percent);
+            canvasItem.DrawCircle(linePoints[i], Radius * scaleAmount, color);
+        }
 
-        canvasItem.DrawCircle(drawState.LastEvaluatedPosition, radius, drawState.EvaluatedColor);
-        canvasItem.DrawLine(drawState.LastEvaluatedPosition, drawState.EvaluatedPosition, drawState.EvaluatedColor, radius * 2);
-        canvasItem.DrawCircle(drawState.EvaluatedPosition, radius, drawState.EvaluatedColor);
+        canvasItem.DrawCircle(
+            drawState.EvaluatedPosition,
+            Radius * drawState.EvaluatedScaleUniform,
+            drawState.EvaluatedColor
+        );
     }
 }
