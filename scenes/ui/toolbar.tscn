@@ -51,10 +51,10 @@ viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewp
 [sub_resource type="ViewportTexture" id="ViewportTexture_i1qcg"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Bubble/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_4dr0l"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Fill/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_4dr0l"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_mbflq"]
@@ -163,7 +163,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
 offset_top = 8.0
-offset_right = 2420.0
+offset_right = 1.0
 offset_bottom = 16.0
 texture = SubResource("ImageTexture_cicof")
 script = ExtResource("9_ukw8a")
@@ -176,7 +176,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
 offset_top = -8.0
-offset_right = 2420.0
+offset_right = 1.0
 texture = SubResource("ImageTexture_cicof")
 script = ExtResource("9_ukw8a")
 _referenceControl = NodePath("..")
@@ -407,7 +407,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_4dr0l")
+texture = SubResource("ViewportTexture_ljjj3")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
@@ -446,7 +446,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-texture = SubResource("ViewportTexture_ljjj3")
+texture = SubResource("ViewportTexture_4dr0l")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

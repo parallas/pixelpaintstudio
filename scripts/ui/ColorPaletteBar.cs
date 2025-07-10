@@ -30,6 +30,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void NextPage()
     {
+        GD.Print("Next page");
         var newPage = Mathf.Wrap(_page + 1, 0, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
@@ -44,6 +45,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void PreviousPage()
     {
+        GD.Print("Prev page");
         var newPage = Mathf.Wrap(_page - 1, 0, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;

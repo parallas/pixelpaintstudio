@@ -1,16 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=18 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="Script" uid="uid://db74nfyn3mccf" path="res://scripts/ui/Topbar.cs" id="1_xm8n6"]
 [ext_resource type="PackedScene" uid="uid://bjju47so4g0la" path="res://scenes/ui/paint_color_button.tscn" id="2_hf8t1"]
 [ext_resource type="Resource" uid="uid://bra1qssvdlufc" path="res://drawing_resources/ink/ink_main_00_red.tres" id="2_mhh6w"]
 [ext_resource type="StyleBox" uid="uid://dx6sib3bjuyju" path="res://styles/drawer.tres" id="4_2uv7f"]
+[ext_resource type="Script" uid="uid://fw8tirswpnlg" path="res://scripts/ui/InkMenuButtonSync.cs" id="5_5i4jx"]
 [ext_resource type="Script" uid="uid://b7qb4b8ako0hj" path="res://scripts/ui/ColorPaletteBar.cs" id="5_ar3oq"]
 [ext_resource type="Script" uid="uid://hpmh2lxuwadp" path="res://scripts/ui/VirtualCursorButton.cs" id="6_xm8n6"]
 [ext_resource type="Script" uid="uid://dqredh7d048oo" path="res://scripts/ui/DropShadowTexture.cs" id="7_t05rr"]
 [ext_resource type="Material" uid="uid://ddpd0nfqo1jgu" path="res://materials/ui_paper.tres" id="7_vtqlh"]
 [ext_resource type="PackedScene" uid="uid://csfvvdtga7dvn" path="res://models/menus/menu_arrow.glb" id="8_vtqlh"]
 [ext_resource type="Script" uid="uid://cssfxutgjsc61" path="res://scripts/ui/BouncyButton.cs" id="10_vtqlh"]
+[ext_resource type="Script" uid="uid://ckwfjag101rip" path="res://scripts/ui/MainEditorValueController.cs" id="12_5qjw4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm8n6"]
 content_margin_left = 48.0
@@ -55,6 +57,10 @@ InkMenu = NodePath("HBoxContainer/Control/Color Palette")
 ToolOptionsMenu = NodePath("HBoxContainer/Control/Stencil Menu")
 OpenColorsButton = NodePath("HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button")
 
+[node name="MainEditorValueController" type="Node" parent="."]
+script = ExtResource("12_5qjw4")
+metadata/_custom_type_script = "uid://ckwfjag101rip"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(2370, 0)
 layout_mode = 2
@@ -80,6 +86,11 @@ layout_mode = 2
 _inkDefinition = ExtResource("2_mhh6w")
 _scaleWhenSelected = false
 _setToolColorWhenClicked = false
+
+[node name="Node" type="Node" parent="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" node_paths=PackedStringArray("InkMenuButton", "MainEditorValueController")]
+script = ExtResource("5_5i4jx")
+InkMenuButton = NodePath("..")
+MainEditorValueController = NodePath("../../../../../MainEditorValueController")
 
 [node name="Button2" type="Button" parent="HBoxContainer/Menu Switcher/HBoxContainer"]
 custom_minimum_size = Vector2(100, 100)
@@ -417,7 +428,8 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 64
 text = ">"
 
+[connection signal="PressedVirtually" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="MainEditorValueController" method="SetEditorPlayerValue"]
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu"]
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Button2" to="." method="SwitchToToolOptionsMenu"]
-[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage"]
-[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="NextPage"]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage" unbinds=1]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="NextPage" unbinds=1]

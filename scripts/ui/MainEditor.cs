@@ -18,6 +18,8 @@ public partial class MainEditor : Control
     public readonly Dictionary<int, ToolState> PlayerToolStates = new Dictionary<int, ToolState>();
     private readonly Dictionary<int, DrawState> PlayerDrawStates = new Dictionary<int, DrawState>();
 
+    public int PrimaryPlayerId { get; set; }
+
     public static readonly List<InkDefinition> AllInkDefinitions =
     [
         // Base Colors (16/16)
