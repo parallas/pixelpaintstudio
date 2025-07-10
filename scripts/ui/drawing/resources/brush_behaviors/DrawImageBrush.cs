@@ -17,6 +17,7 @@ public partial class DrawImageBrush : BrushBehavior
     [Export] public Vector2 RandomScaleRange { get; set; } = Vector2.One;
 
     private Vector2 _lastPosition = Vector2.Zero;
+    private Vector2 _lastScale = Vector2.One;
 
     private BrushUtils.ImageDataCache _imageDataCache;
 
@@ -25,6 +26,7 @@ public partial class DrawImageBrush : BrushBehavior
         base.Initialize(cursorPosition, cursorColor);
 
         _lastPosition = -Vector2.Inf;
+        _lastScale = -Vector2.Inf;
     }
 
     public override void Process(DrawState drawState, double delta)
@@ -42,6 +44,8 @@ public partial class DrawImageBrush : BrushBehavior
 
         if (_lastPosition == -Vector2.Inf)
             _lastPosition = drawState.EvaluatedPosition;
+        if (_lastScale == -Vector2.Inf)
+            _lastScale = drawState.EvaluatedScale;
 
         if (!FillGapsBetweenDraws) _lastPosition = drawState.EvaluatedPosition;
 
@@ -52,7 +56,9 @@ public partial class DrawImageBrush : BrushBehavior
         var linePoints = Geometry2D.BresenhamLine(_lastPosition.ToVector2I(), drawState.EvaluatedPosition.ToVector2I());
         for (int i = 0; i < linePoints.Count; i++)
         {
-            DrawAt(canvasItem, _imageDataCache.ImageTexture, size, linePoints[i], color);
+            float percent = (float)i / (linePoints.Count);
+            Vector2 scaleAmount = _lastScale.Lerp(drawState.EvaluatedScale, percent);
+            DrawAt(canvasItem, _imageDataCache.ImageTexture, size * scaleAmount, linePoints[i], color);
         }
 
         _lastPosition = drawState.EvaluatedPosition;

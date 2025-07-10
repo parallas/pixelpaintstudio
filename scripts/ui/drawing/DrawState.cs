@@ -12,10 +12,13 @@ public class DrawState
     public Vector2 LastEvaluatedPosition;
     public Color CursorColor = Colors.Red;
     public Color EvaluatedColor = Colors.Red;
+    public Vector2 LastEvaluatedScale;
     public Vector2 EvaluatedScale;
     public float DrawingTime;
 
     public Vector2 EvaluatedVelocity => EvaluatedPosition - LastEvaluatedPosition;
+    public float EvaluatedScaleUniform => EvaluatedScale.X;
+    public float LastEvaluatedScaleUniform => LastEvaluatedScale.X;
 
     public enum States
     {
@@ -37,6 +40,8 @@ public class DrawState
             LastCursorPosition = cursorPosition,
             EvaluatedPosition = cursorPosition,
             LastEvaluatedPosition = cursorPosition,
+            EvaluatedScale = Vector2.One,
+            LastEvaluatedScale = Vector2.One,
 
             DrawingTime = 0f
         };
@@ -71,6 +76,7 @@ public class DrawState
             CursorColor = CursorColor,
             EvaluatedColor = EvaluatedColor,
             EvaluatedScale = EvaluatedScale,
+            LastEvaluatedScale = LastEvaluatedScale,
             DrawingTime = DrawingTime,
         };
     }

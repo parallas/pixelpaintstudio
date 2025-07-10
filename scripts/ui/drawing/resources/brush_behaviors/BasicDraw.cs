@@ -10,8 +10,10 @@ public partial class BasicDraw : BrushBehavior
     {
         base.Draw(drawState, canvasItem);
 
-        canvasItem.DrawCircle(drawState.LastEvaluatedPosition, Radius, drawState.EvaluatedColor);
-        canvasItem.DrawLine(drawState.LastEvaluatedPosition, drawState.EvaluatedPosition, drawState.EvaluatedColor, Radius * 2);
-        canvasItem.DrawCircle(drawState.EvaluatedPosition, Radius, drawState.EvaluatedColor);
+        var radius = Radius * drawState.EvaluatedScaleUniform;
+
+        canvasItem.DrawCircle(drawState.LastEvaluatedPosition, radius, drawState.EvaluatedColor);
+        canvasItem.DrawLine(drawState.LastEvaluatedPosition, drawState.EvaluatedPosition, drawState.EvaluatedColor, radius * 2);
+        canvasItem.DrawCircle(drawState.EvaluatedPosition, radius, drawState.EvaluatedColor);
     }
 }

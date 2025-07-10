@@ -34,7 +34,11 @@ public partial class TempState : BrushBehavior
         {
             var state = drawState.Duplicate();
             if (_resampleDistance)
-                state.EvaluatedPosition = drawState.LastEvaluatedPosition.Lerp(drawState.EvaluatedPosition, i / dist);
+            {
+                float percent = i / dist;
+                state.EvaluatedPosition = drawState.LastEvaluatedPosition.Lerp(drawState.EvaluatedPosition, percent);
+                state.EvaluatedScale = drawState.LastEvaluatedScale.Lerp(drawState.EvaluatedScale, percent);
+            }
             foreach (var brushBehavior in _brushBehaviors)
             {
                 brushBehavior.Draw(state, canvasItem);

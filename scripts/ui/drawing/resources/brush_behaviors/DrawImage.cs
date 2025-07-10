@@ -29,9 +29,11 @@ public partial class DrawImage : BrushBehavior
     {
         base.Draw(drawState, canvasItem);
 
+        var scale = Vector2.One * (float)GD.RandRange(RandomScaleRange.X, RandomScaleRange.Y) * drawState.EvaluatedScaleUniform;
+
         var transform = Transform2D.Identity
                 .Translated(Offset)
-                .Scaled(Vector2.One * (float)GD.RandRange(RandomScaleRange.X, RandomScaleRange.Y))
+                .Scaled(scale)
                 .Rotated(Mathf.DegToRad((float)GD.RandRange(RandomAngleRange.X, RandomAngleRange.Y)))
                 .Translated(drawState.EvaluatedPosition)
             ;

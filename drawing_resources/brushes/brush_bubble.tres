@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=10 format=3 uid="uid://dl81ifq6u0rrq"]
+
+[ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_7vvpr"]
+[ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="1_n3qgc"]
+[ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_yfvks"]
+[ext_resource type="Script" uid="uid://k5ekv1tsuv5r" path="res://scripts/ui/drawing/resources/brush_behaviors/ScaleAdd.cs" id="3_tpcws"]
+[ext_resource type="Script" uid="uid://c5caugpc02fc2" path="res://scripts/ui/drawing/resources/brush_behaviors/BasicDraw.cs" id="4_d62yi"]
+
+[sub_resource type="Resource" id="Resource_yaa25"]
+script = ExtResource("1_7vvpr")
+metadata/_custom_type_script = "uid://cmv66q4eh60qf"
+
+[sub_resource type="Resource" id="Resource_trfvl"]
+script = ExtResource("2_yfvks")
+metadata/_custom_type_script = "uid://ctwr7tpgocsul"
+
+[sub_resource type="Resource" id="Resource_46i4d"]
+script = ExtResource("3_tpcws")
+AddPerSecond = 15.0
+metadata/_custom_type_script = "uid://k5ekv1tsuv5r"
+
+[sub_resource type="Resource" id="Resource_2shs2"]
+script = ExtResource("4_d62yi")
+Radius = 3.0
+metadata/_custom_type_script = "uid://c5caugpc02fc2"
+
+[resource]
+script = ExtResource("1_n3qgc")
+Behaviors = Array[Object]([SubResource("Resource_yaa25"), SubResource("Resource_trfvl"), SubResource("Resource_46i4d"), SubResource("Resource_2shs2")])
+StartBehaviors = null
+FinishBehaviors = null
+metadata/_custom_type_script = "uid://wqjbvlsij6wj"

@@ -15,7 +15,7 @@ metadata/_custom_type_script = "uid://ctwr7tpgocsul"
 
 [sub_resource type="Resource" id="Resource_oi40j"]
 script = ExtResource("2_tggaw")
-Radius = 8.0
+Radius = 10.0
 metadata/_custom_type_script = "uid://c5caugpc02fc2"
 
 [resource]
