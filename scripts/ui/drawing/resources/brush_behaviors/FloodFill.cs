@@ -6,7 +6,8 @@ using Parallas;
 public partial class FloodFill : BrushBehavior
 {
     private bool _hasFilled = false;
-    private Color[,] _colorData;
+    private bool[,] _imageMask;
+    private bool[,] _fillMask;
 
     public override void Initialize(Vector2 cursorPosition, Color cursorColor)
     {
@@ -28,50 +29,69 @@ public partial class FloodFill : BrushBehavior
         Vector2I pos = drawState.EvaluatedPosition.ToVector2I();
         int width = image.GetWidth();
         int height = image.GetHeight();
-        _colorData ??= new Color[height, width];
+        _imageMask ??= new bool[height, width];
+        _fillMask ??= new bool[height, width];
 
-        Color sampledColor = Colors.Transparent;
+        int clickedIndex = PosToIndex(pos, width);
+        Color sampledColor = GetColorAtByteIndex(imageData, clickedIndex);
+        if (sampledColor == drawState.EvaluatedColor) return;
+
         for (var i = 0; i < imageData.Length; i += 4)
         {
-            Color color = Color.Color8(
-                imageData[i + 0],
-                imageData[i + 1],
-                imageData[i + 2],
-                imageData[i + 3]
-            );
-            int y = (i / 4) % width;
-            int x = (i / 4) / width;
-            _colorData[x, y] = color;
-
-            if (pos.X == y && pos.Y == x) sampledColor = color;
+            Color color = GetColorAtByteIndex(imageData, i);
+            var fillPos = GetFillPosFromByteIndex(i, width);
+            _fillMask[fillPos.X, fillPos.Y] = false;
+            _imageMask[fillPos.X, fillPos.Y] = color != sampledColor;
         }
 
-        if (sampledColor == drawState.EvaluatedColor) return;
-        MyFill(_colorData, pos.X, pos.Y, sampledColor, drawState.EvaluatedColor);
+        MyFill(_imageMask, _fillMask, pos.X, pos.Y);
 
-        int indexCounter = 0;
-        for (int y = 0; y < _colorData.GetLength(0); y++)
-        for (int x = 0; x < _colorData.GetLength(1); x++)
+        int indexCounter = -4;
+        for (int y = 0; y < _fillMask.GetLength(0); y++)
+        for (int x = 0; x < _fillMask.GetLength(1); x++)
         {
-            var color = _colorData[y, x];
-            imageData[indexCounter + 0] = (byte)color.R8;
-            imageData[indexCounter + 1] = (byte)color.G8;
-            imageData[indexCounter + 2] = (byte)color.B8;
-            imageData[indexCounter + 3] = (byte)color.A8;
             indexCounter += 4;
+            var fillThis = _fillMask[y, x];
+            imageData[indexCounter + 0] = fillThis ? (byte)drawState.EvaluatedColor.R8 : (byte)0;
+            imageData[indexCounter + 1] = fillThis ? (byte)drawState.EvaluatedColor.G8 : (byte)0;
+            imageData[indexCounter + 2] = fillThis ? (byte)drawState.EvaluatedColor.B8 : (byte)0;
+            imageData[indexCounter + 3] = fillThis ? (byte)drawState.EvaluatedColor.A8 : (byte)0;
         }
 
-        image.SetData(width, height, false, image.GetFormat(), imageData);
-
-        canvasItem.DrawTextureRect(ImageTexture.CreateFromImage(image), new Rect2(Vector2.Zero, image.GetSize()), false, Colors.White);
+        var newImage = Image.CreateFromData(width, height, false, image.GetFormat(), imageData);
+        canvasItem.DrawTextureRect(ImageTexture.CreateFromImage(newImage), new Rect2(Vector2.Zero, image.GetSize()), false, Colors.White);
     }
 
-    public static void MyFill(Color[,] array, int x, int y, Color oldColor, Color newColor)
+    private int PosToIndex(Vector2I pos, int imageWidth)
     {
-        if (array[y, x] == oldColor) _MyFill(array, x, y, array.GetLength(1), array.GetLength(0), oldColor, newColor);
+        int byteWidth = (imageWidth * 4);
+        int clickedIndex = ((pos.X * 4) % byteWidth) + pos.Y * byteWidth;
+        return clickedIndex;
     }
 
-    static void _MyFill(Color[,] array, int x, int y, int width, int height, Color oldColor, Color newColor)
+    /// <summary>
+    /// Converts an image data byte index to a fill mask position. The fill mask has X and Y swapped.
+    /// </summary>
+    /// <param name="index">The starting index of the color in an images byte array data.</param>
+    /// <param name="imageWidth">The width in pixels of the image.</param>
+    /// <returns></returns>
+    private Vector2I GetFillPosFromByteIndex(int index, int imageWidth) =>
+        new Vector2I((index / 4) / imageWidth, (index / 4) % imageWidth);
+
+    private Color GetColorAtByteIndex(byte[] imageData, int index) =>
+        Color.Color8(
+            imageData[index + 0],
+            imageData[index + 1],
+            imageData[index + 2],
+            imageData[index + 3]
+        );
+
+    public static void MyFill(bool[,] array, bool[,] fillMask, int x, int y)
+    {
+        if (!array[y, x]) _MyFill(array, fillMask, x, y, array.GetLength(1), array.GetLength(0));
+    }
+
+    static void _MyFill(bool[,] array, bool[,] fillMask, int x, int y, int width, int height)
     {
         // at this point, we know array[y,x] is clear, and we want to move as far as possible to the upper-left. moving
         // up is much more important than moving left, so we could try to make this smarter by sometimes moving to
@@ -79,15 +99,15 @@ public partial class FloodFill : BrushBehavior
         while (true)
         {
             int ox = x, oy = y;
-            while (y != 0 && array[y - 1, x] == oldColor) y--;
-            while (x != 0 && array[y, x - 1] == oldColor) x--;
+            while (y != 0 && !array[y - 1, x]) y--;
+            while (x != 0 && !array[y, x - 1]) x--;
             if (x == ox && y == oy) break;
         }
 
-        MyFillCore(array, x, y, width, height, oldColor, newColor);
+        MyFillCore(array, fillMask, x, y, width, height);
     }
 
-    static void MyFillCore(Color[,] array, int x, int y, int width, int height, Color oldColor, Color newColor)
+    static void MyFillCore(bool[,] array, bool[,] fillMask, int x, int y, int width, int height)
     {
         // at this point, we know that array[y,x] is clear, and array[y-1,x] and array[y,x-1] are set.
         // we'll begin scanning down and to the right, attempting to fill an entire rectangular block
@@ -100,12 +120,12 @@ public partial class FloodFill : BrushBehavior
             // the second row we find the first  | **| cell is filled, ending our rectangular scan. rather than handling
             // this via the recursion below, we'll increase the starting value of 'x' and reduce the last row length to
             // match. then we'll continue trying to set the narrower rectangular block
-            if (lastRowLength != 0 && array[y, x] != oldColor) // if this is not the first row and the leftmost cell is filled...
+            if (lastRowLength != 0 && array[y, x]) // if this is not the first row and the leftmost cell is filled...
             {
                 do
                 {
                     if (--lastRowLength == 0) return; // shorten the row. if it's full, we're done
-                } while (array[y, ++x] != oldColor); // otherwise, update the starting point of the main scan to match
+                } while (array[y, ++x]); // otherwise, update the starting point of the main scan to match
 
                 sx = x;
             }
@@ -114,23 +134,29 @@ public partial class FloodFill : BrushBehavior
             // with recursion but we'd prefer to adjust x and lastRowLength instead
             else
             {
-                for (; x != 0 && array[y, x - 1] == oldColor; rowLength++, lastRowLength++)
+                for (; x != 0 && !array[y, x - 1]; rowLength++, lastRowLength++)
                 {
-                    array[y, --x] =
-                        newColor; // to avoid scanning the cells twice, we'll fill them and update rowLength here
+                    var xValue = --x;
+                    fillMask[y, xValue] = true;
+                    array[y, xValue] =
+                        true; // to avoid scanning the cells twice, we'll fill them and update rowLength here
                     // if there's something above the new starting point, handle that recursively. this deals with cases
                     // like |* **| when we begin filling from (2,0), move down to (2,1), and then move left to (0,1).
                     // the  |****| main scan assumes the portion of the previous row from x to x+lastRowLength has already
                     // been filled. adjusting x and lastRowLength breaks that assumption in this case, so we must fix it
-                    if (y != 0 && array[y - 1, x] == oldColor)
-                        _MyFill(array, x, y - 1, width, height, oldColor, newColor); // use _Fill since there may be more up and left
+                    if (y != 0 && !array[y - 1, x])
+                        _MyFill(array, fillMask, x, y - 1, width, height); // use _Fill since there may be more up and left
                 }
             }
 
             // now at this point we can begin to scan the current row in the rectangular block. the span of the previous
             // row from x (inclusive) to x+lastRowLength (exclusive) has already been filled, so we don't need to
             // check it. so scan across to the right in the current row
-            for (; sx < width && array[y, sx] == oldColor; rowLength++, sx++) array[y, sx] = newColor;
+            for (; sx < width && !array[y, sx]; rowLength++, sx++)
+            {
+                array[y, sx] = true;
+                fillMask[y, sx] = true;
+            }
             // now we've scanned this row. if the block is rectangular, then the previous row has already been scanned,
             // so we don't need to look upwards and we're going to scan the next row in the next iteration so we don't
             // need to look downwards. however, if the block is not rectangular, we may need to look upwards or rightwards
@@ -143,9 +169,9 @@ public partial class FloodFill : BrushBehavior
                      ++sx < end;) // 'end' is the end of the previous row, so scan the current row to
                 {
                     // there. any clear cells would have been connected to the previous
-                    if (array[y, sx] == oldColor)
-                        MyFillCore(array, sx, y, width,
-                            height, oldColor, newColor); // row. the cells up and left must be set so use FillCore
+                    if (!array[y, sx])
+                        MyFillCore(array, fillMask, sx, y, width,
+                            height); // row. the cells up and left must be set so use FillCore
                 }
             }
             // alternately, if this row is longer than the previous row, as in the case |*** *| then we must look above
@@ -154,9 +180,9 @@ public partial class FloodFill : BrushBehavior
             {
                 for (int ux = x + lastRowLength; ++ux < sx;) // sx is the end of the current row
                 {
-                    if (array[y - 1, ux] == oldColor)
-                        _MyFill(array, ux, y - 1, width,
-                            height, oldColor, newColor); // since there may be clear cells up and left, use _Fill
+                    if (!array[y - 1, ux])
+                        _MyFill(array, fillMask, ux, y - 1, width,
+                            height); // since there may be clear cells up and left, use _Fill
                 }
             }
 
