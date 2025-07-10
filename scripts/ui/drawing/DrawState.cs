@@ -41,6 +41,8 @@ public class DrawState
             LastCursorPosition = cursorPosition,
             EvaluatedPosition = cursorPosition,
             LastEvaluatedPosition = cursorPosition,
+            EvaluatedColor = cursorColor,
+            LastEvaluatedColor = cursorColor,
             EvaluatedScale = Vector2.One,
             LastEvaluatedScale = Vector2.One,
 
