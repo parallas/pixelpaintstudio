@@ -1,66 +1,101 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using Parallas;
 
 [GlobalClass]
 public partial class FloodFill : BrushBehavior
 {
     private bool _hasFilled = false;
+    private Image _fillImage;
+    private ImageTexture _fillImageTexture;
+    private int _fillCount = 0;
+    private int _fillStep = 0;
     private bool[,] _imageMask;
     private bool[,] _fillMask;
+    private byte[] _fillImageData;
+    private List<Vector2I> _fillPoints = new List<Vector2I>();
 
     public override void Initialize(Vector2 cursorPosition, Color cursorColor)
     {
         base.Initialize(cursorPosition, cursorColor);
         _hasFilled = false;
+        _fillCount = 0;
+        _fillStep = 0;
+        _fillPoints = new List<Vector2I>();
+    }
+
+    public override void Process(DrawState drawState, double delta)
+    {
+        base.Process(drawState, delta);
+
+        if (drawState.CanvasItem is not DrawCanvas drawCanvas) return;
+
+        if (!_hasFilled)
+        {
+            var existingTexture = drawCanvas.OutputTextureTarget.Texture;
+            using var image = existingTexture.GetImage();
+            var imageData = image.Data["data"].AsByteArray();
+            _fillImageData ??= new byte[imageData.Length];
+
+            Vector2I pos = drawState.EvaluatedPosition.ToVector2I();
+            int width = image.GetWidth();
+            int height = image.GetHeight();
+            _imageMask ??= new bool[height, width];
+            _fillMask ??= new bool[height, width];
+            _fillImage ??= Image.CreateEmpty(width, height, false, image.GetFormat());
+            _fillImageTexture ??= ImageTexture.CreateFromImage(_fillImage);
+
+            int clickedIndex = PosToIndex(pos, width);
+            Color sampledColor = GetColorAtByteIndex(imageData, clickedIndex);
+            if (sampledColor == drawState.EvaluatedColor) return;
+
+            for (var i = 0; i < imageData.Length; i += 4)
+            {
+                Color color = GetColorAtByteIndex(imageData, i);
+                var fillPos = GetFillPosFromByteIndex(i, width);
+                _fillMask[fillPos.X, fillPos.Y] = false;
+                _imageMask[fillPos.X, fillPos.Y] = color != sampledColor;
+            }
+
+            MyFill(_imageMask, _fillMask, pos.X, pos.Y);
+
+            for (int y = 0; y < _fillMask.GetLength(0); y++)
+            for (int x = 0; x < _fillMask.GetLength(1); x++)
+            {
+                var fillThis = _fillMask[y, x];
+                if (!fillThis) continue;
+                _fillPoints.Add(new Vector2I(x, y));
+                _fillCount++;
+            }
+            _hasFilled = true;
+        }
     }
 
     public override void Draw(DrawState drawState, CanvasItem canvasItem)
     {
         base.Draw(drawState, canvasItem);
-        if (_hasFilled) return;
-        _hasFilled = true;
 
-        if (canvasItem is not DrawCanvas drawCanvas) return;
-        var existingTexture = drawCanvas.OutputTextureTarget.Texture;
-        using var image = existingTexture.GetImage();
-        var imageData = image.Data["data"].AsByteArray();
+        var h = drawState.EvaluatedColor.OkHslH;
+        var s = drawState.EvaluatedColor.OkHslS;
+        var l = drawState.EvaluatedColor.OkHslL;
+        var evaluatedColor = Color.FromOkHsl(h, s, l);
 
-        Vector2I pos = drawState.EvaluatedPosition.ToVector2I();
-        int width = image.GetWidth();
-        int height = image.GetHeight();
-        _imageMask ??= new bool[height, width];
-        _fillMask ??= new bool[height, width];
-
-        int clickedIndex = PosToIndex(pos, width);
-        Color sampledColor = GetColorAtByteIndex(imageData, clickedIndex);
-        if (sampledColor == drawState.EvaluatedColor) return;
-
-        for (var i = 0; i < imageData.Length; i += 4)
+        for (int i = 0; i < 200; i++)
         {
-            Color color = GetColorAtByteIndex(imageData, i);
-            var fillPos = GetFillPosFromByteIndex(i, width);
-            _fillMask[fillPos.X, fillPos.Y] = false;
-            _imageMask[fillPos.X, fillPos.Y] = color != sampledColor;
+            if (_fillStep >= _fillCount) break;
+            var fillPos = _fillPoints[_fillStep];
+            int fillIndex = PosToIndex(fillPos, _fillImage.GetWidth());
+            _fillImageData[fillIndex + 0] = (byte)evaluatedColor.R8;
+            _fillImageData[fillIndex + 1] = (byte)evaluatedColor.G8;
+            _fillImageData[fillIndex + 2] = (byte)evaluatedColor.B8;
+            _fillImageData[fillIndex + 3] = (byte)evaluatedColor.A8;
+            _fillStep++;
         }
+        _fillImage.SetData(_fillImage.GetWidth(), _fillImage.GetHeight(), false, _fillImage.GetFormat(), _fillImageData);
+        _fillImageTexture.Update(_fillImage);
+        canvasItem.DrawTextureRect(_fillImageTexture, new Rect2(Vector2.Zero, _fillImage.GetSize()), false, Colors.White);
 
-        MyFill(_imageMask, _fillMask, pos.X, pos.Y);
-
-        int indexCounter = -4;
-        for (int y = 0; y < _fillMask.GetLength(0); y++)
-        for (int x = 0; x < _fillMask.GetLength(1); x++)
-        {
-            indexCounter += 4;
-            var fillThis = _fillMask[y, x];
-            imageData[indexCounter + 0] = fillThis ? (byte)drawState.EvaluatedColor.R8 : (byte)0;
-            imageData[indexCounter + 1] = fillThis ? (byte)drawState.EvaluatedColor.G8 : (byte)0;
-            imageData[indexCounter + 2] = fillThis ? (byte)drawState.EvaluatedColor.B8 : (byte)0;
-            imageData[indexCounter + 3] = fillThis ? (byte)drawState.EvaluatedColor.A8 : (byte)0;
-        }
-
-        using var newImage = Image.CreateFromData(width, height, false, image.GetFormat(), imageData);
-        var imageTexture = ImageTexture.CreateFromImage(newImage);
-        canvasItem.DrawTextureRect(imageTexture, new Rect2(Vector2.Zero, image.GetSize()), false, Colors.White);
     }
 
     private int PosToIndex(Vector2I pos, int imageWidth)
