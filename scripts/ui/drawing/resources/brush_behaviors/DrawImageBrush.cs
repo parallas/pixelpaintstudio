@@ -52,12 +52,12 @@ public partial class DrawImageBrush : BrushBehavior
         var size = SizeOverride;
         if (size == Vector2.Zero) size = _imageDataCache.ImageTexture.GetSize();
 
-        Color color = MultiplyByColor ? drawState.EvaluatedColor : Colors.White;
         var linePoints = Geometry2D.BresenhamLine(_lastPosition.ToVector2I(), drawState.EvaluatedPosition.ToVector2I());
         for (int i = 0; i < linePoints.Count; i++)
         {
             float percent = (float)i / (linePoints.Count);
             Vector2 scaleAmount = _lastScale.Lerp(drawState.EvaluatedScale, percent);
+            Color color = MultiplyByColor ? drawState.LastEvaluatedColor.Lerp(drawState.EvaluatedColor, percent) : Colors.White;
             DrawAt(canvasItem, _imageDataCache.ImageTexture, size * scaleAmount, linePoints[i], color);
         }
 
