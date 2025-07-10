@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://3i8sakgujhkd"]
+[gd_scene load_steps=29 format=3 uid="uid://3i8sakgujhkd"]
 
 [ext_resource type="Script" uid="uid://ciiyfrdjg73jx" path="res://scripts/ui/Toolbar.cs" id="1_cicof"]
 [ext_resource type="PackedScene" uid="uid://bb27qsdfplrcs" path="res://scenes/ui/tool_button.tscn" id="1_ieq13"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://bjdlfscp6y1c0" path="res://drawing_resources/tools/tool_pen_medium.tres" id="7_mbflq"]
 [ext_resource type="Resource" uid="uid://bp610a2qspe5x" path="res://drawing_resources/tools/tool_pen_large.tres" id="9_kceen"]
 [ext_resource type="Script" uid="uid://oatqjlhy3t4d" path="res://scripts/ui/DropShadowRect.cs" id="9_ukw8a"]
+[ext_resource type="Resource" uid="uid://ckvnakn451286" path="res://drawing_resources/tools/tool_fill.tres" id="10_71qqi"]
 [ext_resource type="Resource" uid="uid://dgfv6qtsjquq7" path="res://drawing_resources/tools/tool_bubble.tres" id="11_idg7t"]
 [ext_resource type="Resource" uid="uid://rbqke8dy2k8" path="res://drawing_resources/tools/tool_sponge.tres" id="13_d043o"]
 [ext_resource type="Resource" uid="uid://daf3kkfx85q8e" path="res://drawing_resources/tools/tool_stamp.tres" id="15_ks7f1"]
@@ -52,6 +53,9 @@ viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Bubble/SubViewpor
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_i1qcg"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_idg7t"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Fill/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport")
@@ -159,7 +163,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
 offset_top = 8.0
-offset_right = 1.0
+offset_right = 2420.0
 offset_bottom = 16.0
 texture = SubResource("ImageTexture_cicof")
 script = ExtResource("9_ukw8a")
@@ -172,7 +176,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 0
 offset_top = -8.0
-offset_right = 1.0
+offset_right = 2420.0
 texture = SubResource("ImageTexture_cicof")
 script = ExtResource("9_ukw8a")
 _referenceControl = NodePath("..")
@@ -404,6 +408,45 @@ show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 texture = SubResource("ViewportTexture_i1qcg")
+script = ExtResource("3_7r4a7")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="Fill" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
+layout_mode = 2
+ToolDefinition = ExtResource("10_71qqi")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Tools/Fill"]
+use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/Tools/Fill/SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Tools/Fill/SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+projection = 1
+current = true
+size = 6.5
+far = 50.0
+
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Tools/Fill/SubViewportContainer2/SubViewport"]
+
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Tools/Fill/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+texture = SubResource("ViewportTexture_idg7t")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

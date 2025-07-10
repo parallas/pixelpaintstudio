@@ -60,7 +60,6 @@ metadata/_custom_type_script = "uid://c884dpjmfme40"
 
 [resource]
 script = ExtResource("4_m0wkk")
-Name = "Christmas Lights"
 Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_7s5fq"), SubResource("Resource_d2423"), SubResource("Resource_3yagk"), SubResource("Resource_r4vfi"), SubResource("Resource_jnkqf")])
 StartBehaviors = null
 FinishBehaviors = null

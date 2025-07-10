@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=6 format=3 uid="uid://hefrwedtl6qe"]
+
+[ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="1_l1ajy"]
+[ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="1_unntq"]
+[ext_resource type="Script" uid="uid://mu0o50rpcrby" path="res://scripts/ui/drawing/resources/brush_behaviors/FloodFill.cs" id="2_oswqj"]
+
+[sub_resource type="Resource" id="Resource_r53hb"]
+script = ExtResource("1_l1ajy")
+metadata/_custom_type_script = "uid://ctwr7tpgocsul"
+
+[sub_resource type="Resource" id="Resource_l4hle"]
+script = ExtResource("2_oswqj")
+metadata/_custom_type_script = "uid://mu0o50rpcrby"
+
+[resource]
+script = ExtResource("1_unntq")
+Behaviors = Array[Object]([SubResource("Resource_r53hb"), SubResource("Resource_l4hle")])
+StartBehaviors = null
+FinishBehaviors = null
+metadata/_custom_type_script = "uid://wqjbvlsij6wj"
