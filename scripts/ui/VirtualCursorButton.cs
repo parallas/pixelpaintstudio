@@ -11,6 +11,7 @@ public partial class VirtualCursorButton : Button
     public bool IsPressedVirtually => _pressedPlayerIds.Count > 0;
     private readonly HashSet<int> _hoveredPlayerIds = [];
     private readonly HashSet<int> _pressedPlayerIds = [];
+    public bool IsSelected { get; protected set; }
 
     protected GameCursor[] GameCursors { get; private set; }
 

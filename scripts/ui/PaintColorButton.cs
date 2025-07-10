@@ -16,8 +16,6 @@ public partial class PaintColorButton : VirtualCursorButton
     private Vector2 _scale = Vector2.One;
     private Vector2 _scaleVelocity = Vector2.Zero;
 
-    public bool IsSelected { get; private set; }
-
     private MainEditor _editor;
 
     public override void _Ready()

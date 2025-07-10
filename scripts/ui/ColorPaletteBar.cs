@@ -30,7 +30,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void NextPage()
     {
-        var newPage = Mathf.Min(_page + 1, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage) - 1);
+        var newPage = Mathf.Wrap(_page + 1, 0, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -44,7 +44,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void PreviousPage()
     {
-        var newPage = Mathf.Max(_page - 1, 0);
+        var newPage = Mathf.Wrap(_page - 1, 0, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();

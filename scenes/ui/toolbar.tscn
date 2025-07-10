@@ -51,11 +51,11 @@ viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Large/SubViewp
 [sub_resource type="ViewportTexture" id="ViewportTexture_i1qcg"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Bubble/SubViewportContainer2/SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport")
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_4dr0l"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Fill/SubViewportContainer2/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_mbflq"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Stamp/SubViewportContainer2/SubViewport")
@@ -373,45 +373,6 @@ custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Sponge" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
-layout_mode = 2
-ToolDefinition = ExtResource("13_d043o")
-_visualRoot = NodePath("SubViewportContainer2")
-_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Tools/Sponge"]
-use_parent_material = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-pivot_offset = Vector2(64, 64)
-
-[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-msaa_3d = 2
-size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-projection = 1
-current = true
-size = 6.5
-far = 50.0
-
-[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport"]
-
-[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-texture = SubResource("ViewportTexture_ljjj3")
-script = ExtResource("3_7r4a7")
-Viewport = NodePath("../SubViewport")
-metadata/_custom_type_script = "uid://djtog83vrh75d"
-
 [node name="Fill" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
 layout_mode = 2
 ToolDefinition = ExtResource("10_71qqi")
@@ -447,6 +408,45 @@ show_behind_parent = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 texture = SubResource("ViewportTexture_4dr0l")
+script = ExtResource("3_7r4a7")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
+
+[node name="Sponge" parent="Item Bar/MarginContainer/Items/Tools" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
+layout_mode = 2
+ToolDefinition = ExtResource("13_d043o")
+_visualRoot = NodePath("SubViewportContainer2")
+_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Item Bar/MarginContainer/Items/Tools/Sponge"]
+use_parent_material = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+projection = 1
+current = true
+size = 6.5
+far = 50.0
+
+[node name="Node3D" type="Node3D" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2/SubViewport"]
+
+[node name="DropShadowViewport" type="TextureRect" parent="Item Bar/MarginContainer/Items/Tools/Sponge/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+texture = SubResource("ViewportTexture_ljjj3")
 script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=16 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="Script" uid="uid://db74nfyn3mccf" path="res://scripts/ui/Topbar.cs" id="1_xm8n6"]
@@ -7,6 +7,10 @@
 [ext_resource type="StyleBox" uid="uid://dx6sib3bjuyju" path="res://styles/drawer.tres" id="4_2uv7f"]
 [ext_resource type="Script" uid="uid://b7qb4b8ako0hj" path="res://scripts/ui/ColorPaletteBar.cs" id="5_ar3oq"]
 [ext_resource type="Script" uid="uid://hpmh2lxuwadp" path="res://scripts/ui/VirtualCursorButton.cs" id="6_xm8n6"]
+[ext_resource type="Script" uid="uid://dqredh7d048oo" path="res://scripts/ui/DropShadowTexture.cs" id="7_t05rr"]
+[ext_resource type="Material" uid="uid://ddpd0nfqo1jgu" path="res://materials/ui_paper.tres" id="7_vtqlh"]
+[ext_resource type="PackedScene" uid="uid://csfvvdtga7dvn" path="res://models/menus/menu_arrow.glb" id="8_vtqlh"]
+[ext_resource type="Script" uid="uid://cssfxutgjsc61" path="res://scripts/ui/BouncyButton.cs" id="10_vtqlh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm8n6"]
 content_margin_left = 48.0
@@ -25,6 +29,13 @@ corner_radius_bottom_left = 64
 shadow_color = Color(0, 0, 0, 0.231373)
 shadow_size = 1
 shadow_offset = Vector2(8, 16)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t05rr"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5i4jx"]
+viewport_path = NodePath("HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button/SubViewport")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vtqlh"]
 
 [node name="Topbar" type="MarginContainer" node_paths=PackedStringArray("ColorPaletteBar", "MenuBars", "CurrentMenuBar", "InkMenu", "ToolOptionsMenu", "OpenColorsButton")]
 custom_minimum_size = Vector2(0, 128)
@@ -184,21 +195,115 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="Next Page Button" type="Button" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer"]
+[node name="Prev Page Button" type="Button" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 64
-text = "<"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_t05rr")
+flat = true
 script = ExtResource("6_xm8n6")
 metadata/_custom_type_script = "uid://hpmh2lxuwadp"
 
-[node name="Next Page Button2" type="Button" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button"]
+material = ExtResource("7_vtqlh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(75, 75)
+texture = SubResource("ViewportTexture_5i4jx")
+flip_h = true
+
+[node name="DropShadowTexture" type="TextureRect" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button/TextureRect" node_paths=PackedStringArray("_referenceTextureRect")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 158.0
+offset_bottom = 158.0
+texture = SubResource("ViewportTexture_5i4jx")
+flip_h = true
+script = ExtResource("7_t05rr")
+_referenceTextureRect = NodePath("..")
+metadata/_custom_type_script = "uid://dqredh7d048oo"
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(150, 150)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+projection = 1
+current = true
+size = 6.0
+
+[node name="menu_arrow" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button/SubViewport" instance=ExtResource("8_vtqlh")]
+
+[node name="BouncyButton" type="Node" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" node_paths=PackedStringArray("TargetButton", "VisualRoot")]
+script = ExtResource("10_vtqlh")
+TargetButton = NodePath("..")
+VisualRoot = NodePath("../TextureRect")
+metadata/_custom_type_script = "uid://cssfxutgjsc61"
+
+[node name="Next Page Button" type="Button" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 64
-text = ">"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vtqlh")
+flat = true
 script = ExtResource("6_xm8n6")
 metadata/_custom_type_script = "uid://hpmh2lxuwadp"
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button"]
+material = ExtResource("7_vtqlh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(75, 75)
+texture = SubResource("ViewportTexture_5i4jx")
+flip_v = true
+
+[node name="DropShadowTexture" type="TextureRect" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button/TextureRect" node_paths=PackedStringArray("_referenceTextureRect")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 158.0
+offset_bottom = 158.0
+texture = SubResource("ViewportTexture_5i4jx")
+flip_v = true
+script = ExtResource("7_t05rr")
+_referenceTextureRect = NodePath("..")
+metadata/_custom_type_script = "uid://dqredh7d048oo"
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(150, 150)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+projection = 1
+current = true
+size = 6.0
+
+[node name="menu_arrow" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button/SubViewport" instance=ExtResource("8_vtqlh")]
+
+[node name="BouncyButton" type="Node" parent="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" node_paths=PackedStringArray("TargetButton", "VisualRoot")]
+script = ExtResource("10_vtqlh")
+TargetButton = NodePath("..")
+VisualRoot = NodePath("../TextureRect")
+metadata/_custom_type_script = "uid://cssfxutgjsc61"
 
 [node name="Stencil Menu" type="PanelContainer" parent="HBoxContainer/Control"]
 visible = false
@@ -314,5 +419,5 @@ text = ">"
 
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu"]
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Button2" to="." method="SwitchToToolOptionsMenu"]
-[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage"]
-[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button2" to="HBoxContainer/Control/Color Palette" method="NextPage"]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage"]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="NextPage"]
