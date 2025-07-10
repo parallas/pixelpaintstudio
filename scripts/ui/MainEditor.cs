@@ -204,6 +204,12 @@ public partial class MainEditor : Control
         }
     }
 
+    public override void _Notification(int what)
+    {
+        if (what == NotificationWMCloseRequest)
+            GetTree().Quit();
+    }
+
     private void DrawAllDrawStates()
     {
         foreach (var (playerId, drawState) in PlayerDrawStates)
