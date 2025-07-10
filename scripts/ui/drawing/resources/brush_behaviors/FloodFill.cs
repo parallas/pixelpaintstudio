@@ -23,7 +23,7 @@ public partial class FloodFill : BrushBehavior
         if (canvasItem is not DrawCanvas drawCanvas) return;
         var existingTexture = drawCanvas.OutputTextureTarget.Texture;
         var image = existingTexture.GetImage();
-        var imageData = (byte[])image.Data["data"];
+        var imageData = image.Data["data"].AsByteArray();
 
         Vector2I pos = drawState.EvaluatedPosition.ToVector2I();
         int width = image.GetWidth();
@@ -45,6 +45,8 @@ public partial class FloodFill : BrushBehavior
 
             if (pos.X == y && pos.Y == x) sampledColor = color;
         }
+
+        if (sampledColor == drawState.EvaluatedColor) return;
         MyFill(_colorData, pos.X, pos.Y, sampledColor, drawState.EvaluatedColor);
 
         int indexCounter = 0;
