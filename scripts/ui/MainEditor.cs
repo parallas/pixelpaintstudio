@@ -163,7 +163,7 @@ public partial class MainEditor : Control
             dialog.SetFileMode(FileDialog.FileModeEnum.SaveFile);
             dialog.SetAccess(FileDialog.AccessEnum.Filesystem);
             dialog.SetUseNativeDialog(true);
-            dialog.SetFilters(["png"]);
+            dialog.SetFilters(["*.png ; PNG File"]);
             dialog.FileSelected += dir =>
             {
                 SaveImage(dir);
