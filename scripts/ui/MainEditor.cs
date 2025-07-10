@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Parallas;
 
 public partial class MainEditor : Control
@@ -159,19 +160,7 @@ public partial class MainEditor : Control
         if (Input.IsActionJustPressed("quick_export"))
         {
             Input.SetMouseMode(Input.MouseModeEnum.Visible);
-            var dialog = new FileDialog();
-            dialog.SetFileMode(FileDialog.FileModeEnum.SaveFile);
-            dialog.SetAccess(FileDialog.AccessEnum.Filesystem);
-            dialog.SetUseNativeDialog(true);
-            dialog.SetFilters(["*.png ; PNG File"]);
-            dialog.FileSelected += dir =>
-            {
-                SaveImage(dir);
-                Input.SetMouseMode(Input.MouseModeEnum.Hidden);
-                RemoveChild(dialog);
-            };
-            AddChild(dialog);
-            dialog.PopupCenteredRatio();
+            SaveImage();
         }
     }
 
@@ -244,7 +233,27 @@ public partial class MainEditor : Control
         PlayerToolStates.Remove(playerId);
     }
 
-    private async void SaveImage(String dir)
+    private async void SaveImage()
+    {
+        var dialog = new FileDialog();
+        dialog.SetFileMode(FileDialog.FileModeEnum.SaveFile);
+        dialog.SetAccess(FileDialog.AccessEnum.Filesystem);
+        dialog.SetUseNativeDialog(true);
+        dialog.SetFilters(["*.png ; PNG File"]);
+
+        async void OnDialogOnFileSelected(string dir)
+        {
+            await SaveImage(dir);
+            Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+            RemoveChild(dialog);
+            dialog.FileSelected -= OnDialogOnFileSelected;
+        }
+        dialog.FileSelected += OnDialogOnFileSelected;
+        AddChild(dialog);
+        dialog.PopupCenteredRatio();
+    }
+
+    private async Task SaveImage(String dir)
     {
         GD.Print($"Saving image to: {dir}");
         if (!dir.EndsWith(".png")) dir += ".png";
