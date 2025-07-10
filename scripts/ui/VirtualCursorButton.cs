@@ -19,7 +19,7 @@ public partial class VirtualCursorButton : Button
     {
         base._Process(delta);
 
-        GameCursors = GetTree().GetNodesInGroup("player_cursors").Cast<GameCursor>().ToArray();
+        GameCursors = GetTree().GetNodesInGroup("player_cursors").OfType<GameCursor>().ToArray();
         foreach (var gameCursor in GameCursors)
         {
             if (IsIntersecting(gameCursor.GlobalPosition))

@@ -34,8 +34,11 @@ public partial class PaintColorButton : VirtualCursorButton
         _editor ??= GetTree().GetFirstNodeInGroup("main_editor") as MainEditor;
         if (_editor is null) return;
 
-        IsSelected =
-            _editor.PlayerToolStates.Values.FirstOrDefault(toolState => toolState.InkDefinition == _inkDefinition) is not null;
+        IsSelected = false;
+        foreach (var (key, value) in _editor.PlayerToolStates)
+        {
+            if (value.InkDefinition == _inkDefinition) IsSelected = true;
+        }
 
         _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
 
