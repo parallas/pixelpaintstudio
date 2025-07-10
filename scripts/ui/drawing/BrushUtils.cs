@@ -10,7 +10,7 @@ public static class BrushUtils
 
     public static Texture2D HueShift(Texture2D texture, float hueShift)
     {
-        var image = texture.GetImage();
+        using var image = texture.GetImage();
         var imageData = image.GetData();
         for (int i = 0; i < imageData.Length; i+=4)
         {

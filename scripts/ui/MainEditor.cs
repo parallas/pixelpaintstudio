@@ -276,7 +276,8 @@ public partial class MainEditor : Control
 
         await ToSignal(RenderingServer.Singleton, RenderingServerInstance.SignalName.FramePostDraw);
         var viewportTexture = viewport.GetTexture();
-        viewportTexture.GetImage().SavePng(dir);
+        using var image = viewportTexture.GetImage();
+        image.SavePng(dir);
 
         RemoveChild(viewport);
     }

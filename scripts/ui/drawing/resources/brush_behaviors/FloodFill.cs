@@ -23,7 +23,7 @@ public partial class FloodFill : BrushBehavior
 
         if (canvasItem is not DrawCanvas drawCanvas) return;
         var existingTexture = drawCanvas.OutputTextureTarget.Texture;
-        var image = existingTexture.GetImage();
+        using var image = existingTexture.GetImage();
         var imageData = image.Data["data"].AsByteArray();
 
         Vector2I pos = drawState.EvaluatedPosition.ToVector2I();
@@ -58,8 +58,9 @@ public partial class FloodFill : BrushBehavior
             imageData[indexCounter + 3] = fillThis ? (byte)drawState.EvaluatedColor.A8 : (byte)0;
         }
 
-        var newImage = Image.CreateFromData(width, height, false, image.GetFormat(), imageData);
-        canvasItem.DrawTextureRect(ImageTexture.CreateFromImage(newImage), new Rect2(Vector2.Zero, image.GetSize()), false, Colors.White);
+        using var newImage = Image.CreateFromData(width, height, false, image.GetFormat(), imageData);
+        var imageTexture = ImageTexture.CreateFromImage(newImage);
+        canvasItem.DrawTextureRect(imageTexture, new Rect2(Vector2.Zero, image.GetSize()), false, Colors.White);
     }
 
     private int PosToIndex(Vector2I pos, int imageWidth)
