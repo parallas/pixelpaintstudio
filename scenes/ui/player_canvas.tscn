@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://releeux1dnk5"]
+
+[ext_resource type="Shader" uid="uid://dp0d61wix7fah" path="res://shaders/ui_stencil.gdshader" id="1_7x7f0"]
+[ext_resource type="Script" uid="uid://xuib0el3yssj" path="res://scripts/ui/drawing/PlayerCanvas.cs" id="3_klui6"]
+[ext_resource type="Script" uid="uid://dhj15jvhu7awh" path="res://scripts/ui/drawing/DrawCanvas.cs" id="4_yy1hk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7x7f0"]
+shader = ExtResource("1_7x7f0")
+shader_parameter/stencil_size = Vector2(0, 0)
+shader_parameter/texture_size = Vector2(0, 0)
+
+[sub_resource type="Environment" id="Environment_oi40j"]
+background_mode = 1
+background_color = Color(1, 1, 1, 0)
+
+[sub_resource type="World3D" id="World3D_aa6wj"]
+environment = SubResource("Environment_oi40j")
+
+[node name="Player Canvas" type="TextureRect" node_paths=PackedStringArray("_subViewports", "DrawCanvas")]
+material = SubResource("ShaderMaterial_7x7f0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_klui6")
+_subViewports = [NodePath("Drawing Viewport")]
+DrawCanvas = NodePath("Drawing Viewport/Canvas")
+
+[node name="Drawing Viewport" type="SubViewport" parent="."]
+disable_3d = true
+own_world_3d = true
+world_3d = SubResource("World3D_aa6wj")
+transparent_bg = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 360)
+
+[node name="Canvas" type="Control" parent="Drawing Viewport" node_paths=PackedStringArray("_subViewport")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_yy1hk")
+_subViewport = NodePath("..")

@@ -3,20 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Godot.Collections;
 using Parallas;
 
 public partial class MainEditor : Control
 {
     [Export] public Toolbar Toolbar { get; set; }
     [Export] public Topbar Topbar { get; set; }
-
-    [Export] public DrawCanvas TargetDrawCanvas;
-    [Export] public Control CanvasRoot;
-
+    [Export] private AspectRatioContainer _aspectRatioContainer;
+    [Export] private SubViewport _finalAccumulativeViewport;
     [Export] public ToolState DefaultToolState;
+    [Export] public PackedScene PlayerCanvasScene;
+    [Export] public TextureRect FinalRenderTextureRect;
+    [Export] public Vector2I Resolution { get; private set; } = new Vector2I(640, 360);
+    public Rect2I SizeRect => new Rect2I(Vector2I.Zero, Resolution);
 
-    public readonly Dictionary<int, ToolState> PlayerToolStates = new Dictionary<int, ToolState>();
-    private readonly Dictionary<int, DrawState> PlayerDrawStates = new Dictionary<int, DrawState>();
+    public readonly System.Collections.Generic.Dictionary<int, ToolState> PlayerToolStates = new System.Collections.Generic.Dictionary<int, ToolState>();
+    private readonly System.Collections.Generic.Dictionary<int, DrawState> PlayerDrawStates = new System.Collections.Generic.Dictionary<int, DrawState>();
+    private readonly System.Collections.Generic.Dictionary<int, PlayerCanvas> PlayerCanvases = new System.Collections.Generic.Dictionary<int, PlayerCanvas>();
 
     public int PrimaryPlayerId { get; set; }
 
@@ -113,12 +117,32 @@ public partial class MainEditor : Control
         null,
     ];
 
+    public static readonly List<StencilData> AllStencilData =
+    [
+        new(2, [
+            0b_10,
+            0b_01
+        ]),
+        new(3, [
+            0b_100,
+            0b_000,
+            0b_000
+        ]),
+    ];
+
     public override void _Ready()
     {
         base._Ready();
 
         Input.SetMouseMode(Input.MouseModeEnum.Hidden);
         Godot.Engine.MaxFps = 120;
+
+        SetResolution(Resolution);
+
+        CreatePlayerCanvas(0);
+
+        PlayerDeviceMapper.PlayerCreated += CreatePlayerCanvas;
+        PlayerDeviceMapper.PlayerRemoved += DeletePlayerCanvas;
     }
 
     public override void _EnterTree()
@@ -127,7 +151,6 @@ public partial class MainEditor : Control
         AddToGroup("main_editor");
         PlayerDeviceMapper.PlayerCreated += AddPlayerToolState;
         PlayerDeviceMapper.PlayerRemoved += RemovePlayerToolState;
-        TargetDrawCanvas.Draw += DrawAllDrawStates;
     }
 
     public override void _ExitTree()
@@ -136,7 +159,6 @@ public partial class MainEditor : Control
         RemoveFromGroup("main_editor");
         PlayerDeviceMapper.PlayerCreated -= AddPlayerToolState;
         PlayerDeviceMapper.PlayerRemoved -= RemovePlayerToolState;
-        TargetDrawCanvas.Draw -= DrawAllDrawStates;
     }
 
     public override void _Process(double delta)
@@ -153,7 +175,7 @@ public partial class MainEditor : Control
             if (!PlayerToolStates.TryGetValue(playerId, out var toolState)) continue;
 
             var color = toolState.InkDefinition.SampleColor(drawState.DrawingTime);
-            drawState.Process(TargetDrawCanvas.GetCanvasPosition(drawingCursor.GlobalPosition), color, delta);
+            drawState.Process(GetCanvasPosition(drawingCursor.GlobalPosition), color, delta);
             toolState.ToolDefinition.BrushDefinition?.Process(drawState, delta);
 
             drawState.CanvasItem?.QueueRedraw();
@@ -178,15 +200,16 @@ public partial class MainEditor : Control
             .FirstOrDefault(cursor => cursor.PlayerId == playerId);
         if (gameCursor is null) return;
         if (!PlayerToolStates.TryGetValue(playerId, out ToolState toolState)) return;
+        if (!PlayerCanvases.TryGetValue(playerId, out PlayerCanvas playerCanvas)) return;
 
-        if (@event.IsActionPressed("click") && TargetDrawCanvas.IsWithinCanvas(gameCursor.GlobalPosition))
+        if (@event.IsActionPressed("click") && IsWithinCanvas(gameCursor.GlobalPosition))
         {
             if (PlayerDrawStates.ContainsKey(playerId)) return;
 
             var color = toolState.InkDefinition.SampleColor(0);
             var drawState = DrawState.Start(
-                TargetDrawCanvas,
-                TargetDrawCanvas.GetCanvasPosition(gameCursor.GlobalPosition),
+                playerCanvas.DrawCanvas,
+                GetCanvasPosition(gameCursor.GlobalPosition),
                 color
             );
             PlayerDrawStates.TryAdd(playerId, drawState);
@@ -198,7 +221,7 @@ public partial class MainEditor : Control
             if (!PlayerDrawStates.TryGetValue(playerId, out var drawState)) return;
             var color = toolState.InkDefinition.SampleColor(drawState.DrawingTime);
             drawState.Finish(
-                TargetDrawCanvas.GetCanvasPosition(gameCursor.GlobalPosition),
+                GetCanvasPosition(gameCursor.GlobalPosition),
                 color,
                 0
             );
@@ -212,23 +235,70 @@ public partial class MainEditor : Control
             GetTree().Quit();
     }
 
+    public void SetResolution(Vector2I resolution)
+    {
+        Resolution = resolution;
+        _aspectRatioContainer.Ratio = (float)Resolution.X / Resolution.Y;
+        _finalAccumulativeViewport.Size = resolution;
+
+        foreach (var (i, playerCanvas) in PlayerCanvases)
+        {
+            playerCanvas.SetResolution(resolution);
+        }
+    }
+
+    private void CreatePlayerCanvas(int playerId)
+    {
+        var playerCanvasNode = PlayerCanvasScene.Instantiate();
+        if (playerCanvasNode is not PlayerCanvas playerCanvas) return;
+        playerCanvas.SetResolution(Resolution);
+        playerCanvas.SetOutputTextureTarget(FinalRenderTextureRect);
+        PlayerCanvases.TryAdd(playerId, playerCanvas);
+        playerCanvas.DrawCanvas.Draw += () =>
+        {
+            if (PlayerDrawStates.TryGetValue(playerId, out var drawState))
+                DoDrawState(playerId, drawState);
+        };
+        _finalAccumulativeViewport.AddChild(playerCanvas);
+    }
+
+    private void DeletePlayerCanvas(int playerId)
+    {
+        PlayerCanvases.TryGetValue(playerId, out PlayerCanvas playerCanvas);
+        if (playerCanvas is null) return;
+        _finalAccumulativeViewport.RemoveChild(playerCanvas);
+        playerCanvas.QueueFree();
+        PlayerCanvases.Remove(playerId);
+    }
+
     private void DrawAllDrawStates()
     {
         foreach (var (playerId, drawState) in PlayerDrawStates)
         {
-            if (!PlayerToolStates.TryGetValue(playerId, out var toolState)) continue;
-
-            toolState.ToolDefinition.BrushDefinition.Draw(drawState);
-
-            // Set the last frame properties
-            drawState.LastCursorPosition = drawState.CursorPosition;
-            drawState.LastEvaluatedPosition = drawState.EvaluatedPosition;
-            drawState.LastEvaluatedScale = drawState.EvaluatedScale;
-            drawState.LastEvaluatedColor = drawState.EvaluatedColor;
-
-            if (drawState.State == DrawState.States.Start) drawState.State = DrawState.States.Draw;
-            if (drawState.State == DrawState.States.Finish) PlayerDrawStates.Remove(playerId);
+            DoDrawState(playerId, drawState);
         }
+    }
+
+    private void DoDrawState(int playerId)
+    {
+        var drawState = PlayerDrawStates[playerId];
+        DoDrawState(playerId, drawState);
+    }
+
+    private void DoDrawState(int playerId, DrawState drawState)
+    {
+        if (!PlayerToolStates.TryGetValue(playerId, out var toolState)) return;
+
+        toolState.ToolDefinition.BrushDefinition.Draw(drawState);
+
+        // Set the last frame properties
+        drawState.LastCursorPosition = drawState.CursorPosition;
+        drawState.LastEvaluatedPosition = drawState.EvaluatedPosition;
+        drawState.LastEvaluatedScale = drawState.EvaluatedScale;
+        drawState.LastEvaluatedColor = drawState.EvaluatedColor;
+
+        if (drawState.State == DrawState.States.Start) drawState.State = DrawState.States.Draw;
+        if (drawState.State == DrawState.States.Finish) PlayerDrawStates.Remove(playerId);
     }
 
     private void AddPlayerToolState(int playerId)
@@ -268,7 +338,7 @@ public partial class MainEditor : Control
         GD.Print($"Saving image to: {dir}");
         if (!dir.EndsWith(".png")) dir += ".png";
         var viewport = new SubViewport() { RenderTargetUpdateMode = SubViewport.UpdateMode.Once };
-        viewport.Size = TargetDrawCanvas.SubViewport.Size;
+        viewport.Size = Resolution;
 
         var background = new ColorRect() { Color = Colors.White };
         viewport.AddChild(background);
@@ -276,7 +346,7 @@ public partial class MainEditor : Control
 
         var layerImageRect = new TextureRect()
         {
-            Texture = TargetDrawCanvas.SubViewport.GetTexture(),
+            Texture = FinalRenderTextureRect.Texture,
             Material = GD.Load<Material>("res://materials/brush_mix.tres")
         };
         viewport.AddChild(layerImageRect);
@@ -290,5 +360,20 @@ public partial class MainEditor : Control
         image.SavePng(dir);
 
         RemoveChild(viewport);
+    }
+
+    public Vector2 GetCanvasPosition(Vector2 cursorPosition)
+    {
+        var posLocalToRect = cursorPosition - FinalRenderTextureRect.GlobalPosition;
+        var scaleFactor = this.Resolution / FinalRenderTextureRect.Size;
+        var canvasRelativePosition = posLocalToRect * scaleFactor;
+        var pixelPosition = canvasRelativePosition.Round();
+        return pixelPosition;
+    }
+
+    public bool IsWithinCanvas(Vector2 cursorPosition)
+    {
+        var canvasPosition = GetCanvasPosition(cursorPosition).ToVector2I();
+        return SizeRect.HasPoint(canvasPosition);
     }
 }

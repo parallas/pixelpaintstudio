@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://t3e8v3uvdigw"]
+
+[ext_resource type="Shader" uid="uid://dp0d61wix7fah" path="res://shaders/ui_stencil.gdshader" id="1_p2frl"]
+
+[resource]
+shader = ExtResource("1_p2frl")
+shader_parameter/stencil_size = Vector2(0, 0)
+shader_parameter/texture_size = Vector2(0, 0)

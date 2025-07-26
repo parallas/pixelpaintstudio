@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("2_d6vpv")
 ModelScene = ExtResource("1_tah1y")
+ToolMenu = 1
 metadata/_custom_type_script = "uid://iid6uckh4k5i"

@@ -8,4 +8,5 @@
 script = ExtResource("3_wsw83")
 BrushDefinition = ExtResource("1_4fokr")
 ModelScene = ExtResource("2_3ynvp")
+ToolMenu = 2
 metadata/_custom_type_script = "uid://iid6uckh4k5i"

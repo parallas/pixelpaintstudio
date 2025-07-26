@@ -23,11 +23,6 @@ public partial class ColorPaletteBar : PanelContainer
         SetPageValues();
     }
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-    }
-
     public void NextPage()
     {
         GD.Print("Next page");
