@@ -95,5 +95,6 @@ public partial class StencilButton : VirtualCursorButton
         _stencilData = stencilData;
 
         _paintBlob.SetTexture(stencilData.MaskTexture);
+        _paintBlob.SetTextureScale(Vector2.One * 10f);
     }
 }

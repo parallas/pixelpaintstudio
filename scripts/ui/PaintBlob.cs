@@ -29,4 +29,12 @@ public partial class PaintBlob : Node3D
             shaderMaterial.SetShaderParameter("paint_tex", texture);
         }
     }
+
+    public void SetTextureScale(Vector2 scale)
+    {
+        if (_material is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("paint_tex_scale", scale);
+        }
+    }
 }
