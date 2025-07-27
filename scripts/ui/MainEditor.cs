@@ -120,14 +120,35 @@ public partial class MainEditor : Control
     public static readonly List<StencilData> AllStencilData =
     [
         new(1, [0b_1]),
+        new(3, [
+            0b_011,
+            0b_111,
+            0b_111
+        ]),
+        new(2, [
+            0b_01,
+            0b_11,
+        ]),
         new(2, [
             0b_10,
             0b_01
+        ]),
+        new(2, [
+            0b_10,
+            0b_00,
         ]),
         new(3, [
             0b_100,
             0b_000,
             0b_000
+        ]),
+        new(2, [
+            0b_10,
+            0b_10,
+        ]),
+        new(2, [
+            0b_11,
+            0b_00,
         ]),
     ];
 
@@ -161,7 +182,7 @@ public partial class MainEditor : Control
         RemoveFromGroup("main_editor");
         PlayerDeviceMapper.PlayerCreated -= AddPlayerToolState;
         PlayerDeviceMapper.PlayerRemoved -= RemovePlayerToolState;
-        
+
         PlayerDeviceMapper.PlayerCreated -= CreatePlayerCanvas;
         PlayerDeviceMapper.PlayerRemoved -= DeletePlayerCanvas;
     }
