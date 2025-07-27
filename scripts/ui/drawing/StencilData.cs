@@ -8,6 +8,7 @@ public partial class StencilData : Resource
     public Vector2I Size => new((int)Width, RowData.GetLength(1));
 
     public Texture2D MaskTexture;
+    public Texture2D MaskTextureScaled;
 
     public StencilData(ulong width, ulong[] rowData)
     {
@@ -29,6 +30,9 @@ public partial class StencilData : Resource
             imageData
         );
         MaskTexture = ImageTexture.CreateFromImage(image);
+
+        image.Resize((int)Width * 4, RowData.Length * 4, Image.Interpolation.Nearest);
+        MaskTextureScaled = ImageTexture.CreateFromImage(image);
     }
 
     public bool HasPosition(Vector2I point)

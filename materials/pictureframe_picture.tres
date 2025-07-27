@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dklnhk4jdxoni"]
+
+[ext_resource type="Shader" uid="uid://cx7kertpwpy2h" path="res://shaders/paint_blob.gdshader" id="1_wifvu"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wifvu")
+shader_parameter/paint_tint = Color(1, 1, 1, 1)
+shader_parameter/paint_tex_scale = Vector2(1, 1)

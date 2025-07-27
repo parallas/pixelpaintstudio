@@ -1,22 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://bc7f6yty1rpmk"]
+[gd_scene load_steps=7 format=3 uid="uid://bc7f6yty1rpmk"]
 
 [ext_resource type="Script" uid="uid://bug4ycj8r1wvn" path="res://scripts/ui/StencilButton.cs" id="1_jhuxj"]
-[ext_resource type="PackedScene" uid="uid://8xxa35qq5sb8" path="res://scenes/ui/paint_blob.tscn" id="2_70wyu"]
+[ext_resource type="PackedScene" uid="uid://d2rb6o2hkfyvv" path="res://models/menus/picture_frame.glb" id="2_70wyu"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_5kiri"]
+[ext_resource type="Script" uid="uid://bfis3l8l54w50" path="res://scripts/ui/PaintBlob.cs" id="3_shhec"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_atk6x"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_jhuxj"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_70wyu"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
 
-[node name="Stencil Button" type="Button" node_paths=PackedStringArray("_paintBlob", "_visualRoot")]
+[node name="Stencil Button" type="Button" node_paths=PackedStringArray("_paintBlob", "_modelRoot", "_visualRoot")]
 custom_minimum_size = Vector2(128, 128)
 offset_right = 128.0
 offset_bottom = 128.0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_atk6x")
 flat = true
 script = ExtResource("1_jhuxj")
-_paintBlob = NodePath("SubViewportContainer/SubViewport/paint_blob")
+_paintBlob = NodePath("SubViewportContainer/SubViewport/picture_frame")
+_modelRoot = NodePath("SubViewportContainer/SubViewport/picture_frame")
 _visualRoot = NodePath("SubViewportContainer")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -25,6 +27,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 11.0
+offset_bottom = 11.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -34,22 +40,26 @@ own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(150, 150)
+size_2d_override = Vector2i(600, 600)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
-projection = 1
 current = true
+fov = 35.0
 size = 6.0
 
-[node name="paint_blob" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_70wyu")]
+[node name="picture_frame" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("_meshInstance3D") instance=ExtResource("2_70wyu")]
+transform = Transform3D(4.07838, 0.492217, 1.83698, 0, 4.34667, -1.16469, -1.90178, 1.05556, 3.93942, 0, 0, 0)
+script = ExtResource("3_shhec")
+_meshInstance3D = NodePath("Picture")
 
 [node name="DropShadowViewport" type="TextureRect" parent="SubViewportContainer" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 2
 mouse_filter = 2
-texture = SubResource("ViewportTexture_jhuxj")
+texture = SubResource("ViewportTexture_70wyu")
 script = ExtResource("3_5kiri")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
