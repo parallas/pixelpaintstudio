@@ -18,9 +18,9 @@ public partial class MainEditor : Control
     [Export] public Vector2I Resolution { get; private set; } = new Vector2I(640, 360);
     public Rect2I SizeRect => new Rect2I(Vector2I.Zero, Resolution);
 
-    public readonly System.Collections.Generic.Dictionary<int, ToolState> PlayerToolStates = new System.Collections.Generic.Dictionary<int, ToolState>();
-    private readonly System.Collections.Generic.Dictionary<int, DrawState> PlayerDrawStates = new System.Collections.Generic.Dictionary<int, DrawState>();
-    private readonly System.Collections.Generic.Dictionary<int, PlayerCanvas> PlayerCanvases = new System.Collections.Generic.Dictionary<int, PlayerCanvas>();
+    public readonly System.Collections.Generic.Dictionary<int, ToolState> PlayerToolStates = new();
+    public readonly System.Collections.Generic.Dictionary<int, DrawState> PlayerDrawStates = new();
+    public readonly System.Collections.Generic.Dictionary<int, PlayerCanvas> PlayerCanvases = new();
 
     public int PrimaryPlayerId { get; set; }
 
@@ -119,6 +119,7 @@ public partial class MainEditor : Control
 
     public static readonly List<StencilData> AllStencilData =
     [
+        new(1, [0b_1]),
         new(2, [
             0b_10,
             0b_01
@@ -253,6 +254,7 @@ public partial class MainEditor : Control
         if (playerCanvasNode is not PlayerCanvas playerCanvas) return;
         playerCanvas.SetResolution(Resolution);
         playerCanvas.SetOutputTextureTarget(FinalRenderTextureRect);
+        playerCanvas.SetMaskTexture(AllStencilData[0].MaskTexture);
         PlayerCanvases.TryAdd(playerId, playerCanvas);
         playerCanvas.DrawCanvas.Draw += () =>
         {
