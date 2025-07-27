@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcs3ibma0b68n"]
+[gd_scene load_steps=17 format=3 uid="uid://bcs3ibma0b68n"]
 
 [ext_resource type="Script" uid="uid://1cq4jy72qeno" path="res://scripts/ui/MainEditor.cs" id="1_46cp5"]
 [ext_resource type="PackedScene" uid="uid://3i8sakgujhkd" path="res://scenes/ui/toolbar.tscn" id="1_hnesk"]
@@ -35,9 +35,12 @@ background_color = Color(1, 1, 1, 0)
 environment = SubResource("Environment_m82f4")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_b65ll"]
-viewport_path = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Accumulative Renderer")
+viewport_path = NodePath("Layout/Center/AspectRatioContainer/Unscaled Subviewport/Canvas Stuff/Accumulative Renderer")
 
-[node name="Main Editor" type="Control" node_paths=PackedStringArray("Toolbar", "Topbar", "_aspectRatioContainer", "_finalAccumulativeViewport", "FinalRenderTextureRect")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_yc0ux"]
+viewport_path = NodePath("Layout/Center/AspectRatioContainer/Unscaled Subviewport")
+
+[node name="Main Editor" type="Control" node_paths=PackedStringArray("Toolbar", "Topbar", "_aspectRatioContainer", "_unscaledViewport", "_finalAccumulativeViewport", "UnscaledBackBufferTextureRect", "ScaledBackBufferTextureRect")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,10 +51,12 @@ script = ExtResource("1_46cp5")
 Toolbar = NodePath("Layout/Toolbar")
 Topbar = NodePath("Layout/Topbar")
 _aspectRatioContainer = NodePath("Layout/Center/AspectRatioContainer")
-_finalAccumulativeViewport = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Accumulative Renderer")
+_unscaledViewport = NodePath("Layout/Center/AspectRatioContainer/Unscaled Subviewport")
+_finalAccumulativeViewport = NodePath("Layout/Center/AspectRatioContainer/Unscaled Subviewport/Canvas Stuff/Accumulative Renderer")
 DefaultToolState = ExtResource("2_yc0ux")
 PlayerCanvasScene = ExtResource("7_yc0ux")
-FinalRenderTextureRect = NodePath("Layout/Center/AspectRatioContainer/Canvas Stuff/Final Render")
+UnscaledBackBufferTextureRect = NodePath("Layout/Center/AspectRatioContainer/Unscaled Subviewport/Canvas Stuff/Unscaled Render")
+ScaledBackBufferTextureRect = NodePath("Layout/Center/AspectRatioContainer/Scaled Render")
 Resolution = Vector2i(640, 480)
 
 [node name="Background" type="MarginContainer" parent="."]
@@ -159,18 +164,31 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 66.0
-offset_bottom = 66.0
+offset_right = 2135.02
+offset_bottom = 1208.0
 texture = SubResource("ImageTexture_b1beo")
 script = ExtResource("3_travt")
 _referenceControl = NodePath("..")
 Offset = Vector2(16, 16)
 metadata/_custom_type_script = "uid://oatqjlhy3t4d"
 
-[node name="Canvas Stuff" type="Control" parent="Layout/Center/AspectRatioContainer"]
-layout_mode = 2
+[node name="Unscaled Subviewport" type="SubViewport" parent="Layout/Center/AspectRatioContainer"]
+transparent_bg = true
+size = Vector2i(640, 480)
+size_2d_override = Vector2i(640, 480)
+size_2d_override_stretch = true
+render_target_update_mode = 4
 
-[node name="Accumulative Renderer" type="SubViewport" parent="Layout/Center/AspectRatioContainer/Canvas Stuff"]
+[node name="Canvas Stuff" type="Control" parent="Layout/Center/AspectRatioContainer/Unscaled Subviewport"]
+top_level = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Accumulative Renderer" type="SubViewport" parent="Layout/Center/AspectRatioContainer/Unscaled Subviewport/Canvas Stuff"]
 disable_3d = true
 own_world_3d = true
 world_3d = SubResource("World3D_8s2gp")
@@ -182,7 +200,7 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(640, 360)
 render_target_clear_mode = 2
 
-[node name="Final Render" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Canvas Stuff"]
+[node name="Unscaled Render" type="TextureRect" parent="Layout/Center/AspectRatioContainer/Unscaled Subviewport/Canvas Stuff"]
 texture_filter = 1
 material = ExtResource("8_oi40j")
 layout_mode = 1
@@ -192,6 +210,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_b65ll")
+
+[node name="Scaled Render" type="TextureRect" parent="Layout/Center/AspectRatioContainer"]
+material = ExtResource("8_oi40j")
+layout_mode = 2
+texture = SubResource("ViewportTexture_yc0ux")
 
 [node name="Toolbar" parent="Layout" instance=ExtResource("1_hnesk")]
 custom_minimum_size = Vector2(0, 160)

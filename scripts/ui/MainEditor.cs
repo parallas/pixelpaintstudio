@@ -11,10 +11,12 @@ public partial class MainEditor : Control
     [Export] public Toolbar Toolbar { get; set; }
     [Export] public Topbar Topbar { get; set; }
     [Export] private AspectRatioContainer _aspectRatioContainer;
+    [Export] private SubViewport _unscaledViewport;
     [Export] private SubViewport _finalAccumulativeViewport;
     [Export] public ToolState DefaultToolState;
     [Export] public PackedScene PlayerCanvasScene;
-    [Export] public TextureRect FinalRenderTextureRect;
+    [Export] public TextureRect UnscaledBackBufferTextureRect;
+    [Export] public TextureRect ScaledBackBufferTextureRect;
     [Export] public Vector2I Resolution { get; private set; } = new Vector2I(640, 360);
     public Rect2I SizeRect => new Rect2I(Vector2I.Zero, Resolution);
 
@@ -159,21 +161,21 @@ public partial class MainEditor : Control
         Input.SetMouseMode(Input.MouseModeEnum.Hidden);
         Godot.Engine.MaxFps = 120;
 
-        SetResolution(Resolution);
-
         CreatePlayerCanvas(0);
-
     }
 
     public override void _EnterTree()
     {
         base._EnterTree();
         AddToGroup("main_editor");
+        SetResolution(Resolution);
         PlayerDeviceMapper.PlayerCreated += AddPlayerToolState;
         PlayerDeviceMapper.PlayerRemoved += RemovePlayerToolState;
 
         PlayerDeviceMapper.PlayerCreated += CreatePlayerCanvas;
         PlayerDeviceMapper.PlayerRemoved += DeletePlayerCanvas;
+
+        GetTree().GetRoot().SizeChanged += UpdateUnscaledViewportScale;
     }
 
     public override void _ExitTree()
@@ -269,10 +271,27 @@ public partial class MainEditor : Control
         _aspectRatioContainer.Ratio = (float)Resolution.X / Resolution.Y;
         _finalAccumulativeViewport.Size = resolution;
 
+        UpdateUnscaledViewportScale();
+
         foreach (var (i, playerCanvas) in PlayerCanvases)
         {
             playerCanvas.SetResolution(resolution);
         }
+    }
+
+    private void UpdateUnscaledViewportScale()
+    {
+        int nearestScaleInt = 3;
+        // var targetSize = _aspectRatioContainer.GetGlobalRect().Size;
+        // float ratio = targetSize.X / targetSize.Y;
+        // if (ratio > 1f)
+        //     nearestScaleInt = MathUtil.FloorToInt(targetSize.Y / Resolution.Y);
+        // else
+        //     nearestScaleInt = MathUtil.FloorToInt(targetSize.X / Resolution.X);
+        // nearestScaleInt = Mathf.Max(nearestScaleInt, 1);
+        // GD.Print($"{Resolution} fits into {targetSize} {nearestScaleInt} times");
+        _unscaledViewport.Size = Resolution;
+        _unscaledViewport.Size2DOverride = Resolution * nearestScaleInt;
     }
 
     private void CreatePlayerCanvas(int playerId)
@@ -280,7 +299,7 @@ public partial class MainEditor : Control
         var playerCanvasNode = PlayerCanvasScene.Instantiate();
         if (playerCanvasNode is not PlayerCanvas playerCanvas) return;
         playerCanvas.SetResolution(Resolution);
-        playerCanvas.SetOutputTextureTarget(FinalRenderTextureRect);
+        playerCanvas.SetOutputTextureTarget(UnscaledBackBufferTextureRect);
         playerCanvas.SetMaskTexture(AllStencilData[0].MaskTexture);
         PlayerCanvases.TryAdd(playerId, playerCanvas);
         playerCanvas.DrawCanvas.Draw += () =>
@@ -376,7 +395,7 @@ public partial class MainEditor : Control
 
         var layerImageRect = new TextureRect()
         {
-            Texture = FinalRenderTextureRect.Texture,
+            Texture = UnscaledBackBufferTextureRect.Texture,
             Material = GD.Load<Material>("res://materials/brush_mix.tres")
         };
         viewport.AddChild(layerImageRect);
@@ -394,8 +413,8 @@ public partial class MainEditor : Control
 
     public Vector2 GetCanvasPosition(Vector2 cursorPosition)
     {
-        var posLocalToRect = cursorPosition - FinalRenderTextureRect.GlobalPosition;
-        var scaleFactor = this.Resolution / FinalRenderTextureRect.Size;
+        var posLocalToRect = cursorPosition - ScaledBackBufferTextureRect.GlobalPosition;
+        var scaleFactor = this.Resolution / ScaledBackBufferTextureRect.Size;
         var canvasRelativePosition = posLocalToRect * scaleFactor;
         var pixelPosition = canvasRelativePosition.Round();
         return pixelPosition;
