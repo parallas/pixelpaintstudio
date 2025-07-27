@@ -142,8 +142,6 @@ public partial class MainEditor : Control
 
         CreatePlayerCanvas(0);
 
-        PlayerDeviceMapper.PlayerCreated += CreatePlayerCanvas;
-        PlayerDeviceMapper.PlayerRemoved += DeletePlayerCanvas;
     }
 
     public override void _EnterTree()
@@ -152,6 +150,9 @@ public partial class MainEditor : Control
         AddToGroup("main_editor");
         PlayerDeviceMapper.PlayerCreated += AddPlayerToolState;
         PlayerDeviceMapper.PlayerRemoved += RemovePlayerToolState;
+
+        PlayerDeviceMapper.PlayerCreated += CreatePlayerCanvas;
+        PlayerDeviceMapper.PlayerRemoved += DeletePlayerCanvas;
     }
 
     public override void _ExitTree()
@@ -160,6 +161,9 @@ public partial class MainEditor : Control
         RemoveFromGroup("main_editor");
         PlayerDeviceMapper.PlayerCreated -= AddPlayerToolState;
         PlayerDeviceMapper.PlayerRemoved -= RemovePlayerToolState;
+        
+        PlayerDeviceMapper.PlayerCreated -= CreatePlayerCanvas;
+        PlayerDeviceMapper.PlayerRemoved -= DeletePlayerCanvas;
     }
 
     public override void _Process(double delta)
@@ -206,6 +210,8 @@ public partial class MainEditor : Control
         if (@event.IsActionPressed("click") && IsWithinCanvas(gameCursor.GlobalPosition))
         {
             if (PlayerDrawStates.ContainsKey(playerId)) return;
+
+            playerCanvas.SetMaskTexture(toolState.StencilData.MaskTexture);
 
             var color = toolState.InkDefinition.SampleColor(0);
             var drawState = DrawState.Start(
@@ -306,6 +312,7 @@ public partial class MainEditor : Control
     private void AddPlayerToolState(int playerId)
     {
         var toolState = DefaultToolState.Duplicate() as ToolState;
+        toolState!.SetStencil(AllStencilData[0]);
         PlayerToolStates.TryAdd(playerId, toolState);
     }
 

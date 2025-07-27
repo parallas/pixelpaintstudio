@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=20 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="Script" uid="uid://db74nfyn3mccf" path="res://scripts/ui/Topbar.cs" id="1_xm8n6"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://csfvvdtga7dvn" path="res://models/menus/menu_arrow.glb" id="8_vtqlh"]
 [ext_resource type="Script" uid="uid://cssfxutgjsc61" path="res://scripts/ui/BouncyButton.cs" id="10_vtqlh"]
 [ext_resource type="Script" uid="uid://ckwfjag101rip" path="res://scripts/ui/MainEditorValueController.cs" id="12_5qjw4"]
+[ext_resource type="PackedScene" uid="uid://bc7f6yty1rpmk" path="res://scenes/ui/stencil_button.tscn" id="14_gnqgb"]
+[ext_resource type="Script" uid="uid://wvnajl85h046" path="res://scripts/ui/StencilBar.cs" id="14_vijp7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm8n6"]
 content_margin_left = 48.0
@@ -232,8 +234,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 158.0
+offset_bottom = 158.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_h = true
 script = ExtResource("7_t05rr")
@@ -287,8 +289,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 158.0
+offset_bottom = 158.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_v = true
 script = ExtResource("7_t05rr")
@@ -320,87 +322,91 @@ metadata/_custom_type_script = "uid://cssfxutgjsc61"
 visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_2uv7f")
-script = ExtResource("5_ar3oq")
+script = ExtResource("14_vijp7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Control/Stencil Menu"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Item Container" type="Control" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer"]
+[node name="Items Container" type="Control" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer"]
 custom_minimum_size = Vector2(1688, 128)
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Items" type="HBoxContainer" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container"]
+[node name="Items" type="HBoxContainer" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.5
+offset_top = -64.0
+offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 7
 
-[node name="TestButton" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton2" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button2" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton3" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button3" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton4" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button4" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton5" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button5" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton6" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button6" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton7" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button7" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton8" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button8" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton9" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button9" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton10" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button10" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton11" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button11" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton12" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button12" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton13" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button13" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton14" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button14" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton15" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button15" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="TestButton16" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Item Container/Items"]
-custom_minimum_size = Vector2(104, 128)
+[node name="Stencil Button16" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
 [node name="Page Buttons" type="Control" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer"]
@@ -416,20 +422,120 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
+[node name="Prev Page Button" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_t05rr")
+flat = true
+script = ExtResource("6_xm8n6")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button"]
+material = ExtResource("7_vtqlh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(75, 75)
+texture = SubResource("ViewportTexture_5i4jx")
+flip_h = true
+
+[node name="DropShadowTexture" type="TextureRect" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button/TextureRect" node_paths=PackedStringArray("_referenceTextureRect")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 158.0
+offset_bottom = 158.0
+texture = SubResource("ViewportTexture_5i4jx")
+flip_h = true
+script = ExtResource("7_t05rr")
+_referenceTextureRect = NodePath("..")
+metadata/_custom_type_script = "uid://dqredh7d048oo"
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(150, 150)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+projection = 1
+current = true
+size = 6.0
+
+[node name="menu_arrow" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button/SubViewport" instance=ExtResource("8_vtqlh")]
+
+[node name="BouncyButton" type="Node" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" node_paths=PackedStringArray("TargetButton", "VisualRoot")]
+script = ExtResource("10_vtqlh")
+TargetButton = NodePath("..")
+VisualRoot = NodePath("../TextureRect")
+metadata/_custom_type_script = "uid://cssfxutgjsc61"
+
 [node name="Next Page Button" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 64
-text = "<"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vtqlh")
+flat = true
+script = ExtResource("6_xm8n6")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"
 
-[node name="Next Page Button2" type="Button" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 64
-text = ">"
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button"]
+material = ExtResource("7_vtqlh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(75, 75)
+texture = SubResource("ViewportTexture_5i4jx")
+flip_v = true
+
+[node name="DropShadowTexture" type="TextureRect" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button/TextureRect" node_paths=PackedStringArray("_referenceTextureRect")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 158.0
+offset_bottom = 158.0
+texture = SubResource("ViewportTexture_5i4jx")
+flip_v = true
+script = ExtResource("7_t05rr")
+_referenceTextureRect = NodePath("..")
+metadata/_custom_type_script = "uid://dqredh7d048oo"
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(150, 150)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+projection = 1
+current = true
+size = 6.0
+
+[node name="menu_arrow" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button/SubViewport" instance=ExtResource("8_vtqlh")]
+
+[node name="BouncyButton" type="Node" parent="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" node_paths=PackedStringArray("TargetButton", "VisualRoot")]
+script = ExtResource("10_vtqlh")
+TargetButton = NodePath("..")
+VisualRoot = NodePath("../TextureRect")
+metadata/_custom_type_script = "uid://cssfxutgjsc61"
 
 [connection signal="PressedVirtually" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="MainEditorValueController" method="SetEditorPlayerValue"]
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu"]
 [connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Button2" to="." method="SwitchToToolOptionsMenu"]
 [connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage" unbinds=1]
 [connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="NextPage" unbinds=1]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" to="HBoxContainer/Control/Stencil Menu" method="PreviousPage" unbinds=1]
+[connection signal="PressedVirtually" from="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Stencil Menu" method="NextPage" unbinds=1]

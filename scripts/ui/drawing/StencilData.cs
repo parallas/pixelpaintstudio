@@ -1,7 +1,7 @@
 
 using Godot;
 
-public struct StencilData
+public partial class StencilData : Resource
 {
     public readonly ulong Width;
     public readonly ulong[] RowData;

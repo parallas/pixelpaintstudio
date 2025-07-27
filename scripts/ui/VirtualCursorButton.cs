@@ -50,6 +50,7 @@ public partial class VirtualCursorButton : Button
 
     private void HandleInput(InputEvent @event)
     {
+        if (!IsVisibleInTree()) return;
         if (@event is not InputEventMouseButton eventMouseButton) return;
 
         var deviceId = PlayerDeviceMapper.GetControllerOffsetDeviceId(@event);

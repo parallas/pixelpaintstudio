@@ -10,6 +10,7 @@ public partial class Topbar : MarginContainer
     [Export] public ToolState ToolState { get; private set; }
 
     [Export] public ColorPaletteBar ColorPaletteBar { get; private set; }
+    [Export] public StencilButton StencilBar { get; private set; }
     [Export] public Array<Control> MenuBars { get; private set; }
     [Export] public Control CurrentMenuBar { get; private set; }
     [Export] public Control InkMenu { get; private set; }
@@ -28,6 +29,7 @@ public partial class Topbar : MarginContainer
             bool isCurrent = menuBar == CurrentMenuBar;
             menuBar.Visible = isCurrent;
             menuBar.MouseFilter = isCurrent ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
+            menuBar.ProcessMode = isCurrent ? ProcessModeEnum.Always : ProcessModeEnum.Disabled;
             menuBar.SetDrawBehindParent(true);
             menuBar.SetPivotOffset(new Vector2(0f, menuBar.Size.Y * 0.5f));
         }
@@ -63,6 +65,7 @@ public partial class Topbar : MarginContainer
             bool isCurrent = menuBar == CurrentMenuBar;
             menuBar.Visible = isCurrent;
             menuBar.MouseFilter = isCurrent ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
+            menuBar.ProcessMode = isCurrent ? ProcessModeEnum.Always : ProcessModeEnum.Disabled;
             menuBar.SetDrawBehindParent(true);
         }
     }

@@ -26,7 +26,7 @@ public partial class ColorPaletteBar : PanelContainer
     public void NextPage()
     {
         GD.Print("Next page");
-        var newPage = Mathf.Wrap(_page + 1, 0, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
+        var newPage = Mathf.Wrap(_page + 1, 0, Mathf.FloorToInt((float)(MainEditor.AllInkDefinitions.Count) / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -41,7 +41,7 @@ public partial class ColorPaletteBar : PanelContainer
     public void PreviousPage()
     {
         GD.Print("Prev page");
-        var newPage = Mathf.Wrap(_page - 1, 0, Mathf.FloorToInt((float)MainEditor.AllInkDefinitions.Count / ItemsPerPage));
+        var newPage = Mathf.Wrap(_page - 1, 0, Mathf.FloorToInt((float)(MainEditor.AllInkDefinitions.Count) / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -63,7 +63,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void SetInkArray(InkDefinition[] inkDefinitions)
     {
-        var min = _paintColorButtons.Length;
+        var min = Mathf.Min(_paintColorButtons.Length, inkDefinitions.Length);
         for (var i = 0; i < min; i++)
         {
             var button = _paintColorButtons[i];

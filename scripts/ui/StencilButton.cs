@@ -6,30 +6,21 @@ using System.Reflection.Metadata.Ecma335;
 using Parallas;
 
 [GlobalClass]
-public partial class PaintColorButton : VirtualCursorButton
+public partial class StencilButton : VirtualCursorButton
 {
     [Export] private PaintBlob _paintBlob;
     [Export] private Control _visualRoot;
-    [Export] private InkDefinition _inkDefinition;
+    [Export] private StencilData _stencilData;
     [Export] private bool _scaleWhenSelected = true;
-    [Export] private bool _setToolColorWhenClicked = true;
+    [Export] private bool _setToolValueWhenSelected = true;
     private Vector2 _scale = Vector2.One;
     private Vector2 _scaleVelocity = Vector2.Zero;
 
     private MainEditor _editor;
 
-    public override void _Ready()
-    {
-        base._Ready();
-
-        RandomizeOrientation();
-    }
-
     public override void _Process(double delta)
     {
         base._Process(delta);
-
-        // if (_inkDefinition is not null) _paintBlob.SetColor(_inkDefinition.SampleColor(Time.GetTicksMsec() / 1000.0f));
 
         _editor ??= GetTree().GetFirstNodeInGroup("main_editor") as MainEditor;
         if (_editor is null) return;
@@ -37,7 +28,7 @@ public partial class PaintColorButton : VirtualCursorButton
         IsSelected = false;
         foreach (var (key, value) in _editor.PlayerToolStates)
         {
-            if (value.InkDefinition == _inkDefinition) IsSelected = true;
+            if (value.StencilData == _stencilData) IsSelected = true;
         }
 
         _visualRoot.SetPivotOffset(_visualRoot.Size * 0.5f);
@@ -76,33 +67,22 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base.VirtualCursorPressed(@event, playerId);
 
-        GD.Print($"PRESSED INK BUTTON: {Name}");
-
         if (_editor is null) return;
 
         if (!_editor.PlayerToolStates.TryGetValue(playerId, out var toolState)) return;
 
-        if (_setToolColorWhenClicked)
-            SetToolToColor(toolState);
+        if (_setToolValueWhenSelected)
+            SetToolValue(toolState);
         else
         {
-            RandomizeOrientation();
             Bounce();
         }
     }
 
-    public void SetToolToColor(ToolState toolState)
+    public void SetToolValue(ToolState toolState)
     {
-        toolState.SetInk(_inkDefinition);
-        RandomizeOrientation();
+        toolState.SetStencil(_stencilData);
         Bounce();
-    }
-
-    public void RandomizeOrientation()
-    {
-        _paintBlob.RotateZ(GD.Randf() * 2f * Mathf.Pi);
-        if (GD.Randf() < 0.5f) _paintBlob.RotateX(Mathf.Pi);
-        if (GD.Randf() < 0.5f) _paintBlob.RotateY(Mathf.Pi);
     }
 
     public void Bounce(float intensity = 10f)
@@ -110,28 +90,10 @@ public partial class PaintColorButton : VirtualCursorButton
         _scaleVelocity = Vector2.One * intensity;
     }
 
-    public void SetInkDefinition([NotNull]InkDefinition ink)
+    public void SetStencilDefinition([NotNull]StencilData stencilData)
     {
-        _inkDefinition = ink;
+        _stencilData = stencilData;
 
-        if (ink.Gradient is { } gradient)
-        {
-            _paintBlob.SetColor(Colors.White);
-            _paintBlob.SetTexture(new GradientTexture2D
-            {
-                Gradient = gradient,
-                Width = 64,
-                Height = 64,
-                Fill = GradientTexture2D.FillEnum.Linear,
-                FillFrom = Vector2.Right * 0.0f,
-                FillTo = Vector2.Right * 1.05f,
-                Repeat = GradientTexture2D.RepeatEnum.Repeat,
-            });
-        }
-        else
-        {
-            _paintBlob.SetTexture(null);
-            _paintBlob.SetColor(_inkDefinition.Color);
-        }
+        _paintBlob.SetTexture(stencilData.MaskTexture);
     }
 }
