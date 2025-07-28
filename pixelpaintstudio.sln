@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fun_drawing", "fun_drawing.csproj", "{8DB7A881-9560-4FF6-8F77-EEDEFA5C0DC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pixelpaintstudio", "pixelpaintstudio.csproj", "{8DB7A881-9560-4FF6-8F77-EEDEFA5C0DC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

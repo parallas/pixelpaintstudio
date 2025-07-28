@@ -26,7 +26,7 @@ window/stretch/aspect="expand"
 
 [dotnet]
 
-project/assembly_name="fun_drawing"
+project/assembly_name="pixelpaintstudio"
 
 [filesystem]
 
