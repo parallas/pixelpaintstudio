@@ -25,8 +25,7 @@ public partial class StencilBar : PanelContainer
 
     public void NextPage()
     {
-        GD.Print("Next page");
-        var newPage = Mathf.Wrap(_page + 1, 0, Mathf.FloorToInt((float)(MainEditor.AllStencilData.Count) / ItemsPerPage));
+        var newPage = Mathf.PosMod(_page + 1, 1 + Mathf.FloorToInt((float)(MainEditor.AllStencilData.Count - 1) / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -36,8 +35,7 @@ public partial class StencilBar : PanelContainer
 
     public void PreviousPage()
     {
-        GD.Print("Prev page");
-        var newPage = Mathf.Wrap(_page - 1, 0, Mathf.FloorToInt((float)(MainEditor.AllStencilData.Count) / ItemsPerPage));
+        var newPage = Mathf.PosMod(_page - 1, 1 + Mathf.FloorToInt((float)(MainEditor.AllStencilData.Count - 1) / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -47,7 +45,6 @@ public partial class StencilBar : PanelContainer
 
     private void SetPageValues()
     {
-        GD.Print($"Set Page values for {_page}");
         int startIndex = (_page * ItemsPerPage);
         int endIndex = (_page + 1) * ItemsPerPage;
         endIndex = Math.Min(endIndex, MainEditor.AllStencilData.Count);
@@ -56,13 +53,14 @@ public partial class StencilBar : PanelContainer
 
     public void SetValueArray(StencilData[] stencilDatas)
     {
-        var min = Mathf.Min(_stencilButtons.Length, stencilDatas.Length);
+        var min = _stencilButtons.Length;
         for (var i = 0; i < min; i++)
         {
             var button = _stencilButtons[i];
             if (!IsInstanceValid(button)) continue;
-            var stencil = stencilDatas[i];
-            if (i < stencilDatas.Length && stencil is not null) {
+            bool render = i < stencilDatas.Length && stencilDatas[i] is not null;
+            if (render) {
+                var stencil = stencilDatas[i];
                 button.SetVisible(true);
                 button.ProcessMode = ProcessModeEnum.Always;
                 button.SetStencilDefinition(stencil);

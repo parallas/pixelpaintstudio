@@ -25,8 +25,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void NextPage()
     {
-        GD.Print("Next page");
-        var newPage = Mathf.Wrap(_page + 1, 0, Mathf.FloorToInt((float)(MainEditor.AllInkDefinitions.Count) / ItemsPerPage));
+        var newPage = Mathf.PosMod(_page + 1, 1 + Mathf.FloorToInt((float)(MainEditor.AllInkDefinitions.Count - 1) / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -40,8 +39,7 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void PreviousPage()
     {
-        GD.Print("Prev page");
-        var newPage = Mathf.Wrap(_page - 1, 0, Mathf.FloorToInt((float)(MainEditor.AllInkDefinitions.Count) / ItemsPerPage));
+        var newPage = Mathf.PosMod(_page - 1, 1 + Mathf.FloorToInt((float)(MainEditor.AllInkDefinitions.Count - 1) / ItemsPerPage));
         if (_page == newPage) return;
         _page = newPage;
         SetPageValues();
@@ -63,13 +61,14 @@ public partial class ColorPaletteBar : PanelContainer
 
     public void SetInkArray(InkDefinition[] inkDefinitions)
     {
-        var min = Mathf.Min(_paintColorButtons.Length, inkDefinitions.Length);
+        var min = _paintColorButtons.Length;
         for (var i = 0; i < min; i++)
         {
             var button = _paintColorButtons[i];
             if (!IsInstanceValid(button)) continue;
-            var ink = inkDefinitions[i];
-            if (i < inkDefinitions.Length && ink is not null) {
+            bool render = i < inkDefinitions.Length && inkDefinitions[i] is not null;
+            if (render) {
+                var ink = inkDefinitions[i];
                 button.SetVisible(true);
                 button.ProcessMode = ProcessModeEnum.Always;
                 button.SetInkDefinition(ink);

@@ -76,8 +76,6 @@ public partial class PaintColorButton : VirtualCursorButton
     {
         base.VirtualCursorPressed(@event, playerId);
 
-        GD.Print($"PRESSED INK BUTTON: {Name}");
-
         if (_editor is null) return;
 
         if (!_editor.PlayerToolStates.TryGetValue(playerId, out var toolState)) return;
