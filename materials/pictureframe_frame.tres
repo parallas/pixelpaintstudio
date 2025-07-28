@@ -5,5 +5,5 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_yrim4")
-shader_parameter/paint_tint = Color(0.69, 0.450915, 0.2553, 1)
+shader_parameter/paint_tint = Color(0.81, 0.81, 0.81, 1)
 shader_parameter/paint_tex_scale = Vector2(1, 1)

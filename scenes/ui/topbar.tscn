@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=21 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="Script" uid="uid://db74nfyn3mccf" path="res://scripts/ui/Topbar.cs" id="1_xm8n6"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://fw8tirswpnlg" path="res://scripts/ui/InkMenuButtonSync.cs" id="5_5i4jx"]
 [ext_resource type="Script" uid="uid://b7qb4b8ako0hj" path="res://scripts/ui/ColorPaletteBar.cs" id="5_ar3oq"]
 [ext_resource type="Script" uid="uid://hpmh2lxuwadp" path="res://scripts/ui/VirtualCursorButton.cs" id="6_xm8n6"]
+[ext_resource type="Script" uid="uid://6o23qilu777" path="res://scripts/ui/StencilMenuButtonSync.cs" id="7_3oepe"]
 [ext_resource type="Script" uid="uid://dqredh7d048oo" path="res://scripts/ui/DropShadowTexture.cs" id="7_t05rr"]
 [ext_resource type="Material" uid="uid://ddpd0nfqo1jgu" path="res://materials/ui_paper.tres" id="7_vtqlh"]
 [ext_resource type="PackedScene" uid="uid://csfvvdtga7dvn" path="res://models/menus/menu_arrow.glb" id="8_vtqlh"]
@@ -30,6 +31,7 @@ corner_radius_top_left = 100
 corner_radius_top_right = 16
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 64
+expand_margin_bottom = 16.0
 shadow_color = Color(0, 0, 0, 0.231373)
 shadow_size = 1
 shadow_offset = Vector2(8, 16)
@@ -94,9 +96,16 @@ script = ExtResource("5_5i4jx")
 InkMenuButton = NodePath("..")
 MainEditorValueController = NodePath("../../../../../MainEditorValueController")
 
-[node name="Button2" type="Button" parent="HBoxContainer/Menu Switcher/HBoxContainer"]
+[node name="Stencil Button" parent="HBoxContainer/Menu Switcher/HBoxContainer" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+_scaleWhenSelected = false
+_setToolValueWhenSelected = false
+
+[node name="Node" type="Node" parent="HBoxContainer/Menu Switcher/HBoxContainer/Stencil Button" node_paths=PackedStringArray("StencilButton", "MainEditorValueController")]
+script = ExtResource("7_3oepe")
+StencilButton = NodePath("..")
+MainEditorValueController = NodePath("../../../../../MainEditorValueController")
 
 [node name="Control" type="MarginContainer" parent="HBoxContainer"]
 show_behind_parent = true
@@ -234,8 +243,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 158.0
+offset_bottom = 158.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_h = true
 script = ExtResource("7_t05rr")
@@ -289,8 +298,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 158.0
+offset_bottom = 158.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_v = true
 script = ExtResource("7_t05rr")
@@ -319,7 +328,6 @@ VisualRoot = NodePath("../TextureRect")
 metadata/_custom_type_script = "uid://cssfxutgjsc61"
 
 [node name="Stencil Menu" type="PanelContainer" parent="HBoxContainer/Control"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_2uv7f")
 script = ExtResource("14_vijp7")
@@ -448,8 +456,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 158.0
+offset_bottom = 158.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_h = true
 script = ExtResource("7_t05rr")
@@ -503,8 +511,8 @@ show_behind_parent = true
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 158.0
+offset_bottom = 158.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_v = true
 script = ExtResource("7_t05rr")
@@ -533,8 +541,9 @@ VisualRoot = NodePath("../TextureRect")
 metadata/_custom_type_script = "uid://cssfxutgjsc61"
 
 [connection signal="PressedVirtually" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="MainEditorValueController" method="SetEditorPlayerValue"]
-[connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu"]
-[connection signal="pressed" from="HBoxContainer/Menu Switcher/HBoxContainer/Button2" to="." method="SwitchToToolOptionsMenu"]
+[connection signal="PressedVirtually" from="HBoxContainer/Menu Switcher/HBoxContainer/Ink Menu Button" to="." method="SwitchToColorsMenu" unbinds=1]
+[connection signal="PressedVirtually" from="HBoxContainer/Menu Switcher/HBoxContainer/Stencil Button" to="MainEditorValueController" method="SetEditorPlayerValue"]
+[connection signal="PressedVirtually" from="HBoxContainer/Menu Switcher/HBoxContainer/Stencil Button" to="." method="SwitchToToolOptionsMenu" unbinds=1]
 [connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" to="HBoxContainer/Control/Color Palette" method="PreviousPage" unbinds=1]
 [connection signal="PressedVirtually" from="HBoxContainer/Control/Color Palette/HBoxContainer/Page Buttons/HBoxContainer/Next Page Button" to="HBoxContainer/Control/Color Palette" method="NextPage" unbinds=1]
 [connection signal="PressedVirtually" from="HBoxContainer/Control/Stencil Menu/HBoxContainer/Page Buttons/HBoxContainer/Prev Page Button" to="HBoxContainer/Control/Stencil Menu" method="PreviousPage" unbinds=1]

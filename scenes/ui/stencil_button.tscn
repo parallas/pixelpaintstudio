@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bc7f6yty1rpmk"]
+[gd_scene load_steps=6 format=3 uid="uid://bc7f6yty1rpmk"]
 
 [ext_resource type="Script" uid="uid://bug4ycj8r1wvn" path="res://scripts/ui/StencilButton.cs" id="1_jhuxj"]
-[ext_resource type="PackedScene" uid="uid://d2rb6o2hkfyvv" path="res://models/menus/picture_frame.glb" id="2_70wyu"]
+[ext_resource type="PackedScene" uid="uid://chhgajigh7cfq" path="res://scenes/ui/picture_frame.tscn" id="2_jhuxj"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_5kiri"]
-[ext_resource type="Script" uid="uid://bfis3l8l54w50" path="res://scripts/ui/PaintBlob.cs" id="3_shhec"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_atk6x"]
 
@@ -50,10 +49,8 @@ current = true
 fov = 35.0
 size = 6.0
 
-[node name="picture_frame" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("_meshInstance3D") instance=ExtResource("2_70wyu")]
+[node name="picture_frame" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_jhuxj")]
 transform = Transform3D(4.07838, 0.492217, 1.83698, 0, 4.34667, -1.16469, -1.90178, 1.05556, 3.93942, 0, 0, 0)
-script = ExtResource("3_shhec")
-_meshInstance3D = NodePath("Picture")
 
 [node name="DropShadowViewport" type="TextureRect" parent="SubViewportContainer" node_paths=PackedStringArray("Viewport")]
 modulate = Color(0, 0, 0, 0.25)

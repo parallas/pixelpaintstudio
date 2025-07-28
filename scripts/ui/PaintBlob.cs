@@ -30,6 +30,14 @@ public partial class PaintBlob : Node3D
         }
     }
 
+    public void SetStencilTexture(Texture texture)
+    {
+        if (_material is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("stencil_tex", texture);
+        }
+    }
+
     public void SetTextureScale(Vector2 scale)
     {
         if (_material is ShaderMaterial shaderMaterial)

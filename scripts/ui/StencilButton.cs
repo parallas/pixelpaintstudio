@@ -69,12 +69,12 @@ public partial class StencilButton : VirtualCursorButton
         _scaleVelocity = new Vector2(xVel, yVel);
 
         _hoverTime += (float)delta;
-        if (IsSelected)
+        if (IsSelected && _scaleWhenSelected)
         {
             _modelTargetRotation = Quaternion.FromEuler(new Vector3(Mathf.Cos(_hoverTime * 6f) * 0.3f, Mathf.Sin(_hoverTime * 6f) * 0.3f, 0f));
             _modelRoot.Quaternion = MathUtil.ExpDecay(_modelRoot.Quaternion, _modelTargetRotation, 16f, (float)delta);
         }
-        else if (IsHoveredVirtually)
+        else if (IsHoveredVirtually || !_scaleWhenSelected)
         {
             _modelRoot.Quaternion = MathUtil.ExpDecay(_modelRoot.Quaternion, Quaternion.Identity, 16f, (float)delta);
         }
@@ -119,7 +119,8 @@ public partial class StencilButton : VirtualCursorButton
     {
         _stencilData = stencilData;
 
-        _paintBlob.SetTexture(stencilData.MaskTextureScaled);
+        _paintBlob.SetColor(Colors.Black);
+        _paintBlob.SetStencilTexture(stencilData.MaskTextureScaled);
         float sizeBasedPercent = MathUtil.InverseLerp01(64, 2, stencilData.MaskTexture.GetHeight());
         _paintBlob.SetTextureScale(Vector2.One * 7f * Mathf.Pow(sizeBasedPercent, 3f));
     }

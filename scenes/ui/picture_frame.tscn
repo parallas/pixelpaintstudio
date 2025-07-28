@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://chhgajigh7cfq"]
+
+[ext_resource type="PackedScene" uid="uid://d2rb6o2hkfyvv" path="res://models/menus/picture_frame.glb" id="1_lhhpi"]
+[ext_resource type="Script" uid="uid://bfis3l8l54w50" path="res://scripts/ui/PaintBlob.cs" id="2_5n8jy"]
+
+[node name="picture_frame" node_paths=PackedStringArray("_meshInstance3D") instance=ExtResource("1_lhhpi")]
+script = ExtResource("2_5n8jy")
+_meshInstance3D = NodePath("Picture")
