@@ -119,7 +119,7 @@ public partial class StencilButton : VirtualCursorButton
     {
         _stencilData = stencilData;
 
-        _paintBlob.SetColor(Colors.Black);
+        _paintBlob.SetColor(Colors.White);
         _paintBlob.SetStencilTexture(stencilData.MaskTextureScaled);
         float sizeBasedPercent = MathUtil.InverseLerp01(64, 2, stencilData.MaskTexture.GetHeight());
         _paintBlob.SetTextureScale(Vector2.One * 7f * Mathf.Pow(sizeBasedPercent, 3f));

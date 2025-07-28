@@ -3,7 +3,7 @@ render_mode unshaded;
 
 uniform vec4 paint_tint : source_color = vec4(1);
 uniform sampler2D paint_tex : source_color, hint_default_white, repeat_enable;
-uniform sampler2D stencil_tex : source_color, hint_default_white, repeat_enable;
+uniform sampler2D stencil_tex : source_color, hint_default_black, repeat_enable;
 uniform vec2 paint_tex_scale = vec2(1);
 
 void vertex() {
@@ -19,8 +19,9 @@ void fragment() {
 	float highlight = clamp(0, 1, pow(max(dot(NORMAL + vec3(0, -5, -0.2), VIEW), 0.0), 10));
 	highlight *= 0.08;
 	vec3 final_color = COLOR.rgb * tex_sample * tint * fresnel + highlight;
-	final_color = mix(vec3(1, 1, 1), final_color, vec3(stencil_tex_sample));
+	//final_color = mix(final_color, vec3(1, 1, 1), vec3(1.0 - stencil_tex_sample));
 	ALBEDO = final_color;
+	ALPHA = 1.0 - stencil_tex_sample;
 }
 
 //void light() {
