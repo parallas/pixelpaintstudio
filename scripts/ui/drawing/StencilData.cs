@@ -20,7 +20,8 @@ public partial class StencilData : Resource
         for (int column = 0; column < (int)Width; column++)
         {
             int index = (row * (int)Width) + column;
-            imageData[index] = IsBitActive(rowData[row], column) ? byte.MaxValue : byte.MinValue;
+            int bitIndex = (int)Width - column - 1; // idk why this has to be inverted. guess bc bits are RtoL ???
+            imageData[index] = IsBitActive(rowData[row], bitIndex) ? byte.MaxValue : byte.MinValue;
         }
         Image image = Image.CreateFromData(
             (int)Width,
@@ -45,6 +46,6 @@ public partial class StencilData : Resource
     }
 
     public bool IsBitActive(ulong value, int bitNumber){
-        return ((int)value & (1 << bitNumber)) != 0;
+        return (value & (1ul << bitNumber)) != 0;
     }
 }

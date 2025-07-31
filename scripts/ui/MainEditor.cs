@@ -162,6 +162,52 @@ public partial class MainEditor : Control
             0b_010,
             0b_001,
         ]),
+        new(16, [ // Noisy Dark
+            0b_1110111111101011,
+            0b_0111110110111101,
+            0b_1101101111010111,
+            0b_0111111101111111,
+            0b_1110101110111101,
+            0b_0111110111101111,
+            0b_1011101110110111,
+            0b_1110111101011101,
+            0b_0101110111110111,
+            0b_1111011111011101,
+            0b_0111110101111011,
+            0b_1101011111111111,
+            0b_1111101101011010,
+            0b_0110111011111111,
+            0b_1111111111101011,
+            0b_1011010110111110
+        ]),
+        new(8, [ // checker big
+            0b_11110000,
+            0b_11110000,
+            0b_11110000,
+            0b_11110000,
+            0b_00001111,
+            0b_00001111,
+            0b_00001111,
+            0b_00001111,
+        ]),
+        new(16, [
+            0b_0011100001000111,
+            0b_0011000001001110,
+            0b_0110000011111100,
+            0b_0100000111111000,
+            0b_0100011110010000,
+            0b_1100111100010000,
+            0b_1111111000011001,
+            0b_1000110000111111,
+            0b_0000100000110011,
+            0b_0001100001100001,
+            0b_1001100001000111,
+            0b_1111111111001100,
+            0b_0111000011011000,
+            0b_0100000111110000,
+            0b_1100001111100000,
+            0b_1111111001000001
+        ]),
         new(4, [ // diamond
             0b_0010,
             0b_0101,
@@ -199,16 +245,6 @@ public partial class MainEditor : Control
             0b_001000,
             0b_000000,
         ]),
-        new(8, [ // checker big
-            0b_11110000,
-            0b_11110000,
-            0b_11110000,
-            0b_11110000,
-            0b_00001111,
-            0b_00001111,
-            0b_00001111,
-            0b_00001111,
-        ]),
         new(16, [ // polka dots big
             0b_0000000000000000,
             0b_0000000000000000,
@@ -226,7 +262,7 @@ public partial class MainEditor : Control
             0b_0000001111000000,
             0b_0000000000000000,
             0b_0000000000000000,
-        ]),
+        ])
     ];
 
     public override void _Ready()
@@ -294,6 +330,31 @@ public partial class MainEditor : Control
     public override void _Input(InputEvent @event)
     {
         base._Input(@event);
+
+        if (@event.IsActionPressed("paste"))
+        {
+            if (DisplayServer.ClipboardHasImage())
+            {
+                var clipboardImage = DisplayServer.ClipboardGetImage();
+                clipboardImage.Convert(Image.Format.R8);
+                var data = clipboardImage.GetData();
+                int height = clipboardImage.GetHeight();
+                int width = clipboardImage.GetWidth();
+                string[] rowData = new string[height];
+                for (int y = 0; y < height; y++)
+                {
+                    string rowString = "0b_";
+                    for (int x = 0; x < width; x++)
+                    {
+                        int index = y * width + x;
+                        bool isFull = data[index] != byte.MinValue;
+                        rowString += isFull ? "1" : "0";
+                    }
+                    rowData[y] = rowString;
+                }
+                GD.Print(rowData.Join(", "));
+            }
+        }
 
         var deviceId = PlayerDeviceMapper.GetControllerOffsetDeviceId(@event);
         if (!PlayerDeviceMapper.TryGetPlayerDeviceMapFromDevice(deviceId, out PlayerDeviceMap deviceMap)) return;
