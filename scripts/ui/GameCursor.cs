@@ -14,6 +14,8 @@ public partial class GameCursor : CenterContainer
 
     private Vector2 _moveAmount = Vector2.Zero;
 
+    public ulong TargetId { get; private set; } = 0;
+
     public override void _Ready()
     {
         base._Ready();
@@ -46,6 +48,8 @@ public partial class GameCursor : CenterContainer
 
         if (Input.IsKeyPressed(Key.Escape)) Input.SetMouseMode(Input.MouseModeEnum.Visible);
         if (Input.IsMouseButtonPressed(MouseButton.Left)) Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+
+        SetTargetId(0);
     }
 
     public override void _Input(InputEvent @event)
@@ -69,5 +73,10 @@ public partial class GameCursor : CenterContainer
     public void SetPlayerId(int playerId)
     {
         PlayerId = playerId;
+    }
+
+    public void SetTargetId(ulong targetId)
+    {
+        TargetId = targetId;
     }
 }
