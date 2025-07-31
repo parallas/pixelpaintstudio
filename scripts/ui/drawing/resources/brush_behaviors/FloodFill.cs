@@ -22,7 +22,12 @@ public partial class FloodFill : BrushBehavior
         _hasFilled = false;
         _fillCount = 0;
         _fillStep = 0;
+        _imageMask = null;
+        _fillMask = null;
+        _fillImageData = null;
         _fillPoints = new List<Vector2I>();
+        _fillImage = null;
+        _fillImageTexture = null;
     }
 
     public override void Process(DrawState drawState, double delta)
