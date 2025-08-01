@@ -331,6 +331,11 @@ public partial class MainEditor : Control
     {
         base._GuiInput(@event);
 
+        // if (@event.IsActionPressed("copy"))
+        // {
+        //     // ResourceSaver.Save()
+        // }
+
         if (@event.IsActionPressed("paste"))
         {
             if (DisplayServer.ClipboardHasImage())

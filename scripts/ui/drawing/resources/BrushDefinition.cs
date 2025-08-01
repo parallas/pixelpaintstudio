@@ -5,6 +5,7 @@ using Godot.Collections;
 [GlobalClass]
 public partial class BrushDefinition : Resource
 {
+    [Export] public Texture2D Thumbnail;
     [Export] public Array<BrushBehavior> Behaviors;
     [Export] public Array<BrushBehavior> StartBehaviors;
     [Export] public Array<BrushBehavior> FinishBehaviors;

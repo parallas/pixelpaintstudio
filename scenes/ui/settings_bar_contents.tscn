@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://cia1t7onqyfgc"]
+
+[ext_resource type="Script" uid="uid://hpmh2lxuwadp" path="res://scripts/ui/VirtualCursorButton.cs" id="1_epn33"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljjj3"]
+bg_color = Color(0.584314, 0.623529, 0.678431, 1)
+border_width_top = 16
+border_color = Color(0.91, 0.91, 0.91, 1)
+border_blend = true
+corner_detail = 1
+expand_margin_left = 32.0
+expand_margin_top = 16.0
+expand_margin_right = 32.0
+
+[node name="Settings Bar Contents" type="MarginContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="BG Color2" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ljjj3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="VirtualCursorButton2" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "close"
+script = ExtResource("1_epn33")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"
+
+[node name="VirtualCursorButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "share"
+script = ExtResource("1_epn33")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"
+
+[node name="VirtualCursorButton3" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "music"
+script = ExtResource("1_epn33")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"

@@ -7,19 +7,22 @@ public partial class Topbar : MarginContainer
 {
     [Signal] public delegate void OnSettingsChangeEventHandler(ToolDefinition tool);
 
-    [Export] public ToolState ToolState { get; private set; }
+    [Export] public MainEditorValueController MainEditorValueController { get; private set; }
 
     [Export] public ColorPaletteBar ColorPaletteBar { get; private set; }
-    [Export] public StencilButton StencilBar { get; private set; }
     [Export] public Array<Control> MenuBars { get; private set; }
     [Export] public Control CurrentMenuBar { get; private set; }
     [Export] public Control InkMenu { get; private set; }
+    [Export] public Control SecondarySettingsRootNode { get; private set; }
     [Export] public Control ToolOptionsMenu { get; private set; }
+    [Export] public Control WandsMenu { get; private set; }
 
     [Export] public PaintColorButton OpenColorsButton { get; private set; }
 
     private float _squashStretchAmount = 0f;
     private float _squashStretchVelocity = 0f;
+
+    private bool _secondaryMenuState = false;
 
     public override void _Ready()
     {
@@ -35,18 +38,25 @@ public partial class Topbar : MarginContainer
         }
     }
 
-    public override void _ExitTree()
-    {
-        base._ExitTree();
-
-        if (ToolState is not null) ToolState.InkChanged -= SetColorMenuButtonColor;
-    }
-
     public override void _Process(double delta)
     {
         base._Process(delta);
 
-        // SetColorMenuButtonColor(OpenColorsButton.ToolState?.InkDefinition);
+        if (_secondaryMenuState)
+        {
+            if (MainEditorValueController.Editor.PlayerToolStates.TryGetValue(MainEditorValueController.Editor.PrimaryPlayerId, out ToolState toolState))
+            {
+                switch (toolState.ToolDefinition?.ToolMenu)
+                {
+                    case ToolDefinition.ToolMenus.Stencils:
+                        CurrentMenuBar = ToolOptionsMenu;
+                        break;
+                    case ToolDefinition.ToolMenus.Wands:
+                        CurrentMenuBar = WandsMenu;
+                        break;
+                }
+            }
+        }
 
         MathUtil.Spring(
             ref _squashStretchAmount,
@@ -70,15 +80,6 @@ public partial class Topbar : MarginContainer
         }
     }
 
-    public void SetToolState(ToolState toolState)
-    {
-        if (ToolState is not null) ToolState.InkChanged -= SetColorMenuButtonColor;
-
-        ToolState = toolState;
-
-        ToolState.InkChanged += SetColorMenuButtonColor;
-    }
-
     private void SetColorMenuButtonColor(InkDefinition ink)
     {
         OpenColorsButton.SetInkDefinition(ink);
@@ -86,13 +87,14 @@ public partial class Topbar : MarginContainer
 
     public void SwitchToColorsMenu()
     {
+        _secondaryMenuState = false;
         CurrentMenuBar = InkMenu;
         _squashStretchAmount = 1f;
     }
 
     public void SwitchToToolOptionsMenu()
     {
-        CurrentMenuBar = ToolOptionsMenu;
+        _secondaryMenuState = true;
         _squashStretchAmount = 1f;
     }
 }

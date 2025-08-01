@@ -1,7 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://3i8sakgujhkd"]
+[gd_scene load_steps=38 format=3 uid="uid://3i8sakgujhkd"]
 
 [ext_resource type="Script" uid="uid://ciiyfrdjg73jx" path="res://scripts/ui/Toolbar.cs" id="1_cicof"]
 [ext_resource type="PackedScene" uid="uid://bb27qsdfplrcs" path="res://scenes/ui/tool_button.tscn" id="1_ieq13"]
+[ext_resource type="PackedScene" uid="uid://cia1t7onqyfgc" path="res://scenes/ui/settings_bar_contents.tscn" id="2_4dr0l"]
 [ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_7r4a7"]
 [ext_resource type="Resource" uid="uid://cycjlc7a1giig" path="res://drawing_resources/tools/tool_pen_small.tres" id="4_4dr0l"]
 [ext_resource type="Resource" uid="uid://bjdlfscp6y1c0" path="res://drawing_resources/tools/tool_pen_medium.tres" id="7_mbflq"]
@@ -20,25 +21,6 @@
 [ext_resource type="Script" uid="uid://cssfxutgjsc61" path="res://scripts/ui/BouncyButton.cs" id="19_mbflq"]
 [ext_resource type="Script" uid="uid://el3lsk23do8r" path="res://scripts/ui/CrankButtonBehavior.cs" id="20_ljjj3"]
 [ext_resource type="Resource" uid="uid://y88bren8gajp" path="res://drawing_resources/tools/tool_zoom.tres" id="21_mbflq"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljjj3"]
-bg_color = Color(0.584314, 0.623529, 0.678431, 1)
-border_width_top = 16
-border_color = Color(0.91, 0.91, 0.91, 1)
-border_blend = true
-corner_detail = 1
-expand_margin_left = 32.0
-expand_margin_top = 16.0
-expand_margin_right = 32.0
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_ljjj3"]
-viewport_path = NodePath("Settings Bar/Settings Bar Contents/HBoxContainer/Zoom/SubViewportContainer2/SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_llvci"]
-viewport_path = NodePath("Settings Bar/Settings Bar Contents/HBoxContainer/Zoom2/SubViewportContainer2/SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_ut0li"]
-viewport_path = NodePath("Settings Bar/Settings Bar Contents/HBoxContainer/Zoom3/SubViewportContainer2/SubViewport")
 
 [sub_resource type="Image" id="Image_i1qcg"]
 data = {
@@ -63,6 +45,11 @@ data = {
 
 [sub_resource type="ImageTexture" id="ImageTexture_cicof"]
 image = SubResource("Image_ljjj3")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kceen"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ks7f1"]
+viewport_path = NodePath("Item Bar/MarginContainer/Items/Menu Button/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4dr0l"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Pens/Pen Small/SubViewportContainer2/SubViewport")
@@ -94,11 +81,6 @@ viewport_path = NodePath("Item Bar/MarginContainer/Items/Copying/Wand/SubViewpor
 [sub_resource type="ViewportTexture" id="ViewportTexture_25767"]
 viewport_path = NodePath("Item Bar/MarginContainer/Items/Zoom/SubViewportContainer2/SubViewport")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kceen"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_ks7f1"]
-viewport_path = NodePath("Item Bar/MarginContainer/Items/Menu Button/SubViewport")
-
 [node name="Toolbar" type="MarginContainer" node_paths=PackedStringArray("SettingsBarNode", "ToolbarButtons")]
 custom_minimum_size = Vector2(0, 128)
 anchors_preset = 10
@@ -113,145 +95,8 @@ ToolbarButtons = [NodePath("Item Bar/MarginContainer/Items/Pens/Pen Small"), Nod
 [node name="Settings Bar" type="Control" parent="."]
 layout_mode = 2
 
-[node name="Settings Bar Contents" type="MarginContainer" parent="Settings Bar"]
+[node name="Settings Bar Contents" parent="Settings Bar" instance=ExtResource("2_4dr0l")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 116.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 28
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 0
-
-[node name="BG Color2" type="Panel" parent="Settings Bar/Settings Bar Contents"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ljjj3")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Settings Bar/Settings Bar Contents"]
-custom_minimum_size = Vector2(0, 128)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 8
-
-[node name="Zoom" parent="Settings Bar/Settings Bar Contents/HBoxContainer" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
-layout_mode = 2
-ToolDefinition = ExtResource("21_mbflq")
-_visualRoot = NodePath("SubViewportContainer2")
-_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom"]
-use_parent_material = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-pivot_offset = Vector2(64, 64)
-
-[node name="SubViewport" type="SubViewport" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom/SubViewportContainer2"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-msaa_3d = 2
-size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom/SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-projection = 1
-current = true
-size = 6.5
-far = 50.0
-
-[node name="Node3D" type="Node3D" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom/SubViewportContainer2/SubViewport"]
-
-[node name="DropShadowViewport" type="TextureRect" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-texture = SubResource("ViewportTexture_ljjj3")
-script = ExtResource("3_7r4a7")
-Viewport = NodePath("../SubViewport")
-metadata/_custom_type_script = "uid://djtog83vrh75d"
-
-[node name="Zoom2" parent="Settings Bar/Settings Bar Contents/HBoxContainer" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
-layout_mode = 2
-ToolDefinition = ExtResource("21_mbflq")
-_visualRoot = NodePath("SubViewportContainer2")
-_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom2"]
-use_parent_material = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-pivot_offset = Vector2(64, 64)
-
-[node name="SubViewport" type="SubViewport" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom2/SubViewportContainer2"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-msaa_3d = 2
-size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom2/SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-projection = 1
-current = true
-size = 6.5
-far = 50.0
-
-[node name="Node3D" type="Node3D" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom2/SubViewportContainer2/SubViewport"]
-
-[node name="DropShadowViewport" type="TextureRect" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom2/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-texture = SubResource("ViewportTexture_llvci")
-script = ExtResource("3_7r4a7")
-Viewport = NodePath("../SubViewport")
-metadata/_custom_type_script = "uid://djtog83vrh75d"
-
-[node name="Zoom3" parent="Settings Bar/Settings Bar Contents/HBoxContainer" node_paths=PackedStringArray("_visualRoot", "_modelRoot") instance=ExtResource("1_ieq13")]
-layout_mode = 2
-ToolDefinition = ExtResource("21_mbflq")
-_visualRoot = NodePath("SubViewportContainer2")
-_modelRoot = NodePath("SubViewportContainer2/SubViewport/Node3D")
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom3"]
-use_parent_material = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-pivot_offset = Vector2(64, 64)
-
-[node name="SubViewport" type="SubViewport" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom3/SubViewportContainer2"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-msaa_3d = 2
-size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom3/SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-projection = 1
-current = true
-size = 6.5
-far = 50.0
-
-[node name="Node3D" type="Node3D" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom3/SubViewportContainer2/SubViewport"]
-
-[node name="DropShadowViewport" type="TextureRect" parent="Settings Bar/Settings Bar Contents/HBoxContainer/Zoom3/SubViewportContainer2" node_paths=PackedStringArray("Viewport")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-texture = SubResource("ViewportTexture_ut0li")
-script = ExtResource("3_7r4a7")
-Viewport = NodePath("../SubViewport")
-metadata/_custom_type_script = "uid://djtog83vrh75d"
 
 [node name="BG Color" type="ColorRect" parent="."]
 visible = false
@@ -368,9 +213,9 @@ anchor_bottom = 1.0
 offset_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 8
+theme_override_constants/margin_left = 64
 theme_override_constants/margin_top = 28
-theme_override_constants/margin_right = 8
+theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 0
 
 [node name="Items" type="HBoxContainer" parent="Item Bar/MarginContainer"]
@@ -378,6 +223,66 @@ custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 theme_override_constants/separation = 64
 alignment = 1
+
+[node name="Menu Button" type="Button" parent="Item Bar/MarginContainer/Items"]
+custom_minimum_size = Vector2(100, 128)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kceen")
+flat = true
+script = ExtResource("15_m5qa8")
+metadata/_custom_type_script = "uid://hpmh2lxuwadp"
+
+[node name="TextureRect" type="TextureRect" parent="Item Bar/MarginContainer/Items/Menu Button"]
+material = ExtResource("16_i1qcg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 100)
+texture = SubResource("ViewportTexture_ks7f1")
+
+[node name="DropShadowTexture" type="TextureRect" parent="Item Bar/MarginContainer/Items/Menu Button/TextureRect" node_paths=PackedStringArray("_referenceTextureRect")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 208.0
+offset_bottom = 208.0
+texture = SubResource("ViewportTexture_ks7f1")
+script = ExtResource("17_ljjj3")
+_referenceTextureRect = NodePath("..")
+metadata/_custom_type_script = "uid://dqredh7d048oo"
+
+[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/Menu Button"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(200, 200)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Menu Button/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+projection = 1
+current = true
+size = 5.0
+
+[node name="crank2" parent="Item Bar/MarginContainer/Items/Menu Button/SubViewport" instance=ExtResource("18_i1qcg")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="BouncyButton" type="Node" parent="Item Bar/MarginContainer/Items/Menu Button" node_paths=PackedStringArray("TargetButton", "VisualRoot")]
+script = ExtResource("19_mbflq")
+TargetButton = NodePath("..")
+VisualRoot = NodePath("../TextureRect")
+metadata/_custom_type_script = "uid://cssfxutgjsc61"
+
+[node name="Crank Button Behavior" type="Node" parent="Item Bar/MarginContainer/Items/Menu Button" node_paths=PackedStringArray("Toolbar", "CrankNode")]
+script = ExtResource("20_ljjj3")
+Toolbar = NodePath("../../../../..")
+CrankNode = NodePath("../SubViewport/crank2")
 
 [node name="Pens" type="HBoxContainer" parent="Item Bar/MarginContainer/Items"]
 custom_minimum_size = Vector2(0, 128)
@@ -786,64 +691,8 @@ script = ExtResource("3_7r4a7")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
 
-[node name="Menu Button" type="Button" parent="Item Bar/MarginContainer/Items"]
-custom_minimum_size = Vector2(128, 128)
+[node name="Control" type="Control" parent="Item Bar/MarginContainer/Items"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kceen")
-flat = true
-script = ExtResource("15_m5qa8")
-metadata/_custom_type_script = "uid://hpmh2lxuwadp"
-
-[node name="TextureRect" type="TextureRect" parent="Item Bar/MarginContainer/Items/Menu Button"]
-material = ExtResource("16_i1qcg")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(100, 100)
-texture = SubResource("ViewportTexture_ks7f1")
-
-[node name="DropShadowTexture" type="TextureRect" parent="Item Bar/MarginContainer/Items/Menu Button/TextureRect" node_paths=PackedStringArray("_referenceTextureRect")]
-modulate = Color(0, 0, 0, 0.25)
-show_behind_parent = true
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 208.0
-offset_bottom = 208.0
-texture = SubResource("ViewportTexture_ks7f1")
-script = ExtResource("17_ljjj3")
-_referenceTextureRect = NodePath("..")
-metadata/_custom_type_script = "uid://dqredh7d048oo"
-
-[node name="SubViewport" type="SubViewport" parent="Item Bar/MarginContainer/Items/Menu Button"]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(200, 200)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="Item Bar/MarginContainer/Items/Menu Button/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
-projection = 1
-current = true
-size = 5.0
-
-[node name="crank2" parent="Item Bar/MarginContainer/Items/Menu Button/SubViewport" instance=ExtResource("18_i1qcg")]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="BouncyButton" type="Node" parent="Item Bar/MarginContainer/Items/Menu Button" node_paths=PackedStringArray("TargetButton", "VisualRoot")]
-script = ExtResource("19_mbflq")
-TargetButton = NodePath("..")
-VisualRoot = NodePath("../TextureRect")
-metadata/_custom_type_script = "uid://cssfxutgjsc61"
-
-[node name="Crank Button Behavior" type="Node" parent="Item Bar/MarginContainer/Items/Menu Button" node_paths=PackedStringArray("Toolbar", "CrankNode")]
-script = ExtResource("20_ljjj3")
-Toolbar = NodePath("../../../../..")
-CrankNode = NodePath("../SubViewport/crank2")
+size_flags_horizontal = 3
 
 [connection signal="PressedVirtually" from="Item Bar/MarginContainer/Items/Menu Button" to="Item Bar/MarginContainer/Items/Menu Button/Crank Button Behavior" method="Toggle" unbinds=1]
