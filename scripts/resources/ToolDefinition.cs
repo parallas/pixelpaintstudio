@@ -14,4 +14,9 @@ public partial class ToolDefinition : Resource
         Images,
         Wands
     }
+
+    public void SetBrushDefinition(BrushDefinition brushDefinition)
+    {
+        BrushDefinition = brushDefinition;
+    }
 }

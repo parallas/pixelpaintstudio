@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="BrushDefinition" load_steps=9 format=3 uid="uid://bstqujm0okway"]
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=10 format=3 uid="uid://bstqujm0okway"]
 
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_g62dg"]
 [ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_mqqvn"]
 [ext_resource type="Texture2D" uid="uid://mdc7jwpl37gv" path="res://textures/glob.png" id="3_goqy0"]
 [ext_resource type="Script" uid="uid://drcqrruwqhh3q" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImageBrush.cs" id="3_mqqvn"]
+[ext_resource type="Texture2D" uid="uid://b0ecir7gsg674" path="res://drawing_resources/brushes/wands/thumbnails/wand_thumb_shadedtest.png" id="5_2qfag"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="8_266s0"]
 
 [sub_resource type="Resource" id="Resource_5mx1t"]
@@ -19,6 +20,7 @@ script = ExtResource("3_mqqvn")
 Texture = ExtResource("3_goqy0")
 SizeOverride = Vector2(16, 16)
 TintUsingColor = true
+MultiplyByColor = false
 FillGapsBetweenDraws = true
 RandomAngleRange = Vector2(0, 0)
 RandomScaleRange = Vector2(1, 1)
@@ -26,7 +28,7 @@ metadata/_custom_type_script = "uid://drcqrruwqhh3q"
 
 [resource]
 script = ExtResource("8_266s0")
-Name = "Spring Test"
+Thumbnail = ExtResource("5_2qfag")
 Behaviors = Array[Object]([SubResource("Resource_5mx1t"), SubResource("Resource_cj32i"), SubResource("Resource_goqy0")])
 StartBehaviors = null
 FinishBehaviors = null

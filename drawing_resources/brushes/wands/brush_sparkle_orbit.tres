@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BrushDefinition" load_steps=11 format=3 uid="uid://ccfc6mthnew5q"]
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=12 format=3 uid="uid://ccfc6mthnew5q"]
 
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_cwpcv"]
 [ext_resource type="Script" uid="uid://ctwr7tpgocsul" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorFromPalette.cs" id="2_cwpcv"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c884dpjmfme40" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImage.cs" id="3_rsj5p"]
 [ext_resource type="Texture2D" uid="uid://b7iypcajly1qt" path="res://textures/star.png" id="3_tb5ir"]
 [ext_resource type="Script" uid="uid://wqjbvlsij6wj" path="res://scripts/ui/drawing/resources/BrushDefinition.cs" id="5_cjn3m"]
+[ext_resource type="Texture2D" uid="uid://drjdkhtnm4ale" path="res://drawing_resources/brushes/wands/thumbnails/wand_thumb_sparkle.png" id="6_duivt"]
 
 [sub_resource type="Resource" id="Resource_mhy3e"]
 script = ExtResource("1_cwpcv")
@@ -34,6 +35,7 @@ metadata/_custom_type_script = "uid://c884dpjmfme40"
 
 [resource]
 script = ExtResource("5_cjn3m")
+Thumbnail = ExtResource("6_duivt")
 Behaviors = Array[Object]([SubResource("Resource_mhy3e"), SubResource("Resource_7iq2r"), SubResource("Resource_cj32i"), SubResource("Resource_tb5ir")])
 StartBehaviors = null
 FinishBehaviors = null

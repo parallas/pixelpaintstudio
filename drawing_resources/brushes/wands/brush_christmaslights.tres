@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BrushDefinition" load_steps=17 format=3 uid="uid://btxag5m8sl4tr"]
+[gd_resource type="Resource" script_class="BrushDefinition" load_steps=18 format=3 uid="uid://btxag5m8sl4tr"]
 
 [ext_resource type="Script" uid="uid://cmv66q4eh60qf" path="res://scripts/ui/drawing/resources/brush_behaviors/SnapToCursor.cs" id="1_5s1ju"]
 [ext_resource type="Script" uid="uid://b17vdftr7prjq" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColor.cs" id="2_5s1ju"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dtfcaotk1gw1y" path="res://scripts/ui/drawing/resources/brush_behaviors/SetColorRandom.cs" id="5_lssp1"]
 [ext_resource type="Texture2D" uid="uid://cldx5kd4obc2o" path="res://textures/christmas_light_bright_80x.png" id="6_lssp1"]
 [ext_resource type="Script" uid="uid://c884dpjmfme40" path="res://scripts/ui/drawing/resources/brush_behaviors/DrawImage.cs" id="6_r4vfi"]
+[ext_resource type="Texture2D" uid="uid://dxttk5jl86yao" path="res://drawing_resources/brushes/wands/thumbnails/wand_thumb_christmaslights.png" id="9_osc4w"]
 
 [sub_resource type="Resource" id="Resource_m82f4"]
 script = ExtResource("1_5s1ju")
@@ -60,6 +61,7 @@ metadata/_custom_type_script = "uid://c884dpjmfme40"
 
 [resource]
 script = ExtResource("4_m0wkk")
+Thumbnail = ExtResource("9_osc4w")
 Behaviors = Array[Object]([SubResource("Resource_m82f4"), SubResource("Resource_7s5fq"), SubResource("Resource_d2423"), SubResource("Resource_3yagk"), SubResource("Resource_r4vfi"), SubResource("Resource_jnkqf")])
 StartBehaviors = null
 FinishBehaviors = null

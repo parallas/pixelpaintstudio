@@ -26,6 +26,14 @@ public partial class MainEditor : Control
 
     public int PrimaryPlayerId { get; set; }
 
+    public static readonly List<BrushDefinition> MagicWandDefinitions =
+    [
+        // GD.Load<BrushDefinition>("res://drawing_resources/brushes/wands/brush_sourgummyworm.tres"),
+        // GD.Load<BrushDefinition>("res://drawing_resources/brushes/wands/brush_christmaslights.tres"),
+        // GD.Load<BrushDefinition>("res://drawing_resources/brushes/wands/brush_scribble.tres"),
+        // GD.Load<BrushDefinition>("res://drawing_resources/brushes/wands/brush_toothpaste.tres"),
+        // GD.Load<BrushDefinition>("res://drawing_resources/brushes/wands/brush_sparkle_orbit.tres"),
+    ];
     public static readonly List<InkDefinition> AllInkDefinitions =
     [
         // Base Colors (16/16)
@@ -273,6 +281,16 @@ public partial class MainEditor : Control
         Godot.Engine.MaxFps = 120;
 
         CreatePlayerCanvas(0);
+
+        foreach (var fileName in DirAccess.GetFilesAt("res://drawing_resources/brushes/wands/"))
+        {
+            var replace = fileName;
+            if (fileName.GetExtension() == "import")
+            {
+                replace = fileName.Replace(".import", "");
+            }
+            MagicWandDefinitions.Add(GD.Load<BrushDefinition>("res://drawing_resources/brushes/wands/" + replace));
+        }
     }
 
     public override void _EnterTree()

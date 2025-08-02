@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dikgniiqb312x"]
+[gd_scene load_steps=24 format=3 uid="uid://dikgniiqb312x"]
 
 [ext_resource type="StyleBox" uid="uid://cchoxocbl217e" path="res://styles/color_palette.tres" id="1_fg84n"]
 [ext_resource type="Script" uid="uid://db74nfyn3mccf" path="res://scripts/ui/Topbar.cs" id="1_xm8n6"]
@@ -16,6 +16,8 @@
 [ext_resource type="Script" uid="uid://ckwfjag101rip" path="res://scripts/ui/MainEditorValueController.cs" id="12_5qjw4"]
 [ext_resource type="PackedScene" uid="uid://bc7f6yty1rpmk" path="res://scenes/ui/stencil_button.tscn" id="14_gnqgb"]
 [ext_resource type="Script" uid="uid://wvnajl85h046" path="res://scripts/ui/StencilBar.cs" id="14_vijp7"]
+[ext_resource type="PackedScene" uid="uid://rlimybs23sc7" path="res://scenes/ui/magic_button.tscn" id="17_3lf5l"]
+[ext_resource type="Script" uid="uid://cwegy6j7xepsd" path="res://scripts/ui/CrystalBallBar.cs" id="17_yut24"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm8n6"]
 content_margin_left = 48.0
@@ -47,7 +49,7 @@ viewport_path = NodePath("HBoxContainer/Menus/Color Palette/HBoxContainer/Page B
 content_margin_left = 24.0
 content_margin_top = 0.0
 content_margin_right = 32.0
-content_margin_bottom = 32.0
+content_margin_bottom = 0.0
 bg_color = Color(0.468334, 0.267665, 0.730959, 1)
 skew = Vector2(-0.2, 0)
 border_width_right = 8
@@ -144,84 +146,72 @@ script = ExtResource("5_ar3oq")
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Colors Container" type="Control" parent="HBoxContainer/Menus/Color Palette/HBoxContainer"]
-custom_minimum_size = Vector2(1688, 128)
+[node name="Colors" type="HBoxContainer" parent="HBoxContainer/Menus/Color Palette/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Colors" type="HBoxContainer" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -64.0
-offset_bottom = 64.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/separation = 7
 
-[node name="Paint Color Button" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button2" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button2" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button3" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button3" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button4" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button4" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button13" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button13" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button5" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button5" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button6" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button6" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button7" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button7" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button12" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button12" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button8" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button8" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button18" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button18" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button17" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button17" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button14" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button14" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button9" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button9" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button10" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button10" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
-[node name="Paint Color Button11" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors Container/Colors" instance=ExtResource("2_hf8t1")]
+[node name="Paint Color Button11" parent="HBoxContainer/Menus/Color Palette/HBoxContainer/Colors" instance=ExtResource("2_hf8t1")]
 custom_minimum_size = Vector2(100, 128)
 layout_mode = 2
 
@@ -364,84 +354,72 @@ script = ExtResource("14_vijp7")
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Items Container" type="Control" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer"]
-custom_minimum_size = Vector2(1688, 128)
+[node name="Items" type="HBoxContainer" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Items" type="HBoxContainer" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -64.0
-offset_bottom = 64.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/separation = 7
 
-[node name="Stencil Button" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button2" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button2" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button3" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button3" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button4" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button4" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button5" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button5" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button6" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button6" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button7" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button7" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button8" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button8" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button9" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button9" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button10" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button10" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button11" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button11" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button12" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button12" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button13" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button13" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button14" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button14" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button15" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button15" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
-[node name="Stencil Button16" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items Container/Items" instance=ExtResource("14_gnqgb")]
+[node name="Stencil Button16" parent="HBoxContainer/Menus/MarginContainer/Stencil Menu/HBoxContainer/Items" instance=ExtResource("14_gnqgb")]
 custom_minimum_size = Vector2(100, 120)
 layout_mode = 2
 
@@ -571,28 +549,56 @@ metadata/_custom_type_script = "uid://cssfxutgjsc61"
 [node name="Wand Menu" type="PanelContainer" parent="HBoxContainer/Menus/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3oepe")
-script = ExtResource("14_vijp7")
+script = ExtResource("17_yut24")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Menus/MarginContainer/Wand Menu"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Items Container" type="Control" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer"]
-custom_minimum_size = Vector2(1688, 128)
+[node name="Items" type="HBoxContainer" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Items" type="HBoxContainer" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items Container"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -64.0
-offset_bottom = 64.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/separation = 7
+
+[node name="Magic Button" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button2" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button3" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button4" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button5" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button6" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button7" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button8" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button9" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
+
+[node name="Magic Button10" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer/Items" instance=ExtResource("17_3lf5l")]
+custom_minimum_size = Vector2(165, 150)
+layout_mode = 2
 
 [node name="Page Buttons" type="Control" parent="HBoxContainer/Menus/MarginContainer/Wand Menu/HBoxContainer"]
 custom_minimum_size = Vector2(240, 128)
@@ -634,7 +640,7 @@ layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 158.0
-offset_bottom = 158.0
+offset_bottom = 172.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_h = true
 script = ExtResource("7_t05rr")
@@ -689,7 +695,7 @@ layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 158.0
-offset_bottom = 158.0
+offset_bottom = 172.0
 texture = SubResource("ViewportTexture_5i4jx")
 flip_v = true
 script = ExtResource("7_t05rr")

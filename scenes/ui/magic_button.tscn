@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://rlimybs23sc7"]
+
+[ext_resource type="Script" uid="uid://chdtvkj03641p" path="res://scripts/ui/CrystalBallButton.cs" id="1_akk4s"]
+[ext_resource type="PackedScene" uid="uid://fu4t231g2kyb" path="res://models/menus/crystal_ball.glb" id="2_akk4s"]
+[ext_resource type="Script" uid="uid://bfis3l8l54w50" path="res://scripts/ui/PaintBlob.cs" id="3_jwdnc"]
+[ext_resource type="Script" uid="uid://djtog83vrh75d" path="res://scripts/ui/DropShadowViewport.cs" id="3_s36sn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_atk6x"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_r61hu"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[node name="Magic Button" type="Button" node_paths=PackedStringArray("_paintBlob", "_modelRoot", "_visualRoot")]
+custom_minimum_size = Vector2(180, 180)
+offset_right = 128.0
+offset_bottom = 128.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_atk6x")
+flat = true
+script = ExtResource("1_akk4s")
+_paintBlob = NodePath("SubViewportContainer/SubViewport/crystal_ball")
+_modelRoot = NodePath("SubViewportContainer/SubViewport/crystal_ball")
+_visualRoot = NodePath("SubViewportContainer")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(180, 180)
+size_2d_override = Vector2i(600, 600)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+current = true
+fov = 35.0
+size = 6.0
+
+[node name="crystal_ball" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("_meshInstance3D") instance=ExtResource("2_akk4s")]
+script = ExtResource("3_jwdnc")
+_meshInstance3D = NodePath("crystalball")
+
+[node name="DropShadowViewport" type="TextureRect" parent="SubViewportContainer" node_paths=PackedStringArray("Viewport")]
+modulate = Color(0, 0, 0, 0.25)
+show_behind_parent = true
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("ViewportTexture_r61hu")
+script = ExtResource("3_s36sn")
+Viewport = NodePath("../SubViewport")
+metadata/_custom_type_script = "uid://djtog83vrh75d"
