@@ -9,7 +9,7 @@ public partial class DropShadowViewport : DropShadow
     {
         if (Viewport is null) return;
 
-        Texture = Viewport.GetTexture();
+        Texture ??= Viewport.GetTexture();
 
         base._Ready();
     }
