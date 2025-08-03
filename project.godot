@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="fun_drawing"
+config/name="pixelpaintstudio"
 run/main_scene="uid://1dgjl4mfmmc0"
 config/auto_accept_quit=false
 config/features=PackedStringArray("4.4", "C#", "Mobile")

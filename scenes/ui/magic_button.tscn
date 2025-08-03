@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_atk6x"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_r61hu"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_akk4s"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
 
 [node name="Magic Button" type="Button" node_paths=PackedStringArray("_paintBlob", "_modelRoot", "_visualRoot")]
@@ -55,7 +55,7 @@ modulate = Color(0, 0, 0, 0.25)
 show_behind_parent = true
 layout_mode = 2
 mouse_filter = 2
-texture = SubResource("ViewportTexture_r61hu")
+texture = SubResource("ViewportTexture_akk4s")
 script = ExtResource("3_s36sn")
 Viewport = NodePath("../SubViewport")
 metadata/_custom_type_script = "uid://djtog83vrh75d"
